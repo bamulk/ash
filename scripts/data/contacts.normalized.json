@@ -1,0 +1,3125 @@
+[
+  {
+    "first_name": "Alison & Kevin",
+    "last_name": "Lanius",
+    "display_name": "Alison & Kevin Lanius",
+    "emails": [
+      "alisonlanius@gmail.com"
+    ],
+    "phones": [],
+    "street": "4951 Kurz Cir",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Alissa & Anthony",
+    "last_name": "Ratliff",
+    "display_name": "Alissa & Anthony Ratliff",
+    "emails": [
+      "alissaratliff@live.com"
+    ],
+    "phones": [],
+    "street": "7999 Wildridge Ln",
+    "city": null,
+    "state": "CA",
+    "zip": null,
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Allan & Marian",
+    "last_name": "Espiritu",
+    "display_name": "Allan & Marian Espiritu",
+    "emails": [
+      "allynesprit@yahoo.com"
+    ],
+    "phones": [
+      "925-699-1423"
+    ],
+    "street": "2392 Rees Cir",
+    "city": "Livermore",
+    "state": "CA",
+    "zip": "94550",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Amber & Matt",
+    "last_name": "Viduya",
+    "display_name": "Amber & Matt Viduya",
+    "emails": [
+      "amberandmatt@sbcglobal.net"
+    ],
+    "phones": [
+      "916-508-8970"
+    ],
+    "street": "4408 Ravenwood Ave",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Amy",
+    "last_name": "May",
+    "display_name": "Amy May",
+    "emails": [],
+    "phones": [
+      "916-213-9100"
+    ],
+    "street": "2721 Echo Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Andrea Ambrose & Jeff",
+    "last_name": "Kaplowitz",
+    "display_name": "Andrea Ambrose & Jeff Kaplowitz",
+    "emails": [
+      "jeffmfk@gmail.com"
+    ],
+    "phones": [
+      "916-806-4977"
+    ],
+    "street": "7031 Sutter Ave",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Andy & Amanda",
+    "last_name": "Thomas",
+    "display_name": "Andy & Amanda Thomas",
+    "emails": [
+      "amandalynnthomas@yahoo.com"
+    ],
+    "phones": [
+      "916-501-0495"
+    ],
+    "street": "800 San Ramon Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95864",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Anthony & Rachel",
+    "last_name": "Piccardo",
+    "display_name": "Anthony & Rachel Piccardo",
+    "emails": [],
+    "phones": [
+      "916-710-1445"
+    ],
+    "street": "5744 Audrey Way",
+    "city": "Fair Oaks",
+    "state": "CA",
+    "zip": "95628",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Anthony Owen",
+    "last_name": "Parks",
+    "display_name": "Anthony Owen Parks",
+    "emails": [],
+    "phones": [],
+    "street": "33 3rd Ave Isleton",
+    "city": null,
+    "state": "CA",
+    "zip": "95641",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Antonio and Ada",
+    "last_name": "Ortega",
+    "display_name": "Antonio and Ada Ortega",
+    "emails": [],
+    "phones": [],
+    "street": "3820 Lakeside Dr Modesto",
+    "city": null,
+    "state": "CA",
+    "zip": "95355",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "April",
+    "last_name": "Dudley",
+    "display_name": "April Dudley",
+    "emails": [],
+    "phones": [
+      "916-969-0825"
+    ],
+    "street": "8481 Lonely Oak Ct",
+    "city": "Fair Oaks",
+    "state": "CA",
+    "zip": "95628",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Ashley Powers & Andrew",
+    "last_name": "Hill",
+    "display_name": "Ashley Powers & Andrew Hill",
+    "emails": [
+      "clarkashleypowers@gmail.com",
+      "drewdhill@yahoo.com"
+    ],
+    "phones": [
+      "315-382-5735",
+      "206-708-9898"
+    ],
+    "street": "4320 53rd St",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95820",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Azelyn",
+    "last_name": "Marquez",
+    "display_name": "Azelyn Marquez",
+    "emails": [
+      "spazelyn@yahoo.com"
+    ],
+    "phones": [
+      "916-598-2675"
+    ],
+    "street": "4107 32nd St",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95820",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Barbara & Kenzie",
+    "last_name": "Scott",
+    "display_name": "Barbara & Kenzie Scott",
+    "emails": [],
+    "phones": [
+      "916-718-8872",
+      "916-517-0496"
+    ],
+    "street": "7821 Mountain Ave",
+    "city": "Orangevale",
+    "state": "CA",
+    "zip": "95662",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Bettie",
+    "last_name": "Renda",
+    "display_name": "Bettie Renda",
+    "emails": [],
+    "phones": [],
+    "street": "109 Mystic Hills Pl",
+    "city": "Folsom",
+    "state": "CA",
+    "zip": "95630",
+    "role": "seller",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Bevan",
+    "last_name": "Richardson",
+    "display_name": "Bevan Richardson",
+    "emails": [],
+    "phones": [
+      "916-991-6402"
+    ],
+    "street": "851 Oak Ln",
+    "city": "Rio Linda",
+    "state": "CA",
+    "zip": "95673",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Beverly",
+    "last_name": "Easton",
+    "display_name": "Beverly Easton",
+    "emails": [
+      "howshoney2000@hotmail.com"
+    ],
+    "phones": [
+      "209-405-0937"
+    ],
+    "street": "1436 Oak Grove Dr",
+    "city": "Roseville",
+    "state": "CA",
+    "zip": "95747",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Blair",
+    "last_name": "Mcleod",
+    "display_name": "Blair Mcleod",
+    "emails": [
+      "blairmcleod@comcast.net"
+    ],
+    "phones": [],
+    "street": "2700 Garfield Ave",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Bob & Debra",
+    "last_name": "Blankenship",
+    "display_name": "Bob & Debra Blankenship",
+    "emails": [
+      "bobbyblankenshipsr@gmail.com"
+    ],
+    "phones": [
+      "916-240-3430"
+    ],
+    "street": "2537 Stansberry Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95826",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Bob",
+    "last_name": "Muirhead",
+    "display_name": "Bob Muirhead",
+    "emails": [],
+    "phones": [
+      "916-488-1569"
+    ],
+    "street": "2132 Cortez Ln",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Bob, Margarita & John",
+    "last_name": "Wolstenholm",
+    "display_name": "Bob, Margarita & John Wolstenholm",
+    "emails": [],
+    "phones": [
+      "916-489-3356"
+    ],
+    "street": "2128 Madera Rd",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Bobby & Melissa",
+    "last_name": "Blankenship",
+    "display_name": "Bobby & Melissa Blankenship",
+    "emails": [
+      "bobbyblank2@gmail.com",
+      "madavis0485@gmail.com"
+    ],
+    "phones": [
+      "916-271-6170",
+      "209-915-8702"
+    ],
+    "street": "9454 Roseburg Ct",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95826",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Boynarr & Heather",
+    "last_name": "Hunt",
+    "display_name": "Boynarr & Heather Hunt",
+    "emails": [],
+    "phones": [
+      "916-247-8019"
+    ],
+    "street": "5200 Winding Way",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Brandy & Anthony",
+    "last_name": "Arellano",
+    "display_name": "Brandy & Anthony Arellano",
+    "emails": [
+      "brandychapman4@gmail.com"
+    ],
+    "phones": [
+      "916-912-95824"
+    ],
+    "street": "5880 Power Inn Rd",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95824",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Brenden",
+    "last_name": "Nagle",
+    "display_name": "Brenden Nagle",
+    "emails": [
+      "brendannagle@yahoo.com"
+    ],
+    "phones": [
+      "916-601-3208"
+    ],
+    "street": "10426 Ambassador Dr",
+    "city": "Rancho Cordova",
+    "state": "CA",
+    "zip": "95760",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Brett & Theresa",
+    "last_name": "Roberts",
+    "display_name": "Brett & Theresa Roberts",
+    "emails": [
+      "trigga_06@hotmail.com"
+    ],
+    "phones": [
+      "916-862-3706"
+    ],
+    "street": "4805 Golden Bear Dr",
+    "city": "Antioch",
+    "state": "CA",
+    "zip": "94531",
+    "role": "both",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Brett and Ashley",
+    "last_name": "Mulkey",
+    "display_name": "Brett and Ashley Mulkey",
+    "emails": [],
+    "phones": [],
+    "street": "9287 Medallion Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95826",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Brett",
+    "last_name": "Mulkey",
+    "display_name": "Brett Mulkey",
+    "emails": [
+      "brettmulkey@gmail.com"
+    ],
+    "phones": [
+      "9168999850"
+    ],
+    "street": "7819 Mount Diablo Ct",
+    "city": "Fair Oaks",
+    "state": "CA",
+    "zip": "95628",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Brian & Laura",
+    "last_name": "Weissbart",
+    "display_name": "Brian & Laura Weissbart",
+    "emails": [
+      "laurakatzw@yahoo.com"
+    ],
+    "phones": [
+      "916-801-0770"
+    ],
+    "street": "7424 Ranch Ave",
+    "city": "Citrus Heights",
+    "state": "CA",
+    "zip": "95610",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Brie & David",
+    "last_name": "Fugate",
+    "display_name": "Brie & David Fugate",
+    "emails": [
+      "bhardie8@yahoo.com"
+    ],
+    "phones": [
+      "530-306-6689"
+    ],
+    "street": "2952 Leta Ln",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Brittany",
+    "last_name": "Barber",
+    "display_name": "Brittany Barber",
+    "emails": [],
+    "phones": [
+      "916- 513-0279"
+    ],
+    "street": "7823 Tigerwoods Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95829",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Brooke & Ryan",
+    "last_name": "Frederick",
+    "display_name": "Brooke & Ryan Frederick",
+    "emails": [],
+    "phones": [],
+    "street": "3920 Hillcrest Ln",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Bruce",
+    "last_name": "Damigo",
+    "display_name": "Bruce Damigo",
+    "emails": [],
+    "phones": [
+      "916-879-2883"
+    ],
+    "street": "1317 Greenhills rd.Sacramento",
+    "city": null,
+    "state": "CA",
+    "zip": "95864",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Carol",
+    "last_name": "Capper",
+    "display_name": "Carol Capper",
+    "emails": [],
+    "phones": [
+      "916-480-9063"
+    ],
+    "street": "2144 Byron rd.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Carrie",
+    "last_name": "Boyle",
+    "display_name": "Carrie Boyle",
+    "emails": [
+      "carrie@bandbwinemerchants.com"
+    ],
+    "phones": [],
+    "street": "8209 Rockbury wy.",
+    "city": "Antelope",
+    "state": "CA",
+    "zip": "95843",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Carrie",
+    "last_name": "Maroni",
+    "display_name": "Carrie Maroni",
+    "emails": [
+      "kungfuclairol@gmail.com"
+    ],
+    "phones": [
+      "916-817-7448"
+    ],
+    "street": "4249 Birgit Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95864",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Cathy Shinnamon & Shannon",
+    "last_name": "Parish",
+    "display_name": "Cathy Shinnamon & Shannon Parish",
+    "emails": [],
+    "phones": [
+      "916-708-2382"
+    ],
+    "street": "4420 Colby Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Chardonnay & James",
+    "last_name": "Kelly",
+    "display_name": "Chardonnay & James Kelly",
+    "emails": [
+      "cprovine@yahoo.com"
+    ],
+    "phones": [
+      "916-752-0410"
+    ],
+    "street": "8937 Woodman Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95826",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Cheyenne & Nick",
+    "last_name": "Martin",
+    "display_name": "Cheyenne & Nick Martin",
+    "emails": [],
+    "phones": [],
+    "street": "4205 Loazell Ct",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95864",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Chris",
+    "last_name": "McCarthy",
+    "display_name": "Chris McCarthy",
+    "emails": [
+      "mccarthypaints@sbcglobal.net"
+    ],
+    "phones": [
+      "916-290-3430"
+    ],
+    "street": "5811 9th Ave",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95820",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Christie",
+    "last_name": "Guisti",
+    "display_name": "Christie Guisti",
+    "emails": [],
+    "phones": [],
+    "street": "2368 Santa Anita Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Christine",
+    "last_name": "Boyle",
+    "display_name": "Christine Boyle",
+    "emails": [
+      "yellowpoet76@gmail.com"
+    ],
+    "phones": [
+      "510-410-2288"
+    ],
+    "street": "3571 West Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Christine",
+    "last_name": "Pobanz-Stetler",
+    "display_name": "Christine Pobanz-Stetler",
+    "emails": [],
+    "phones": [],
+    "street": "2904 Weise Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95833",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Chuck",
+    "last_name": "Bagwell",
+    "display_name": "Chuck Bagwell",
+    "emails": [],
+    "phones": [],
+    "street": "1704 Orion Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95864",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Chuck Dernberger & Shelley",
+    "last_name": "Breton",
+    "display_name": "Chuck Dernberger & Shelley Breton",
+    "emails": [
+      "dernberger@mac.com"
+    ],
+    "phones": [
+      "510-386-7983"
+    ],
+    "street": "8745 Brookdale cir.",
+    "city": "Granite Bay",
+    "state": "CA",
+    "zip": "95746",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Chuck Runyon & Tammy",
+    "last_name": "Moeller",
+    "display_name": "Chuck Runyon & Tammy Moeller",
+    "emails": [
+      "chuckswoodcraft@comcast.net"
+    ],
+    "phones": [
+      "916-459-8815"
+    ],
+    "street": "1959 Middleberry Rd",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95815",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Clayton",
+    "last_name": "Family",
+    "display_name": "Clayton Family",
+    "emails": [
+      "r.clayton2@yahoo.com",
+      "elisallopez18@aol.com"
+    ],
+    "phones": [
+      "916-803-8878",
+      "916-835-9975"
+    ],
+    "street": "1940 Beale Cir",
+    "city": "Lincoln",
+    "state": "CA",
+    "zip": "95648",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Colin",
+    "last_name": "Reyes",
+    "display_name": "Colin Reyes",
+    "emails": [
+      "creyes1187@gmail.com"
+    ],
+    "phones": [
+      "916-220-0498"
+    ],
+    "street": "5041 Dory Way",
+    "city": "Fair Oaks",
+    "state": "CA",
+    "zip": "95628",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Colleen & Steven",
+    "last_name": "Root",
+    "display_name": "Colleen & Steven Root",
+    "emails": [
+      "colleenroot@gmail.com"
+    ],
+    "phones": [
+      "916-764-6892"
+    ],
+    "street": "1913 Woodstock Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Dale",
+    "last_name": "Martin",
+    "display_name": "Dale Martin",
+    "emails": [
+      "stangm7@hotmail.com"
+    ],
+    "phones": [
+      "916-224-2139"
+    ],
+    "street": "849 Nevada St",
+    "city": "Auburn",
+    "state": "CA",
+    "zip": "95603",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Danette",
+    "last_name": "Verras",
+    "display_name": "Danette Verras",
+    "emails": [],
+    "phones": [
+      "916-835-2681"
+    ],
+    "street": "5443 Ventana Pl",
+    "city": "Citrus Heights",
+    "state": "CA",
+    "zip": "95610",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Daniel Desjardine & Dave",
+    "last_name": "Mauldin",
+    "display_name": "Daniel Desjardine & Dave Mauldin",
+    "emails": [
+      "dan.desjardine@gmail.com",
+      "davidd.mauldin@gmail.com"
+    ],
+    "phones": [
+      "415-601-9341",
+      "415-306-2582"
+    ],
+    "street": "2681 Maybrook dr.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95835",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Darren & Ellen",
+    "last_name": "Tam",
+    "display_name": "Darren & Ellen Tam",
+    "emails": [
+      "dtam312@yahoo.com"
+    ],
+    "phones": [
+      "916-833-4389"
+    ],
+    "street": "7070 Warbler Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95831",
+    "role": "seller",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Darren E Tierney",
+    "last_name": "Trust",
+    "display_name": "Darren E Tierney Trust",
+    "emails": [],
+    "phones": [],
+    "street": "4730 New York",
+    "city": "Fair Oaks",
+    "state": "CA",
+    "zip": "95628",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Darrin and Charlotte",
+    "last_name": "Frank",
+    "display_name": "Darrin and Charlotte Frank",
+    "emails": [],
+    "phones": [],
+    "street": "6732 Superior Dr",
+    "city": "North Highlands",
+    "state": "CA",
+    "zip": "95660",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Dave & Betty",
+    "last_name": "Shanks",
+    "display_name": "Dave & Betty Shanks",
+    "emails": [
+      "dave@daveshanksplumbing.com"
+    ],
+    "phones": [
+      "510-828-5500"
+    ],
+    "street": "126 Mesquite Ct",
+    "city": "Folsom",
+    "state": "CA",
+    "zip": "95630",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "David & Delaney",
+    "last_name": "Price",
+    "display_name": "David & Delaney Price",
+    "emails": [
+      "delaneyellison@gmail.com",
+      "davidjprice2@yahoo.com"
+    ],
+    "phones": [
+      "707-228-9754",
+      "909-967-4865"
+    ],
+    "street": "7031 Rosado Dr",
+    "city": "El Dorado Hills",
+    "state": "CA",
+    "zip": "95762",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "David & Norma",
+    "last_name": "Mann",
+    "display_name": "David & Norma Mann",
+    "emails": [
+      "normdave25@gmail.com"
+    ],
+    "phones": [
+      "916-201-9717"
+    ],
+    "street": "712 Lincoln Ave",
+    "city": "Lodi",
+    "state": "CA",
+    "zip": "95240",
+    "role": "both",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "David & Rebecca",
+    "last_name": "Watkins",
+    "display_name": "David & Rebecca Watkins",
+    "emails": [
+      "watkinsfam1090@gmail.com"
+    ],
+    "phones": [
+      "530-577-4470"
+    ],
+    "street": "1090 Washoan blvd South Lake Tahoe",
+    "city": null,
+    "state": "CA",
+    "zip": "96150",
+    "role": "seller",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "David",
+    "last_name": "Menda",
+    "display_name": "David Menda",
+    "emails": [
+      "dbhmenda@gmail.com"
+    ],
+    "phones": [
+      "925-325-6856"
+    ],
+    "street": "4479 Camstock Ct Concord",
+    "city": null,
+    "state": "CA",
+    "zip": "94521",
+    "role": "seller",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Desiree",
+    "last_name": "Perez",
+    "display_name": "Desiree Perez",
+    "emails": [
+      "desireeperez77@gmail.com"
+    ],
+    "phones": [
+      "916-495-7041"
+    ],
+    "street": "2104 Weldon Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Destiny & Trevor",
+    "last_name": "Sterner",
+    "display_name": "Destiny & Trevor Sterner",
+    "emails": [
+      "tssterner@yahoo.com"
+    ],
+    "phones": [
+      "916-796-7282"
+    ],
+    "street": "8213 Catalpa Dr",
+    "city": "Citrus Heights",
+    "state": "CA",
+    "zip": "95610",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Diane & Glenn",
+    "last_name": "Fulbright",
+    "display_name": "Diane & Glenn Fulbright",
+    "emails": [
+      "dbmitchell58@yahoo.com"
+    ],
+    "phones": [
+      "916-753-4024"
+    ],
+    "street": "3894 Terra Vista Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Diane",
+    "last_name": "Mitchell",
+    "display_name": "Diane Mitchell",
+    "emails": [
+      "dbmitchell58@yahoo.com"
+    ],
+    "phones": [
+      "916-753-4024"
+    ],
+    "street": "208 Dunbarton Cir",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Doug & Brigette",
+    "last_name": "Arevalo",
+    "display_name": "Doug & Brigette Arevalo",
+    "emails": [
+      "birds_theword@hotmail.com"
+    ],
+    "phones": [
+      "916-712-3007"
+    ],
+    "street": "10840 Scotsman Way",
+    "city": "Rancho Cordova",
+    "state": "CA",
+    "zip": "95670",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Doug",
+    "last_name": "Leslie",
+    "display_name": "Doug Leslie",
+    "emails": [],
+    "phones": [
+      "916-835-3197"
+    ],
+    "street": "5311 Moddison Ave",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95819",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Dusty",
+    "last_name": "Linblad",
+    "display_name": "Dusty Linblad",
+    "emails": [
+      "swimfinaticswimschool@gmail.com"
+    ],
+    "phones": [
+      "530-774-3317"
+    ],
+    "street": "2890 Herbert Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Edward & Colleen",
+    "last_name": "Ryan",
+    "display_name": "Edward & Colleen Ryan",
+    "emails": [],
+    "phones": [
+      "530-304-4483"
+    ],
+    "street": "17501 County Road 86 Esparto",
+    "city": null,
+    "state": "CA",
+    "zip": "95627",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Elvy",
+    "last_name": "Harris",
+    "display_name": "Elvy Harris",
+    "emails": [],
+    "phones": [],
+    "street": "3729 Hepburn Stockto",
+    "city": null,
+    "state": "CA",
+    "zip": "95209",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Ely",
+    "last_name": "Harris",
+    "display_name": "Ely Harris",
+    "emails": [],
+    "phones": [],
+    "street": "3211 Country Club Stockton",
+    "city": null,
+    "state": "CA",
+    "zip": "95604",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Erek",
+    "last_name": "King",
+    "display_name": "Erek King",
+    "emails": [],
+    "phones": [
+      "916-212-0086"
+    ],
+    "street": "4114 Tyrone Way",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Erica & Matt",
+    "last_name": "Ashley",
+    "display_name": "Erica & Matt Ashley",
+    "emails": [],
+    "phones": [],
+    "street": "4824 Minnesota ave",
+    "city": "Fair Oaks",
+    "state": "CA",
+    "zip": "95628",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Erin",
+    "last_name": "Rivas",
+    "display_name": "Erin Rivas",
+    "emails": [],
+    "phones": [],
+    "street": "1041 Old Mill Way",
+    "city": "Elverta",
+    "state": "CA",
+    "zip": "95626",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Ernest",
+    "last_name": "Loya",
+    "display_name": "Ernest Loya",
+    "emails": [],
+    "phones": [
+      "916-974-1513"
+    ],
+    "street": "2129 Juanita Ln",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Francesca",
+    "last_name": "Adams",
+    "display_name": "Francesca Adams",
+    "emails": [
+      "frannie_87@yahoo.com"
+    ],
+    "phones": [
+      "916-709-3464"
+    ],
+    "street": "5924 Meghan Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95842",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Frank",
+    "last_name": "Harrison",
+    "display_name": "Frank Harrison",
+    "emails": [
+      "soundmasterfrank@gmail.com"
+    ],
+    "phones": [
+      "510-670-0481"
+    ],
+    "street": "8232 Auberry Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95828",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Geoff",
+    "last_name": "Crockwell",
+    "display_name": "Geoff Crockwell",
+    "emails": [
+      "geoffcrockwell@gmail.com"
+    ],
+    "phones": [
+      "408-569-8388"
+    ],
+    "street": "3309 Redding ave.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95820",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Gibson",
+    "last_name": "Howell",
+    "display_name": "Gibson Howell",
+    "emails": [
+      "gib@mail.com"
+    ],
+    "phones": [
+      "916-730-0141"
+    ],
+    "street": "3551 Garden Hwy",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95834",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Gigi & Nick",
+    "last_name": "Favreau",
+    "display_name": "Gigi & Nick Favreau",
+    "emails": [],
+    "phones": [],
+    "street": "2655 Danube Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Grace & Daniel",
+    "last_name": "Montoya",
+    "display_name": "Grace & Daniel Montoya",
+    "emails": [],
+    "phones": [],
+    "street": "4001 Pasadena Ave",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Hailey",
+    "last_name": "Fierro",
+    "display_name": "Hailey Fierro",
+    "emails": [
+      "haileyfierro@gmail.com"
+    ],
+    "phones": [
+      "916-719-3307"
+    ],
+    "street": "3440 Harmony Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Heather & Andrew",
+    "last_name": "Stewart",
+    "display_name": "Heather & Andrew Stewart",
+    "emails": [],
+    "phones": [
+      "916-223-7268"
+    ],
+    "street": "1845 Casterbridge Dr",
+    "city": "Roseville",
+    "state": "CA",
+    "zip": "95747",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Helen",
+    "last_name": "Freudiger",
+    "display_name": "Helen Freudiger",
+    "emails": [
+      "helenfreudiger@comcast.net"
+    ],
+    "phones": [
+      "916-350-1638"
+    ],
+    "street": "5301 E Commerce Way Unit 63105",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95835",
+    "role": "both",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Herman & Desiree",
+    "last_name": "Barahona",
+    "display_name": "Herman & Desiree Barahona",
+    "emails": [
+      "barahonaconsulting@gmail.com",
+      "desireeperez77@gmail.com"
+    ],
+    "phones": [
+      "510-559-0310",
+      "510-872-2322"
+    ],
+    "street": "3910 Hillcrest Ln",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jaclyn",
+    "last_name": "Pasko",
+    "display_name": "Jaclyn Pasko",
+    "emails": [
+      "jaclyn.pasko@gmail.com"
+    ],
+    "phones": [
+      "916-952-2941"
+    ],
+    "street": "1418 Los Molinos Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95864",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jaclyn",
+    "last_name": "Shackleford",
+    "display_name": "Jaclyn Shackleford",
+    "emails": [
+      "jozzyshark@hotmail.com"
+    ],
+    "phones": [
+      "916-606-4257"
+    ],
+    "street": "5725 Beauregard Way",
+    "city": null,
+    "state": "CA",
+    "zip": null,
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jake & Stacie",
+    "last_name": "Henrikson",
+    "display_name": "Jake & Stacie Henrikson",
+    "emails": [
+      "jacob_henrikson@yahoo.com"
+    ],
+    "phones": [
+      "916-709-5336"
+    ],
+    "street": "5705 Seascape Ct",
+    "city": "Citrus Heights",
+    "state": "CA",
+    "zip": "95610",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jasmin",
+    "last_name": "Guevara",
+    "display_name": "Jasmin Guevara",
+    "emails": [
+      "guevara.jasmine@gmail.com"
+    ],
+    "phones": [
+      "916-212-3759"
+    ],
+    "street": "5081 Toronto Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95820",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jean & Greg",
+    "last_name": "Burke",
+    "display_name": "Jean & Greg Burke",
+    "emails": [],
+    "phones": [],
+    "street": "3034 San Lorenzo Way",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jeff & Cathy",
+    "last_name": "Burns",
+    "display_name": "Jeff & Cathy Burns",
+    "emails": [],
+    "phones": [],
+    "street": "3894 Terra Vista wy.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jenifer",
+    "last_name": "Cox",
+    "display_name": "Jenifer Cox",
+    "emails": [],
+    "phones": [],
+    "street": "2531 Bowker ct.",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jenna",
+    "last_name": "Monica",
+    "display_name": "Jenna Monica",
+    "emails": [
+      "jmonica9113@yahoo.com"
+    ],
+    "phones": [
+      "916-337-5327"
+    ],
+    "street": "7710 Thunderbird Ct",
+    "city": "Fair Oaks",
+    "state": "CA",
+    "zip": "95628",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jenna",
+    "last_name": "Schultz",
+    "display_name": "Jenna Schultz",
+    "emails": [
+      "jmonica9113@yahoo.com"
+    ],
+    "phones": [
+      "916-337-5327"
+    ],
+    "street": "7710 Thunderbird Ct",
+    "city": "Fair Oaks",
+    "state": "CA",
+    "zip": "95628",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jessica & John",
+    "last_name": "Peyton",
+    "display_name": "Jessica & John Peyton",
+    "emails": [
+      "jsanchez2236@hotmail.com"
+    ],
+    "phones": [
+      "916-225-6215"
+    ],
+    "street": "8643 El Verano Ave",
+    "city": "Elverta",
+    "state": "CA",
+    "zip": "95626",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jessica & Paul",
+    "last_name": "VanBrocklin",
+    "display_name": "Jessica & Paul VanBrocklin",
+    "emails": [],
+    "phones": [
+      "916-715-3853"
+    ],
+    "street": "7527 Monogram Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95842",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jill",
+    "last_name": "McCain",
+    "display_name": "Jill McCain",
+    "emails": [
+      "jillmccain4@yahoo.com"
+    ],
+    "phones": [
+      "916-540-0564"
+    ],
+    "street": "325 Bloomfield Ct",
+    "city": "Roseville",
+    "state": "CA",
+    "zip": "95678",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jim & Janet",
+    "last_name": "Thiel",
+    "display_name": "Jim & Janet Thiel",
+    "emails": [],
+    "phones": [
+      "916-316-0673"
+    ],
+    "street": "5130 Vale Dr",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jim & Karen",
+    "last_name": "Fullmer",
+    "display_name": "Jim & Karen Fullmer",
+    "emails": [],
+    "phones": [],
+    "street": "211 Fall River Dr",
+    "city": "Folsom",
+    "state": "CA",
+    "zip": "95630",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jimmy",
+    "last_name": "Kwiatkowski",
+    "display_name": "Jimmy Kwiatkowski",
+    "emails": [],
+    "phones": [
+      "916-910-5323"
+    ],
+    "street": "2121 Cortez Ln",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Joann",
+    "last_name": "Lomas",
+    "display_name": "Joann Lomas",
+    "emails": [],
+    "phones": [
+      "916-417-3204"
+    ],
+    "street": "4718 Kinsey Ct",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95842",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Joe & Darci",
+    "last_name": "Keller",
+    "display_name": "Joe & Darci Keller",
+    "emails": [
+      "joe.keller@dignityhealth.org"
+    ],
+    "phones": [
+      "209-564-7231"
+    ],
+    "street": "2313 Gila Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95864",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Joe & Denise",
+    "last_name": "Edwards",
+    "display_name": "Joe & Denise Edwards",
+    "emails": [
+      "denise_3541@yahoo.com",
+      "jee0727@gmail.com"
+    ],
+    "phones": [
+      "916-947-6395",
+      "209-405-0937"
+    ],
+    "street": "6074 MnNeely Way",
+    "city": "Orangevale",
+    "state": "CA",
+    "zip": "95662",
+    "role": "both",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Johnny & Susan",
+    "last_name": "Orozco",
+    "display_name": "Johnny & Susan Orozco",
+    "emails": [
+      "jands.orozco@gmail.com"
+    ],
+    "phones": [
+      "323-898-5425",
+      "626-437-5393"
+    ],
+    "street": "3824 39th St",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95820",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Jordan",
+    "last_name": "Ellison",
+    "display_name": "Jordan Ellison",
+    "emails": [
+      "ellison_jordan@yahoo.com"
+    ],
+    "phones": [
+      "916-204-2577"
+    ],
+    "street": "2634 14th St",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95818",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Joy",
+    "last_name": "Fabiano",
+    "display_name": "Joy Fabiano",
+    "emails": [
+      "joypar@aol.com"
+    ],
+    "phones": [
+      "916-296-8399"
+    ],
+    "street": "717 Daniels St",
+    "city": "Woodland",
+    "state": "CA",
+    "zip": "95695",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Juliana",
+    "last_name": "Isaac",
+    "display_name": "Juliana Isaac",
+    "emails": [],
+    "phones": [],
+    "street": "2144 Madera Rd",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Justin",
+    "last_name": "Dargen",
+    "display_name": "Justin Dargen",
+    "emails": [
+      "jdargen@yahoo.com"
+    ],
+    "phones": [
+      "916-223-7324"
+    ],
+    "street": "4621 Shade Tree wy.",
+    "city": "Antelope",
+    "state": "CA",
+    "zip": "95843",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Justine",
+    "last_name": "Gapinski",
+    "display_name": "Justine Gapinski",
+    "emails": [
+      "gapinskijustine@gmail.com"
+    ],
+    "phones": [
+      "916-504-6574"
+    ],
+    "street": "1003 Fulton Ave apt 105",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Karen & Tim",
+    "last_name": "Crumley",
+    "display_name": "Karen & Tim Crumley",
+    "emails": [
+      "tkcrumzee@aol.com"
+    ],
+    "phones": [
+      "916-997-9100"
+    ],
+    "street": "602 Willow Creek dr.",
+    "city": "Folsom",
+    "state": "CA",
+    "zip": "95630",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Karen",
+    "last_name": "Crumley",
+    "display_name": "Karen Crumley",
+    "emails": [
+      "tkcrumzee@aol.com"
+    ],
+    "phones": [
+      "916-997-9100"
+    ],
+    "street": "602 Willow Creek dr.",
+    "city": "Folsom",
+    "state": "CA",
+    "zip": "95630",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Katheryn",
+    "last_name": "Boucher",
+    "display_name": "Katheryn Boucher",
+    "emails": [],
+    "phones": [],
+    "street": "2136 Madera rd.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Kathy",
+    "last_name": "Stricklan",
+    "display_name": "Kathy Stricklan",
+    "emails": [
+      "redrosek8@outlook.com"
+    ],
+    "phones": [
+      "916-747-3390"
+    ],
+    "street": "2424 Burgundy Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Kayla & Eric",
+    "last_name": "Bosley",
+    "display_name": "Kayla & Eric Bosley",
+    "emails": [],
+    "phones": [],
+    "street": "2278 Hayloft Dr",
+    "city": "Folsom",
+    "state": "CA",
+    "zip": "95630",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Kayla & Justin",
+    "last_name": "Fore",
+    "display_name": "Kayla & Justin Fore",
+    "emails": [
+      "kayla.fore1@gmail.com"
+    ],
+    "phones": [
+      "916-678-8826"
+    ],
+    "street": "16 Placid Ct",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95838",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Keith & Mike",
+    "last_name": "Holbrook",
+    "display_name": "Keith & Mike Holbrook",
+    "emails": [],
+    "phones": [
+      "916-482-9990"
+    ],
+    "street": "2344 Santa Anita Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Kelly & Michael",
+    "last_name": "James",
+    "display_name": "Kelly & Michael James",
+    "emails": [],
+    "phones": [],
+    "street": "1050 Crestline Cir",
+    "city": "El Dorado Hills",
+    "state": "CA",
+    "zip": "95762",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Ken & Janelle",
+    "last_name": "Embree",
+    "display_name": "Ken & Janelle Embree",
+    "emails": [
+      "kembree@sonic.net"
+    ],
+    "phones": [
+      "916-481-6952",
+      "916-475-8989"
+    ],
+    "street": "2120 Madera Rd",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Kevin",
+    "last_name": "Clem",
+    "display_name": "Kevin Clem",
+    "emails": [],
+    "phones": [],
+    "street": "4913 San Marque",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Kim & Justin",
+    "last_name": "Craddock",
+    "display_name": "Kim & Justin Craddock",
+    "emails": [
+      "kimpage.direct@yahoo.com"
+    ],
+    "phones": [
+      "916-745-5452"
+    ],
+    "street": "1342 Bamboo st. Plumas Lake",
+    "city": null,
+    "state": "CA",
+    "zip": "95961",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Kimmy Sweet/Paul",
+    "last_name": "Danforth",
+    "display_name": "Kimmy Sweet/Paul Danforth",
+    "emails": [
+      "kimberly.a.photography@gmail.com"
+    ],
+    "phones": [
+      "707-592-1930"
+    ],
+    "street": "9214 Hilari Way",
+    "city": "Orangevale",
+    "state": "CA",
+    "zip": "95662",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Kourath & Chantha",
+    "last_name": "Kong",
+    "display_name": "Kourath & Chantha Kong",
+    "emails": [
+      "kourath@yahoo.com"
+    ],
+    "phones": [
+      "209-603-9270"
+    ],
+    "street": "5070 Trouville Ln",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95835",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Kristin",
+    "last_name": "King",
+    "display_name": "Kristin King",
+    "emails": [],
+    "phones": [
+      "916-792-6537"
+    ],
+    "street": "911 Canyon Terrace Ln",
+    "city": "Folsom",
+    "state": "CA",
+    "zip": "95630",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Kristina",
+    "last_name": "Compher",
+    "display_name": "Kristina Compher",
+    "emails": [
+      "caligrl.kc@gmail.com"
+    ],
+    "phones": [
+      "510-298-2487"
+    ],
+    "street": "4400 Bishop wy.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95842",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Kyla",
+    "last_name": "Bath",
+    "display_name": "Kyla Bath",
+    "emails": [],
+    "phones": [
+      "530-391-8138"
+    ],
+    "street": "3331 N Shingle Rd Shingle Springs",
+    "city": null,
+    "state": "CA",
+    "zip": "95682",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Laura & Brooks",
+    "last_name": "Ellison",
+    "display_name": "Laura & Brooks Ellison",
+    "emails": [
+      "brooksellison@gmail.com",
+      "lellison17@gmail.com"
+    ],
+    "phones": [
+      "916-204-0984",
+      "916-204-1897"
+    ],
+    "street": "1341 Marian Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95818",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Lauren",
+    "last_name": "Gragham",
+    "display_name": "Lauren Gragham",
+    "emails": [
+      "laurenrg83@yahoo.com"
+    ],
+    "phones": [
+      "916-271-1829"
+    ],
+    "street": "3019 Gerald Ave",
+    "city": null,
+    "state": "CA",
+    "zip": null,
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Linda",
+    "last_name": "Kleeman",
+    "display_name": "Linda Kleeman",
+    "emails": [],
+    "phones": [
+      "916-717-5511"
+    ],
+    "street": "350 Munroe St",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Linda",
+    "last_name": "Moffit",
+    "display_name": "Linda Moffit",
+    "emails": [],
+    "phones": [],
+    "street": "623 Hancock Dr",
+    "city": "Folsom",
+    "state": "CA",
+    "zip": "95630",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Lindsey & Shaun",
+    "last_name": "Westerbeck",
+    "display_name": "Lindsey & Shaun Westerbeck",
+    "emails": [],
+    "phones": [
+      "916-215-0296"
+    ],
+    "street": "8232 Longden Cir",
+    "city": "Citrus Heights",
+    "state": "CA",
+    "zip": "95610",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Lisa",
+    "last_name": "LaCross",
+    "display_name": "Lisa LaCross",
+    "emails": [],
+    "phones": [
+      "916-759-2413"
+    ],
+    "street": "3401 Smilax Way Saccramento",
+    "city": null,
+    "state": "CA",
+    "zip": "95834",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Liz & Logan",
+    "last_name": "Robertson",
+    "display_name": "Liz & Logan Robertson",
+    "emails": [
+      "lizardmauck@yahoo.com",
+      "logan.robertson.89@icloud.com"
+    ],
+    "phones": [
+      "916-396-7602",
+      "916-969-2181"
+    ],
+    "street": "2641 Point Reyes Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95826",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Liz & Mike",
+    "last_name": "Bachman",
+    "display_name": "Liz & Mike Bachman",
+    "emails": [
+      "lizbachman@surewest.net",
+      "mikebachman@surewest.net"
+    ],
+    "phones": [
+      "916-715-2139"
+    ],
+    "street": "812 Cottonwood Dr",
+    "city": "Roseville",
+    "state": "CA",
+    "zip": "95661",
+    "role": "seller",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Lori",
+    "last_name": "Boggs",
+    "display_name": "Lori Boggs",
+    "emails": [],
+    "phones": [
+      "916-804-2056"
+    ],
+    "street": "3725 Merrily Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Lori Jane Rorrer",
+    "last_name": "Cockrum",
+    "display_name": "Lori Jane Rorrer Cockrum",
+    "emails": [
+      "lrorr5@aol.com"
+    ],
+    "phones": [
+      "916-991-2107"
+    ],
+    "street": "7329 10th St",
+    "city": "Rio Linda",
+    "state": "CA",
+    "zip": "95673",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Luann & Tim",
+    "last_name": "Stone",
+    "display_name": "Luann & Tim Stone",
+    "emails": [
+      "timstone49@gmail.com"
+    ],
+    "phones": [
+      "925-303-6722"
+    ],
+    "street": "9412 Drift Way",
+    "city": "Orangevale",
+    "state": "CA",
+    "zip": "95662",
+    "role": "both",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Lucy",
+    "last_name": "Snyder",
+    "display_name": "Lucy Snyder",
+    "emails": [],
+    "phones": [
+      "916-628-6097"
+    ],
+    "street": "2891 Herbert Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95822",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Marcus & Carrie",
+    "last_name": "Maroni",
+    "display_name": "Marcus & Carrie Maroni",
+    "emails": [],
+    "phones": [],
+    "street": "3841 Esperanza Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95864",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Marjorie",
+    "last_name": "Bradley",
+    "display_name": "Marjorie Bradley",
+    "emails": [],
+    "phones": [],
+    "street": "2200 Madera rd.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95843",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Mark and Nancy",
+    "last_name": "Nicholas",
+    "display_name": "Mark and Nancy Nicholas",
+    "emails": [],
+    "phones": [],
+    "street": "2121 Ivanhoe Dr",
+    "city": "Placerville",
+    "state": "CA",
+    "zip": "95667",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Marni & Chris",
+    "last_name": "Hernandez",
+    "display_name": "Marni & Chris Hernandez",
+    "emails": [
+      "marnirn@gmail.com"
+    ],
+    "phones": [
+      "530-312-1206"
+    ],
+    "street": "2500 La France Dr",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Matt",
+    "last_name": "Buren",
+    "display_name": "Matt Buren",
+    "emails": [],
+    "phones": [],
+    "street": "1001 Rathbone cir.",
+    "city": "Folsom",
+    "state": "CA",
+    "zip": "95630",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Melanie & Logan",
+    "last_name": "Smith",
+    "display_name": "Melanie & Logan Smith",
+    "emails": [
+      "mlucillewalker@gmail.com"
+    ],
+    "phones": [
+      "916-224-0639"
+    ],
+    "street": "2365 Purinton Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Melinda & Rene",
+    "last_name": "Stachelrodt",
+    "display_name": "Melinda & Rene Stachelrodt",
+    "emails": [],
+    "phones": [
+      "707-799-7338"
+    ],
+    "street": "11853 Loisdale Way",
+    "city": "Rancho Cordova",
+    "state": "CA",
+    "zip": "95742",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Melinda",
+    "last_name": "Moss",
+    "display_name": "Melinda Moss",
+    "emails": [],
+    "phones": [
+      "707-799-7338"
+    ],
+    "street": "11853 Loisdale Way",
+    "city": "Rancho Cordova",
+    "state": "CA",
+    "zip": "95742",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Michael & Suzanne",
+    "last_name": "Seaman",
+    "display_name": "Michael & Suzanne Seaman",
+    "emails": [],
+    "phones": [
+      "916-483-8985"
+    ],
+    "street": "2837 Merrywood Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Michelle & Fred",
+    "last_name": "Blackwell",
+    "display_name": "Michelle & Fred Blackwell",
+    "emails": [
+      "myride4u2@aol.com"
+    ],
+    "phones": [
+      "916-410-0956"
+    ],
+    "street": "6601 Golden Rain Ct",
+    "city": "Citrus Heights",
+    "state": "CA",
+    "zip": "95610",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Mickey & Bill",
+    "last_name": "Dunphy",
+    "display_name": "Mickey & Bill Dunphy",
+    "emails": [],
+    "phones": [],
+    "street": "3001 Crest Haven Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Mike & Jackie",
+    "last_name": "Marcos",
+    "display_name": "Mike & Jackie Marcos",
+    "emails": [
+      "valerosac5601@gmail.com"
+    ],
+    "phones": [
+      "562-230-8667"
+    ],
+    "street": "1597 Derrylin Dr",
+    "city": "Roseville",
+    "state": "CA",
+    "zip": "95747",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Mike & Kelly",
+    "last_name": "Alexieff",
+    "display_name": "Mike & Kelly Alexieff",
+    "emails": [
+      "malexieff@yahoo.com"
+    ],
+    "phones": [
+      "510-593-7537"
+    ],
+    "street": "4864 Tusk Way",
+    "city": "Elk Grove",
+    "state": "CA",
+    "zip": "95757",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Mike Barkman & Sophea",
+    "last_name": "Chiv",
+    "display_name": "Mike Barkman & Sophea Chiv",
+    "emails": [],
+    "phones": [
+      "916-661-2365"
+    ],
+    "street": "2132 Madera Rd",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Mike",
+    "last_name": "Holbrook",
+    "display_name": "Mike Holbrook",
+    "emails": [],
+    "phones": [
+      "916-482-9990"
+    ],
+    "street": "2344 Santa Anita Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Mike",
+    "last_name": "Lynn",
+    "display_name": "Mike Lynn",
+    "emails": [
+      "lynnmichael12061@gmail.com"
+    ],
+    "phones": [
+      "916-997-7388"
+    ],
+    "street": "475 Bayfield Ct",
+    "city": "Lincoln",
+    "state": "CA",
+    "zip": "95648",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Mike",
+    "last_name": "Marcos",
+    "display_name": "Mike Marcos",
+    "emails": [],
+    "phones": [],
+    "street": "1597 Derrylin Dr",
+    "city": "Roseville",
+    "state": "CA",
+    "zip": "95747",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Nancy & Mark",
+    "last_name": "Nicholas",
+    "display_name": "Nancy & Mark Nicholas",
+    "emails": [
+      "aubrie0911@hotmail.com"
+    ],
+    "phones": [
+      "916-847-8665"
+    ],
+    "street": "2121 Ivanhoe Dr",
+    "city": "Placerville",
+    "state": "CA",
+    "zip": "95667",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Nick & Becca",
+    "last_name": "Hithe",
+    "display_name": "Nick & Becca Hithe",
+    "emails": [
+      "nhithe@gmail.com"
+    ],
+    "phones": [
+      "916-801-7432",
+      "530-748-6833"
+    ],
+    "street": "5040 Loch Leven Dr Pollock Pines",
+    "city": null,
+    "state": "CA",
+    "zip": "95727",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Nick & Vicki",
+    "last_name": "Noard",
+    "display_name": "Nick & Vicki Noard",
+    "emails": [
+      "vnoard82@gmail.com",
+      "nknoard@gmail.com"
+    ],
+    "phones": [
+      "916-542-5681",
+      "510-386-3843"
+    ],
+    "street": "3712 Huff Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Nicki",
+    "last_name": "Alexander",
+    "display_name": "Nicki Alexander",
+    "emails": [
+      "nicki.renee87@yahoo.com"
+    ],
+    "phones": [],
+    "street": "5480 Clayton Dr Unit 1",
+    "city": "Loomis",
+    "state": "CA",
+    "zip": null,
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Nickie",
+    "last_name": "Christensten-Swonger",
+    "display_name": "Nickie Christensten-Swonger",
+    "emails": [],
+    "phones": [
+      "916-842-4389"
+    ],
+    "street": "3900 Hillcrest ln.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Nicole & Elvy",
+    "last_name": "Harris",
+    "display_name": "Nicole & Elvy Harris",
+    "emails": [
+      "nicolerubio88@gmail.com",
+      "elvyharris@gmail.com"
+    ],
+    "phones": [
+      "916-806-9396"
+    ],
+    "street": "3211 Country Club Blvd Stockton",
+    "city": null,
+    "state": "CA",
+    "zip": "95204",
+    "role": "both",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Nikki",
+    "last_name": "Starks",
+    "display_name": "Nikki Starks",
+    "emails": [
+      "okhelice@hotmail.com"
+    ],
+    "phones": [
+      "707-291-3776"
+    ],
+    "street": "2204 Lloyd Ln",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Noelia",
+    "last_name": "Hernandez",
+    "display_name": "Noelia Hernandez",
+    "emails": [],
+    "phones": [
+      "916-296-7264"
+    ],
+    "street": "2675 Danube Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Nola & Brian",
+    "last_name": "Mcaleb",
+    "display_name": "Nola & Brian Mcaleb",
+    "emails": [],
+    "phones": [
+      "916-743-9792"
+    ],
+    "street": "826 56th St",
+    "city": null,
+    "state": "CA",
+    "zip": null,
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Oscar Avelar & Alejandra",
+    "last_name": "Espino",
+    "display_name": "Oscar Avelar & Alejandra Espino",
+    "emails": [],
+    "phones": [],
+    "street": "4013Galbrath Dr",
+    "city": "North Highlands",
+    "state": "CA",
+    "zip": "95660",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Pam & Ron",
+    "last_name": "Cooper",
+    "display_name": "Pam & Ron Cooper",
+    "emails": [
+      "pamcooperhome@sbcglobal.net"
+    ],
+    "phones": [
+      "510-552-5950"
+    ],
+    "street": "2204 Madera rd.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Patrick Knapp & Tom",
+    "last_name": "Dear",
+    "display_name": "Patrick Knapp & Tom Dear",
+    "emails": [],
+    "phones": [],
+    "street": "2004 Waterford Rd Saramento",
+    "city": null,
+    "state": "CA",
+    "zip": "95815",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Paul",
+    "last_name": "Gilligham",
+    "display_name": "Paul Gilligham",
+    "emails": [
+      "pgilling@surewest.net"
+    ],
+    "phones": [
+      "916-997-4870"
+    ],
+    "street": "915 44th St",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95819",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Paulette",
+    "last_name": "Walton",
+    "display_name": "Paulette Walton",
+    "emails": [
+      "pleegrand50@yahoo.com"
+    ],
+    "phones": [],
+    "street": "6458 Santa Catarina Way",
+    "city": "Citrus Heights",
+    "state": "CA",
+    "zip": "95610",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Phil & Callie",
+    "last_name": "Johnson",
+    "display_name": "Phil & Callie Johnson",
+    "emails": [],
+    "phones": [
+      "530-558-5058"
+    ],
+    "street": "2815 Countryside Dr",
+    "city": "Placerville",
+    "state": "CA",
+    "zip": "95667",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Polly",
+    "last_name": "Cornwall",
+    "display_name": "Polly Cornwall",
+    "emails": [],
+    "phones": [
+      "916-607-0844"
+    ],
+    "street": "2710 Wright st.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Richard & Paula",
+    "last_name": "Clayton",
+    "display_name": "Richard & Paula Clayton",
+    "emails": [],
+    "phones": [],
+    "street": "1940 Beale Cir",
+    "city": "Lincoln",
+    "state": "CA",
+    "zip": "95648",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Richard Barner & Shannon",
+    "last_name": "Johnson",
+    "display_name": "Richard Barner & Shannon Johnson",
+    "emails": [
+      "barnerr@surewest.net",
+      "shannonjwalker@yahoo.com"
+    ],
+    "phones": [
+      "916-247-9251",
+      "916-524-4119"
+    ],
+    "street": "2505 N View Ln",
+    "city": "Placerville",
+    "state": "CA",
+    "zip": "95667",
+    "role": "both",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Rick",
+    "last_name": "Haeling",
+    "display_name": "Rick Haeling",
+    "emails": [
+      "rhaeling@aol.com"
+    ],
+    "phones": [
+      "916-956-5656"
+    ],
+    "street": "3114 Judah St",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95815",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Robin & Jason",
+    "last_name": "Fender",
+    "display_name": "Robin & Jason Fender",
+    "emails": [],
+    "phones": [
+      "916-475-7488"
+    ],
+    "street": "2541 Verna Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Roxanne",
+    "last_name": "Santistevan",
+    "display_name": "Roxanne Santistevan",
+    "emails": [],
+    "phones": [],
+    "street": "3180 Country Club Stockton",
+    "city": null,
+    "state": "CA",
+    "zip": "95204",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Sabrina",
+    "last_name": "Schmidt",
+    "display_name": "Sabrina Schmidt",
+    "emails": [],
+    "phones": [
+      "916-534-3740"
+    ],
+    "street": "2369 Santa Anita Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Sandy & Samantha",
+    "last_name": "Keller",
+    "display_name": "Sandy & Samantha Keller",
+    "emails": [],
+    "phones": [
+      "916-624-5453"
+    ],
+    "street": "4905 Whitney Blvd",
+    "city": "Rocklin",
+    "state": "CA",
+    "zip": "95677",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Sarah & Scott",
+    "last_name": "Birch",
+    "display_name": "Sarah & Scott Birch",
+    "emails": [
+      "sarbirch@gmail.com"
+    ],
+    "phones": [
+      "858-204-7781"
+    ],
+    "street": "1310 Gannon Dr",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Sarah & Shane",
+    "last_name": "Boyd",
+    "display_name": "Sarah & Shane Boyd",
+    "emails": [
+      "sboyd@faithlegacychurch.com"
+    ],
+    "phones": [],
+    "street": "3636 Chadsworth wy.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Shelby",
+    "last_name": "Crocker",
+    "display_name": "Shelby Crocker",
+    "emails": [
+      "shelbers76@gmail.com"
+    ],
+    "phones": [
+      "916-459-8910"
+    ],
+    "street": "4021 McClain wy. #7",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Steve & Kathy",
+    "last_name": "Clement",
+    "display_name": "Steve & Kathy Clement",
+    "emails": [
+      "skmaterials1@gmail.com",
+      "klclement@gmail.com"
+    ],
+    "phones": [
+      "801-368-3844",
+      "801-682-3849",
+      "801-682-6939"
+    ],
+    "street": "1455 N 400 E",
+    "city": "Mapleton",
+    "state": "UT",
+    "zip": "84664",
+    "role": "seller",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Steve",
+    "last_name": "Acton",
+    "display_name": "Steve Acton",
+    "emails": [
+      "sacton44@yahoo.com"
+    ],
+    "phones": [],
+    "street": "1845 Graeagle Ln",
+    "city": "Lincoln",
+    "state": "CA",
+    "zip": "95648",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Susan & Allen",
+    "last_name": "Chancey",
+    "display_name": "Susan & Allen Chancey",
+    "emails": [
+      "novasuez@yahoo.com"
+    ],
+    "phones": [
+      "916-838-7787"
+    ],
+    "street": "2680 Danube dr.",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Tamara & Josh",
+    "last_name": "Haynes",
+    "display_name": "Tamara & Josh Haynes",
+    "emails": [],
+    "phones": [
+      "916-837-5382"
+    ],
+    "street": "6708 Ridgeway Dr Pollock Pines",
+    "city": null,
+    "state": "CA",
+    "zip": "95726",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Tamera",
+    "last_name": "Keller",
+    "display_name": "Tamera Keller",
+    "emails": [
+      "itlk2aa@gmail.com"
+    ],
+    "phones": [
+      "916-247-1597"
+    ],
+    "street": "3606 Ardmore Rd",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95821",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Tenille & Edward",
+    "last_name": "Stewart",
+    "display_name": "Tenille & Edward Stewart",
+    "emails": [],
+    "phones": [],
+    "street": "2630 La France Dr",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Teresa",
+    "last_name": "Wilson",
+    "display_name": "Teresa Wilson",
+    "emails": [],
+    "phones": [],
+    "street": "4708 Hazelwood Ave",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Terri",
+    "last_name": "Notz",
+    "display_name": "Terri Notz",
+    "emails": [
+      "tnotz@comcast.net"
+    ],
+    "phones": [
+      "916-716-3938"
+    ],
+    "street": "5420 El Camino Ave #116",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Theresa",
+    "last_name": "Martin",
+    "display_name": "Theresa Martin",
+    "emails": [
+      "treeza63@gmail.com"
+    ],
+    "phones": [
+      "916-878-8870"
+    ],
+    "street": "1026 Olson Ln Apt 624",
+    "city": "El Dorado Hills",
+    "state": "CA",
+    "zip": "95762",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Theresa",
+    "last_name": "Wilson",
+    "display_name": "Theresa Wilson",
+    "emails": [
+      "teresa.wilson821@gmail.com"
+    ],
+    "phones": [
+      "916-410-5500"
+    ],
+    "street": "4708 Hazlewood Way",
+    "city": "Carmichael",
+    "state": "CA",
+    "zip": "95608",
+    "role": "seller",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Tim & Mitzi",
+    "last_name": "Collins",
+    "display_name": "Tim & Mitzi Collins",
+    "emails": [
+      "mitzismk@yahoo.com",
+      "timmer122603@yahoo.com"
+    ],
+    "phones": [
+      "916-677- 9532",
+      "916-541-5418"
+    ],
+    "street": "540 E 10th st.",
+    "city": "Lincoln",
+    "state": "CA",
+    "zip": "95648",
+    "role": "both",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Tom & Maria",
+    "last_name": "Pratt",
+    "display_name": "Tom & Maria Pratt",
+    "emails": [
+      "ptom30@yahoo.com"
+    ],
+    "phones": [
+      "916-812-5465"
+    ],
+    "street": "3236 Portsmouth Dr",
+    "city": "Rancho Cordova",
+    "state": "CA",
+    "zip": "95670",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Tom",
+    "last_name": "Pratt",
+    "display_name": "Tom Pratt",
+    "emails": [],
+    "phones": [],
+    "street": "3103 Patriot lane #62",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95827",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Tracy & James",
+    "last_name": "Batty",
+    "display_name": "Tracy & James Batty",
+    "emails": [],
+    "phones": [],
+    "street": "9037 Cherry Ave",
+    "city": "Orangevale",
+    "state": "CA",
+    "zip": "95662",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Trudy",
+    "last_name": "Gragham",
+    "display_name": "Trudy Gragham",
+    "emails": [
+      "tgcaligirl75@comcast.net"
+    ],
+    "phones": [
+      "916-612-0256"
+    ],
+    "street": "2332 Barcelona Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Trudy",
+    "last_name": "Graham",
+    "display_name": "Trudy Graham",
+    "emails": [
+      "tgcaligirl75@comcast.net"
+    ],
+    "phones": [
+      "916-612-0256"
+    ],
+    "street": "2332 Barcelona Way",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Valentine & Alan",
+    "last_name": "Taylor",
+    "display_name": "Valentine & Alan Taylor",
+    "emails": [
+      "tayloralan66@gmail.com"
+    ],
+    "phones": [
+      "916-436-6053"
+    ],
+    "street": "3833 Highway 16 Rumsey",
+    "city": null,
+    "state": "CA",
+    "zip": "95679",
+    "role": "buyer",
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Wally",
+    "last_name": "George",
+    "display_name": "Wally George",
+    "emails": [],
+    "phones": [],
+    "street": "2233 Woodside",
+    "city": "Sacramento",
+    "state": "CA",
+    "zip": "95825",
+    "role": null,
+    "source": "Sheet import"
+  },
+  {
+    "first_name": "Walter and Sunny",
+    "last_name": "Passmore",
+    "display_name": "Walter and Sunny Passmore",
+    "emails": [],
+    "phones": [],
+    "street": "5160 String Canyon Somerset",
+    "city": null,
+    "state": "CA",
+    "zip": "95684",
+    "role": null,
+    "source": "Sheet import"
+  }
+]
