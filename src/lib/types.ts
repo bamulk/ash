@@ -85,6 +85,27 @@ export type Reminder = {
   created_at: string;
 };
 
+export type Comparable = {
+  id?: string;
+  formattedAddress?: string;
+  addressLine1?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  price?: number;
+  bedrooms?: number;
+  bathrooms?: number;
+  squareFootage?: number;
+  lotSize?: number;
+  yearBuilt?: number;
+  removedDate?: string;
+  daysOld?: number;
+  daysOnMarket?: number;
+  distance?: number;
+  correlation?: number;
+  propertyType?: string;
+};
+
 export type HomeValuation = {
   id: string;
   contact_id: string;
@@ -93,6 +114,7 @@ export type HomeValuation = {
   range_low: number | null;
   range_high: number | null;
   source: string;
+  raw: { comparables?: Comparable[] } | null;
   queried_at: string;
   queried_by: string | null;
 };

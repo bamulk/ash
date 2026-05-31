@@ -203,6 +203,51 @@ export default async function ContactDetailPage({
                 </div>
               </details>
             )}
+            {latestVal.raw?.comparables && latestVal.raw.comparables.length > 0 && (
+              <details className="text-xs text-slate-600 dark:text-slate-300 pt-1">
+                <summary className="cursor-pointer font-medium">
+                  Comparable sales ({latestVal.raw.comparables.length})
+                </summary>
+                <div className="mt-2 divide-y divide-slate-100 dark:divide-slate-800">
+                  {latestVal.raw.comparables.map((cp, i) => (
+                    <div key={cp.id || i} className="py-2 flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <div className="text-slate-900 dark:text-slate-100 truncate">
+                          {cp.formattedAddress || cp.addressLine1 || "—"}
+                        </div>
+                        <div className="text-slate-500 dark:text-slate-400 mt-0.5">
+                          {[
+                            cp.bedrooms != null ? `${cp.bedrooms} bd` : null,
+                            cp.bathrooms != null ? `${cp.bathrooms} ba` : null,
+                            cp.squareFootage != null ? `${cp.squareFootage.toLocaleString()} sqft` : null,
+                            cp.yearBuilt != null ? `built ${cp.yearBuilt}` : null,
+                          ]
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </div>
+                        <div className="text-slate-500 dark:text-slate-400">
+                          {[
+                            cp.distance != null ? `${cp.distance.toFixed(2)} mi` : null,
+                            cp.daysOld != null ? `sold ${cp.daysOld}d ago` : null,
+                            cp.correlation != null ? `${Math.round(cp.correlation * 100)}% match` : null,
+                          ]
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </div>
+                      </div>
+                      <div className="text-right whitespace-nowrap">
+                        <div className="font-semibold text-slate-900 dark:text-slate-100">
+                          {formatCurrency(cp.price)}
+                        </div>
+                        {cp.removedDate && (
+                          <div className="text-slate-400">{formatDate(cp.removedDate)}</div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            )}
           </div>
         ) : (
           rentcastOn && (
