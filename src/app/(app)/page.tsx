@@ -1,11 +1,42 @@
 import Link from "next/link";
-import { Users, DollarSign, Bell, Cake, Home as HomeIcon, ArrowRight } from "lucide-react";
+import { Users, DollarSign, Bell, Cake, Home as HomeIcon, ArrowRight, TrendingDown, TrendingUp, Percent } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Card, Badge, LinkButton } from "@/components/ui";
 import { formatCurrency, formatDate, todayISO } from "@/lib/format";
 import type { Contact, Transaction, Reminder } from "@/lib/types";
+import { getPmmsRates } from "@/lib/freddie-pmms";
 
 export const dynamic = "force-dynamic";
+
+function RateBlock({
+  label,
+  curr,
+  prev,
+}: {
+  label: string;
+  curr: { rate: number } | null;
+  prev: { rate: number } | null;
+}) {
+  const delta = curr && prev ? curr.rate - prev.rate : null;
+  return (
+    <div>
+      <div className="text-xs text-slate-500 dark:text-slate-400">{label}</div>
+      <div className="text-xl font-semibold mt-0.5 flex items-baseline gap-2">
+        {curr ? `${curr.rate.toFixed(2)}%` : "—"}
+        {delta != null && Math.abs(delta) > 0.0001 && (
+          <span
+            className={`inline-flex items-center text-xs font-medium ${
+              delta > 0 ? "text-rose-600 dark:text-rose-400" : "text-emerald-600 dark:text-emerald-400"
+            }`}
+          >
+            {delta > 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+            {Math.abs(delta).toFixed(2)}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
 
 function StatCard({
   href,
@@ -49,7 +80,7 @@ export default async function Dashboard() {
     : { data: null };
   const firstName = (profile?.full_name || "there").split(" ")[0];
 
-  const [{ data: contacts }, { data: txns }, { data: reminders }] = await Promise.all([
+  const [{ data: contacts }, { data: txns }, { data: reminders }, rates] = await Promise.all([
     supabase.from("contacts").select("id, display_name, role, birthday"),
     supabase.from("transactions").select("*"),
     supabase
@@ -57,6 +88,7 @@ export default async function Dashboard() {
       .select("*, contacts(display_name)")
       .eq("is_done", false)
       .order("due_date"),
+    getPmmsRates(),
   ]);
 
   const allContacts = (contacts ?? []) as Pick<Contact, "id" | "display_name" | "role" | "birthday">[];
@@ -106,6 +138,26 @@ export default async function Dashboard() {
         <StatCard href="/transactions" label={`${year} GCI`} value={formatCurrency(ytdGci)} icon={HomeIcon} />
         <StatCard href="/reminders" label="Open reminders" value={String(openRems.length)} sub={`${overdue.length} overdue`} icon={Bell} />
       </div>
+
+      {(rates.thirty || rates.fifteen) && (
+        <Card className="p-4">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <h2 className="text-sm font-medium flex items-center gap-2">
+                <Percent size={14} className="text-brand" /> Mortgage rates this week
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                Freddie Mac PMMS via FRED
+                {rates.thirty?.date ? ` · week of ${formatDate(rates.thirty.date)}` : ""}
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-6">
+              <RateBlock label="30-yr fixed" curr={rates.thirty} prev={rates.thirtyPrev} />
+              <RateBlock label="15-yr fixed" curr={rates.fifteen} prev={rates.fifteenPrev} />
+            </div>
+          </div>
+        </Card>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Reminders */}
