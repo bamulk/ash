@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { fetchAvm, contactAddress, isRentCastConfigured } from "@/lib/rentcast";
 
 function list(v: FormDataEntryValue | null): string[] {
   return String(v || "")
@@ -103,5 +104,48 @@ export async function removeTagAction(contactId: string, tagId: string) {
     .delete()
     .eq("contact_id", contactId)
     .eq("tag_id", tagId);
+  revalidatePath(`/contacts/${contactId}`);
+}
+
+/**
+ * Fetch a fresh AVM estimate for a contact's home and store it as a
+ * snapshot so we can show value-over-time. No-op (with a clear error) if
+ * RENTCAST_API_KEY isn't configured or the contact has no address.
+ */
+export async function checkContactValueAction(contactId: string) {
+  if (!isRentCastConfigured()) {
+    throw new Error(
+      "Set RENTCAST_API_KEY in .env.local (and Vercel) to enable home valuations."
+    );
+  }
+  const supabase = await createClient();
+  const { data: contact } = await supabase
+    .from("contacts")
+    .select("street, city, state, zip")
+    .eq("id", contactId)
+    .single();
+  if (!contact) throw new Error("Contact not found");
+  const address = contactAddress(contact);
+  if (!address || !contact.street) {
+    throw new Error("Add a street address to the contact first.");
+  }
+
+  const avm = await fetchAvm(address);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { error } = await supabase.from("home_valuations").insert({
+    contact_id: contactId,
+    address,
+    estimate: avm.estimate,
+    range_low: avm.rangeLow,
+    range_high: avm.rangeHigh,
+    source: "rentcast",
+    raw: avm.raw,
+    queried_by: user?.id ?? null,
+  });
+  if (error) throw new Error(error.message);
   revalidatePath(`/contacts/${contactId}`);
 }

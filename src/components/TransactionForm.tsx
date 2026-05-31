@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Card, Field, Input, Select, Textarea } from "@/components/ui";
 import SubmitButton from "@/components/SubmitButton";
+import AddressLineInput from "@/components/AddressLineInput";
 import type { Transaction } from "@/lib/types";
 
 export default function TransactionForm({
@@ -48,7 +49,7 @@ export default function TransactionForm({
         </Field>
         <div className="sm:col-span-2">
           <Field label="Property address">
-            <Input name="address" defaultValue={d.address ?? ""} />
+            <AddressLineInput name="address" defaultValue={d.address ?? ""} />
           </Field>
         </div>
         <Field label="Date closed">

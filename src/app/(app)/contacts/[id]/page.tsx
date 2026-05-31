@@ -1,18 +1,20 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Mail, Phone, MapPin, Plus, X } from "lucide-react";
+import { Mail, Phone, MapPin, Plus, X, Home, AlertTriangle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Card, PageHeader, Badge, Input, Button } from "@/components/ui";
 import SubmitButton from "@/components/SubmitButton";
 import DeleteButton from "@/components/DeleteButton";
 import ContactForm from "@/components/ContactForm";
 import { formatRole, formatCurrency, formatDate, todayISO } from "@/lib/format";
-import type { Contact, Tag, Transaction, Reminder } from "@/lib/types";
+import type { Contact, Tag, Transaction, Reminder, HomeValuation } from "@/lib/types";
+import { isRentCastConfigured } from "@/lib/rentcast";
 import {
   updateContactAction,
   deleteContactAction,
   addTagAction,
   removeTagAction,
+  checkContactValueAction,
 } from "../actions";
 import { createReminderAction, toggleReminderAction } from "../../reminders/actions";
 
@@ -33,7 +35,7 @@ export default async function ContactDetailPage({
   if (!contact) notFound();
   const c = contact as Contact;
 
-  const [{ data: linkRows }, { data: txns }, { data: reminders }, { data: campRows }] =
+  const [{ data: linkRows }, { data: txns }, { data: reminders }, { data: campRows }, { data: valRows }] =
     await Promise.all([
       supabase.from("contact_tags").select("tag_id, tags(id, name, color)").eq("contact_id", id),
       supabase.from("transactions").select("*").eq("contact_id", id).order("closed_date", { ascending: false }),
@@ -42,6 +44,11 @@ export default async function ContactDetailPage({
         .from("campaign_contacts")
         .select("touched_at, status, campaigns(id, name, scheduled_date, kind)")
         .eq("contact_id", id),
+      supabase
+        .from("home_valuations")
+        .select("*")
+        .eq("contact_id", id)
+        .order("queried_at", { ascending: false }),
     ]);
 
   const tags = (linkRows ?? [])
@@ -49,6 +56,9 @@ export default async function ContactDetailPage({
     .filter(Boolean) as Tag[];
   const transactions = (txns ?? []) as Transaction[];
   const rems = (reminders ?? []) as Reminder[];
+  const valuations = (valRows ?? []) as HomeValuation[];
+  const latestVal = valuations[0];
+  const rentcastOn = isRentCastConfigured();
   const campaigns = (campRows ?? []) as unknown as {
     touched_at: string | null;
     status: string;
@@ -140,6 +150,66 @@ export default async function ContactDetailPage({
               </Link>
             ))}
           </div>
+        )}
+      </Card>
+
+      {/* Home value (RentCast AVM) */}
+      <Card className="p-4">
+        <div className="flex items-center justify-between mb-3 gap-3 flex-wrap">
+          <h2 className="text-sm font-medium flex items-center gap-2">
+            <Home size={14} className="text-brand" /> Home value
+          </h2>
+          {c.street ? (
+            <form action={checkContactValueAction.bind(null, id)}>
+              <SubmitButton variant="secondary" size="sm" disabled={!rentcastOn}>
+                {latestVal ? "Refresh value" : "Check value"}
+              </SubmitButton>
+            </form>
+          ) : (
+            <span className="text-xs text-slate-400">Add a street address to check value</span>
+          )}
+        </div>
+
+        {!rentcastOn && (
+          <div className="flex items-start gap-2 text-xs text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-lg p-3 mb-3">
+            <AlertTriangle size={13} className="mt-0.5 shrink-0" />
+            <span>
+              Set <code className="font-mono">RENTCAST_API_KEY</code> in <code className="font-mono">.env.local</code> (and Vercel) to enable RentCast valuations. Free tier covers 50 checks/mo.
+            </span>
+          </div>
+        )}
+
+        {latestVal ? (
+          <div className="space-y-2">
+            <div className="flex items-baseline gap-3 flex-wrap">
+              <span className="text-2xl font-semibold">{formatCurrency(latestVal.estimate)}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">
+                {latestVal.range_low != null && latestVal.range_high != null
+                  ? `range ${formatCurrency(latestVal.range_low)} – ${formatCurrency(latestVal.range_high)}`
+                  : ""}{" "}
+                · as of {formatDate(latestVal.queried_at)}
+              </span>
+            </div>
+            {valuations.length > 1 && (
+              <details className="text-xs text-slate-500 dark:text-slate-400">
+                <summary className="cursor-pointer">History ({valuations.length - 1} earlier)</summary>
+                <div className="mt-2 space-y-1">
+                  {valuations.slice(1).map((v) => (
+                    <div key={v.id} className="flex justify-between">
+                      <span>{formatDate(v.queried_at)}</span>
+                      <span>{formatCurrency(v.estimate)}</span>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            )}
+          </div>
+        ) : (
+          rentcastOn && (
+            <p className="text-sm text-slate-400">
+              No value snapshot yet. Click {c.street ? "“Check value”" : "Check value"} to fetch an estimate from RentCast.
+            </p>
+          )
         )}
       </Card>
 

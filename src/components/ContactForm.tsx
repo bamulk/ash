@@ -1,5 +1,6 @@
 import { Card, Field, Input, Select, Textarea } from "@/components/ui";
 import SubmitButton from "@/components/SubmitButton";
+import AddressAutocomplete from "@/components/AddressAutocomplete";
 import type { Contact } from "@/lib/types";
 
 export default function ContactForm({
@@ -38,18 +39,12 @@ export default function ContactForm({
         <Field label="Phones" hint="Comma-separated for multiple.">
           <Input name="phones" defaultValue={(c.phones ?? []).join(", ")} />
         </Field>
-        <Field label="Street">
-          <Input name="street" defaultValue={c.street ?? ""} />
-        </Field>
-        <Field label="City">
-          <Input name="city" defaultValue={c.city ?? ""} />
-        </Field>
-        <Field label="State">
-          <Input name="state" defaultValue={c.state ?? ""} />
-        </Field>
-        <Field label="ZIP">
-          <Input name="zip" defaultValue={c.zip ?? ""} />
-        </Field>
+        <AddressAutocomplete
+          defaultStreet={c.street ?? ""}
+          defaultCity={c.city ?? ""}
+          defaultState={c.state ?? ""}
+          defaultZip={c.zip ?? ""}
+        />
         <Field label="Birthday">
           <Input type="date" name="birthday" defaultValue={c.birthday ?? ""} />
         </Field>

@@ -142,6 +142,23 @@ create table if not exists public.reminders (
 create index if not exists reminders_due_idx on public.reminders (due_date) where is_done = false;
 create index if not exists reminders_contact_idx on public.reminders (contact_id);
 
+-- ============ home_valuations (RentCast AVM snapshots) ============
+create table if not exists public.home_valuations (
+  id uuid primary key default gen_random_uuid(),
+  contact_id uuid not null references public.contacts(id) on delete cascade,
+  address text not null,
+  estimate numeric(14,2),
+  range_low numeric(14,2),
+  range_high numeric(14,2),
+  source text not null default 'rentcast',
+  raw jsonb,
+  queried_at timestamptz not null default now(),
+  queried_by uuid references public.profiles(id) on delete set null
+);
+
+create index if not exists home_valuations_contact_idx
+  on public.home_valuations (contact_id, queried_at desc);
+
 -- ============ updated_at trigger for contacts ============
 create or replace function public.touch_updated_at()
 returns trigger language plpgsql as $$
@@ -165,6 +182,7 @@ alter table public.segments enable row level security;
 alter table public.campaigns enable row level security;
 alter table public.campaign_contacts enable row level security;
 alter table public.reminders enable row level security;
+alter table public.home_valuations enable row level security;
 
 create or replace function public.is_admin() returns boolean
 language sql stable security definer as $$
@@ -191,7 +209,7 @@ declare t text;
 begin
   foreach t in array array[
     'contacts','tags','contact_tags','transactions',
-    'segments','campaigns','campaign_contacts','reminders'
+    'segments','campaigns','campaign_contacts','reminders','home_valuations'
   ] loop
     execute format('drop policy if exists %I on public.%I', t || '_authed_all', t);
     execute format(

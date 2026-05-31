@@ -85,6 +85,18 @@ export type Reminder = {
   created_at: string;
 };
 
+export type HomeValuation = {
+  id: string;
+  contact_id: string;
+  address: string;
+  estimate: number | null;
+  range_low: number | null;
+  range_high: number | null;
+  source: string;
+  queried_at: string;
+  queried_by: string | null;
+};
+
 export type Profile = {
   id: string;
   full_name: string;

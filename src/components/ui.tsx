@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import type { ComponentProps, ComponentPropsWithoutRef, ReactNode } from "react";
 
 type Variant = "primary" | "secondary" | "ghost" | "danger";
 type Size = "sm" | "md";
@@ -107,17 +107,17 @@ export function PageHeader({
 const inputClass =
   "w-full border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-slate-100";
 
-export function Input(props: ComponentPropsWithoutRef<"input">) {
+export function Input(props: ComponentProps<"input">) {
   return <input {...props} className={`${inputClass} ${props.className ?? ""}`} />;
 }
 
-export function Textarea(props: ComponentPropsWithoutRef<"textarea">) {
+export function Textarea(props: ComponentProps<"textarea">) {
   return (
     <textarea {...props} className={`${inputClass} ${props.className ?? ""}`} />
   );
 }
 
-export function Select(props: ComponentPropsWithoutRef<"select">) {
+export function Select(props: ComponentProps<"select">) {
   return <select {...props} className={`${inputClass} ${props.className ?? ""}`} />;
 }
 
