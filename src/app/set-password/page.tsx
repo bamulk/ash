@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -10,11 +10,21 @@ import { Button } from "@/components/ui";
 export default function SetPasswordPage() {
   const router = useRouter();
   const supabase = createClient();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Tell Apple/Chrome/etc. which account the new password belongs to so
+  // the password manager updates the right saved credential instead of
+  // creating a duplicate.
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user?.email) setEmail(data.user.email);
+    });
+  }, [supabase]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -57,19 +67,41 @@ export default function SetPasswordPage() {
           </div>
         ) : (
           <>
+            {/* Hidden, prefilled, read-only "username" field so password
+                managers (Apple Passwords, 1Password, iCloud Keychain,
+                Chrome) attach the new password to the right account. */}
             <input
+              type="email"
+              name="username"
+              autoComplete="username"
+              value={email}
+              readOnly
+              hidden
+              tabIndex={-1}
+            />
+            <input
+              id="new-password"
+              name="new-password"
               type="password"
               autoComplete="new-password"
               required
+              minLength={8}
+              // Apple-specific hint for iCloud Keychain's strong-password
+              // generator. Lowercase via spread so TypeScript doesn't
+              // complain about the non-standard attribute.
+              {...{ passwordrules: "minlength: 8; allowed: ascii;" }}
               placeholder="New password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full border border-slate-300 dark:border-slate-600 rounded-lg px-3.5 py-3 text-base"
             />
             <input
+              id="confirm-password"
+              name="confirm-password"
               type="password"
               autoComplete="new-password"
               required
+              minLength={8}
               placeholder="Confirm password"
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}

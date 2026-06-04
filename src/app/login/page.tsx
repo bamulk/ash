@@ -59,9 +59,11 @@ export default function LoginPage() {
 
         <div className="space-y-3">
           <input
+            id="login-email"
+            name="email"
             type="email"
             inputMode="email"
-            autoComplete="email"
+            autoComplete="username webauthn"
             required
             placeholder="you@email.com"
             value={email}
@@ -69,8 +71,10 @@ export default function LoginPage() {
             className="w-full border border-slate-300 dark:border-slate-600 rounded-lg px-3.5 py-3 text-base text-slate-900 dark:text-slate-100"
           />
           <input
+            id="login-password"
+            name="password"
             type="password"
-            autoComplete="current-password"
+            autoComplete="current-password webauthn"
             required
             placeholder="Password"
             value={password}
