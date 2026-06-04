@@ -9,6 +9,13 @@ export const metadata: Metadata = {
   title: "Ashley Stone Homes",
   description: "Ashley Stone Homes — client, transaction & marketing management",
   applicationName: "Ashley Stone Homes",
+  appleWebApp: {
+    capable: true,
+    title: "Ashley Stone",
+    // black-translucent lets the iOS status bar adapt to whatever the
+    // page paints underneath — matches the rest of our dark/light theme.
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export const viewport = {
