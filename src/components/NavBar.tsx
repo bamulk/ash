@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -9,7 +10,6 @@ import {
   Megaphone,
   Bell,
   UserCog,
-  Home,
 } from "lucide-react";
 import SignOutButton from "./SignOutButton";
 
@@ -52,9 +52,14 @@ export default function NavBar({
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2 font-semibold">
-            <span className="w-8 h-8 rounded-lg bg-brand text-white inline-flex items-center justify-center">
-              <Home size={18} />
-            </span>
+            <Image
+              src="/logo.png"
+              alt="Ashley Stone Homes"
+              width={32}
+              height={32}
+              priority
+              className="w-8 h-8 object-contain"
+            />
             <span className="tracking-tight hidden md:inline">
               Ashley Stone Homes
             </span>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Home } from "lucide-react";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui";
 
@@ -44,9 +44,14 @@ export default function LoginPage() {
         className="w-full max-w-sm bg-white dark:bg-slate-900/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl shadow-slate-900/5 border border-slate-200 dark:border-slate-700/70 space-y-5"
       >
         <div className="flex items-center gap-3">
-          <span className="w-11 h-11 rounded-xl bg-brand text-white inline-flex items-center justify-center">
-            <Home size={22} />
-          </span>
+          <Image
+            src="/logo.png"
+            alt="Ashley Stone Homes"
+            width={48}
+            height={48}
+            priority
+            className="w-12 h-12 object-contain"
+          />
           <div>
             <h1 className="text-xl font-semibold tracking-tight">
               Ashley Stone Homes
