@@ -125,11 +125,21 @@ export default async function Dashboard() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Welcome back, {firstName}</h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-          Here&apos;s what&apos;s happening at Ashley Stone Homes.
-        </p>
+      <div className="flex items-start sm:items-center justify-between gap-4 flex-col sm:flex-row">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Welcome back, {firstName}</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+            Here&apos;s what&apos;s happening at Ashley Stone Homes.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 sm:flex sm:flex-row gap-2 w-full sm:w-auto">
+          <LinkButton href="/contacts/new" variant="secondary">
+            <Users size={14} /> Add contact
+          </LinkButton>
+          <LinkButton href="/transactions/new" variant="secondary">
+            <DollarSign size={14} /> Add deal
+          </LinkButton>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -236,11 +246,6 @@ export default async function Dashboard() {
         </Card>
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        <LinkButton href="/contacts/new" variant="secondary"><Users size={14} /> Add contact</LinkButton>
-        <LinkButton href="/transactions/new" variant="secondary"><DollarSign size={14} /> Add deal</LinkButton>
-        <LinkButton href="/marketing" variant="secondary"><HomeIcon size={14} /> Marketing</LinkButton>
-      </div>
     </div>
   );
 }
