@@ -90,41 +90,54 @@ export default function NavBar({
         </div>
       </header>
 
-      {/* Mobile bottom tab bar */}
+      {/* Mobile floating liquid-glass tab bar.
+          The wrapper is full-width so we can horizontally center the pill;
+          pointer-events-none lets taps near the edges fall through to the
+          page underneath. The pill itself re-enables pointer events.
+          Note: no transform on the wrapper — iOS Safari detaches
+          position:fixed from the viewport when a transform is present. */}
       <nav
-        className="md:hidden fixed bottom-0 inset-x-0 z-[1100] bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-700/70"
-        style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 0.5rem)" }}
+        aria-label="Primary"
+        className="md:hidden fixed inset-x-0 z-[1100] flex justify-center px-3 pointer-events-none"
+        style={{ bottom: "max(0.5rem, env(safe-area-inset-bottom, 0px))" }}
       >
-        <ul
-          className="grid max-w-lg mx-auto"
-          style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
-        >
-          {items.map((n) => {
-            const Icon = n.icon;
-            const active = n.match(pathname);
-            return (
-              <li key={n.href}>
-                <Link
-                  href={n.href}
-                  className={`flex flex-col items-center justify-center gap-0.5 py-2 text-[10px] font-medium ${
-                    active
-                      ? "text-brand"
-                      : "text-slate-600 dark:text-slate-400 active:text-slate-900 dark:active:text-slate-100"
-                  }`}
-                >
-                  <span
-                    className={`inline-flex items-center justify-center w-9 h-6 rounded-full ${
-                      active ? "bg-brand/10" : ""
+        <div className="pointer-events-auto relative isolate">
+          {/* Glass surface: translucent base + heavy blur + saturation. */}
+          <div
+            aria-hidden
+            className="absolute inset-0 rounded-2xl bg-white/55 dark:bg-slate-900/55 backdrop-blur-2xl backdrop-saturate-150 border border-white/50 dark:border-white/10 shadow-[0_10px_40px_-8px_rgba(15,23,42,0.28)] dark:shadow-[0_10px_40px_-8px_rgba(0,0,0,0.65)]"
+          />
+          {/* Inner refraction edge for the liquid-glass look. */}
+          <div
+            aria-hidden
+            className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/40 dark:ring-white/10"
+          />
+          <ul className="relative flex items-center gap-0.5 px-1.5 py-1.5">
+            {items.map((n) => {
+              const Icon = n.icon;
+              const active = n.match(pathname);
+              return (
+                <li key={n.href}>
+                  <Link
+                    href={n.href}
+                    aria-label={n.label}
+                    aria-current={active ? "page" : undefined}
+                    className={`flex flex-col items-center justify-center min-w-[3.25rem] px-2 py-1.5 rounded-xl transition-colors duration-200 ${
+                      active
+                        ? "bg-brand text-white shadow-md shadow-brand/30"
+                        : "text-slate-700 dark:text-slate-200 active:bg-slate-200/40 dark:active:bg-white/10"
                     }`}
                   >
                     <Icon size={18} />
-                  </span>
-                  {n.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+                    <span className={`text-[9.5px] font-medium mt-0.5 leading-none ${active ? "" : "opacity-75"}`}>
+                      {n.label}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </nav>
     </>
   );
