@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title: "Ashley Stone Homes",
   description: "Ashley Stone Homes — client, transaction & marketing management",
   applicationName: "Ashley Stone Homes",
+  manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     title: "Ashley Stone",
@@ -38,6 +40,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans">
         {children}
+        <ServiceWorkerRegister />
         {mapsKey && (
           <Script
             id="google-maps-places"

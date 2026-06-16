@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Offline — Ashley Stone Homes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-icon.png">
+<meta name="theme-color" content="#1e3a5f" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --fg: #0f172a;
+    --muted: #64748b;
+    --brand: #1e3a5f;
+    --brand-hover: #142943;
+    --card: #ffffff;
+    --border: #e2e8f0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1220;
+      --fg: #e2e8f0;
+      --muted: #94a3b8;
+      --brand: #3b6ea5;
+      --brand-hover: #2f5a87;
+      --card: #1e293b;
+      --border: #334155;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
+      Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .card {
+    width: 100%;
+    max-width: 360px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  .logo {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1.25rem;
+    display: block;
+    border-radius: 0.75rem;
+  }
+  h1 { margin: 0 0 0.5rem; font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; }
+  p  { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
+  button {
+    margin-top: 1.5rem;
+    width: 100%;
+    background: var(--brand);
+    color: #fff;
+    border: 0;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.625rem;
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 120ms ease;
+  }
+  button:hover, button:focus { background: var(--brand-hover); outline: 0; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="logo" src="/icon-192.png" alt="Ashley Stone Homes">
+    <h1>You&rsquo;re offline</h1>
+    <p>This page needs a connection. We&rsquo;ll bring you right back when you&rsquo;re online again.</p>
+    <button type="button" onclick="location.reload()">Try again</button>
+  </div>
+</body>
+</html>

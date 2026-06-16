@@ -31,8 +31,16 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
   const isAuthRoute = pathname.startsWith("/login");
+  // PWA assets must be reachable without auth: Chrome fetches the manifest
+  // and service worker before the user signs in (or even before they have
+  // a session), and the offline fallback page is shown when the network
+  // is down — including, possibly, before the redirect-to-login completes.
+  const isPwaAsset =
+    pathname === "/sw.js" ||
+    pathname === "/manifest.webmanifest" ||
+    pathname === "/offline.html";
 
-  if (!user && !isAuthRoute) {
+  if (!user && !isAuthRoute && !isPwaAsset) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
