@@ -27,6 +27,8 @@ export type Transaction = {
   client_name: string;
   address: string | null;
   closed_date: string | null;
+  target_coe_date: string | null;
+  status: "closed" | "in_escrow" | "pending";
   source_of_business: string | null;
   deal_type: "buyer" | "seller" | null;
   sold_price: number | null;

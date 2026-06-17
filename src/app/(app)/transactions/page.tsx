@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, Clock } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { PageHeader, LinkButton, Card, Badge, EmptyState } from "@/components/ui";
 import { formatCurrency, formatDate, formatRole } from "@/lib/format";
@@ -26,14 +26,21 @@ export default async function TransactionsPage({
   const { data } = await supabase
     .from("transactions")
     .select("*")
-    .order("closed_date", { ascending: false });
+    .order("closed_date", { ascending: false, nullsFirst: true });
   const all = (data ?? []) as Transaction[];
 
+  const inEscrow = all
+    .filter((t) => t.status === "in_escrow")
+    .sort((a, b) => (a.target_coe_date || "").localeCompare(b.target_coe_date || ""));
+  const closed = all.filter((t) => t.status === "closed");
+
   const years = [
-    ...new Set(all.map((t) => t.closed_date?.slice(0, 4)).filter(Boolean)),
-  ].sort().reverse() as string[];
+    ...new Set(closed.map((t) => t.closed_date?.slice(0, 4)).filter(Boolean)),
+  ]
+    .sort()
+    .reverse() as string[];
   const year = sp.year || years[0] || "";
-  const rows = year ? all.filter((t) => t.closed_date?.startsWith(year)) : all;
+  const rows = year ? closed.filter((t) => t.closed_date?.startsWith(year)) : closed;
 
   const sum = (f: (t: Transaction) => number | null) =>
     rows.reduce((acc, t) => acc + (f(t) || 0), 0);
@@ -45,13 +52,55 @@ export default async function TransactionsPage({
     <div className="space-y-6">
       <PageHeader
         title="Deals"
-        subtitle={`${rows.length} closed ${year ? `in ${year}` : "total"}`}
+        subtitle={`${rows.length} closed ${year ? `in ${year}` : "total"}${
+          inEscrow.length ? ` · ${inEscrow.length} in escrow` : ""
+        }`}
         actions={
           <LinkButton href="/transactions/new">
             <Plus size={14} /> New deal
           </LinkButton>
         }
       />
+
+      {inEscrow.length > 0 && (
+        <section className="space-y-2">
+          <h2 className="text-sm font-semibold flex items-center gap-2">
+            <Clock size={14} className="text-brand" /> In escrow
+            <Badge tone="in_progress">{inEscrow.length}</Badge>
+          </h2>
+          <Card className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="text-left text-xs text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800">
+                <tr>
+                  <th className="p-3 font-medium">Est. COE</th>
+                  <th className="p-3 font-medium">Client / Address</th>
+                  <th className="p-3 font-medium text-right">Purchase price</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-50 dark:divide-slate-800/60">
+                {inEscrow.map((t) => (
+                  <tr key={t.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td className="p-3 whitespace-nowrap text-slate-500 dark:text-slate-400">
+                      {formatDate(t.target_coe_date)}
+                    </td>
+                    <td className="p-3">
+                      <Link href={`/transactions/${t.id}`} className="font-medium hover:underline">
+                        {t.client_name}
+                      </Link>
+                      {t.address && (
+                        <div className="text-xs text-slate-400">{t.address}</div>
+                      )}
+                    </td>
+                    <td className="p-3 text-right whitespace-nowrap font-medium">
+                      {formatCurrency(t.sold_price)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Card>
+        </section>
+      )}
 
       {years.length > 1 && (
         <div className="flex gap-2 flex-wrap">
@@ -71,7 +120,9 @@ export default async function TransactionsPage({
           <Link
             href="/transactions?year="
             className={`px-3 py-1 rounded-full text-sm ${
-              !year ? "bg-brand text-white" : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
+              !year
+                ? "bg-brand text-white"
+                : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
             }`}
           >
             All
@@ -88,7 +139,7 @@ export default async function TransactionsPage({
 
       {rows.length === 0 ? (
         <EmptyState
-          title="No deals yet"
+          title="No closed deals yet"
           description="Add a closed deal to start tracking commissions."
         />
       ) : (
