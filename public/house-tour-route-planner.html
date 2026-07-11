@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House Tour Route Planner</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f2ee; color: #2b2a27; height: 100vh; display: flex; flex-direction: column; }
+  header { padding: 14px 20px; background: #fff; border-bottom: 1px solid #e2ded7; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  header h1 { font-size: 17px; font-weight: 700; }
+  header .sub { font-size: 12px; color: #8a857c; margin-top: 2px; }
+  .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  button { border: 1px solid #d6d1c8; background: #fff; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; color: #2b2a27; }
+  button:hover { background: #f0ede7; }
+  button.primary { background: #c96442; border-color: #c96442; color: #fff; }
+  button.primary:hover { background: #b5573a; }
+  label.toggle { font-size: 13px; display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
+  main { flex: 1; display: flex; min-height: 0; }
+  #sidebar { width: 360px; min-width: 300px; background: #fff; border-right: 1px solid #e2ded7; display: flex; flex-direction: column; overflow-y: auto; }
+  #map { flex: 1; }
+  .summary { padding: 12px 16px; border-bottom: 1px solid #e2ded7; background: #faf9f6; font-size: 13px; display: flex; gap: 18px; }
+  .summary b { font-size: 17px; display: block; }
+  .summary .unit { color: #8a857c; font-size: 11px; }
+  #stops { list-style: none; padding: 10px; flex: 1; }
+  .stop { display: flex; align-items: center; gap: 10px; padding: 10px 8px; border: 1px solid #e8e4dc; border-radius: 10px; margin-bottom: 8px; background: #fff; cursor: grab; }
+  .stop.dragging { opacity: 0.4; }
+  .stop.fixed { background: #f2efe9; cursor: default; }
+  .badge { width: 28px; height: 28px; border-radius: 50%; background: #c96442; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; }
+  .stop.fixed .badge { background: #2b2a27; font-size: 15px; }
+  .stop-info { flex: 1; min-width: 0; }
+  .stop-info .addr { font-size: 13px; font-weight: 600; line-height: 1.3; }
+  .stop-info .city { font-size: 11.5px; color: #8a857c; }
+  .stop-info .leg { font-size: 11.5px; color: #c96442; font-weight: 600; margin-top: 2px; }
+  .tag { display: inline-block; font-size: 10.5px; font-weight: 700; color: #7a4620; background: #f6e3c8; border-radius: 5px; padding: 1px 6px; margin-top: 3px; }
+  details.notes { margin-top: 5px; font-size: 12px; }
+  details.notes summary { cursor: pointer; color: #8a857c; font-weight: 600; font-size: 11.5px; user-select: none; }
+  details.notes .showing { white-space: pre-wrap; background: #faf6ef; border: 1px solid #ece5d8; border-radius: 7px; padding: 7px 9px; margin-top: 5px; line-height: 1.45; }
+  details.notes textarea { width: 100%; margin-top: 6px; min-height: 52px; border: 1px solid #d6d1c8; border-radius: 7px; padding: 7px 9px; font: inherit; font-size: 12px; resize: vertical; background: #fffdf5; }
+  details.notes textarea:focus { outline: 2px solid #c96442; border-color: transparent; }
+  .saved { font-size: 10.5px; color: #6f9a6f; margin-left: 6px; visibility: hidden; }
+  .arrows { display: flex; flex-direction: column; gap: 2px; }
+  .arrows button { padding: 1px 7px; font-size: 11px; line-height: 1.4; border-radius: 5px; }
+  .hint { padding: 10px 16px 16px; font-size: 11.5px; color: #8a857c; }
+  .gmaps { display: block; margin: 0 16px 14px; text-align: center; padding: 10px; background: #2b2a27; color: #fff; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600; }
+  .gmaps:hover { background: #444; }
+  #status { font-size: 12px; color: #8a857c; padding: 0 16px 10px; min-height: 16px; }
+  .num-icon { background: #c96442; color: #fff; border-radius: 50%; width: 28px; height: 28px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35); }
+  .num-icon.home { background: #2b2a27; font-size: 14px; }
+  @media (max-width: 720px) { main { flex-direction: column; } #sidebar { width: 100%; max-height: 45vh; } }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>House Tour Route Planner</h1>
+    <div class="sub">Saturday showings &middot; starting from Fair Oaks</div>
+  </div>
+  <div class="controls">
+    <label class="toggle"><input type="checkbox" id="roundtrip"> Return home at end</label>
+    <button id="optimize" class="primary">Find fastest order</button>
+    <button id="reset">Reset order</button>
+  </div>
+</header>
+<main>
+  <div id="sidebar">
+    <div class="summary">
+      <div><b id="totDist">–</b><span class="unit">total miles</span></div>
+      <div><b id="totTime">–</b><span class="unit">drive time</span></div>
+      <div><b id="numStops">5</b><span class="unit">houses</span></div>
+    </div>
+    <ul id="stops"></ul>
+    <div id="status"></div>
+    <a class="gmaps" id="gmaps" href="#" target="_blank" rel="noopener">Open this route in Google Maps</a>
+    <div class="hint">Drag houses (or use ▲▼) to reorder. The route, mileage, and drive times update automatically using real road distances. "Find fastest order" tries every possible order and picks the quickest.</div>
+  </div>
+  <div id="map"></div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const START = { name: "7819 Mount Diablo Ct", city: "Fair Oaks, CA 95628", lat: 38.634895, lng: -121.277649 };
+const HOUSES = [
+  { id: "fairway3591", name: "3591 Fairway Dr", city: "Cameron Park, CA 95682", mls: "226085343", lat: 38.670818, lng: -120.980383,
+    tag: "Vacant w/lockbox — go anytime",
+    notes: "SHOWING: Vacant w/lockbox. Contact: Sarah Henjum (530) 919-1481.\nHOME: 2,433 sqft · 0.37 ac · built ~1963.\nDIRECTIONS: Cameron Park Dr → El Dorado Royale, turn right → right on Fairway. When leaving, exit to Cameron Park Dr via Sudbury." },
+  { id: "fairway3767", name: "3767 Fairway Dr", city: "Cameron Park, CA 95682", mls: "226063462", lat: 38.666647, lng: -120.981820,
+    tag: "Text agent, then go — NO ShowingTime",
+    notes: "SHOWING: Do NOT use ShowingTime. Text/call listing agents: Kirsten (916) 276-6615 or Troy (916) 296-9203.\nOPEN HOUSE: Sun Jul 12, 11 AM–1 PM.\nHOME: Solar owned · fridge included · whole-house water filtration · CFP+DIC insurance ~$4,650/yr · El Dorado schools. Sellers prefer 2-week rent back. Offers to REbyKirsten@gmail.com w/ pre-approval + proof of funds." },
+  { id: "thorson",     name: "3525 Thorson Dr", city: "Placerville, CA 95667", mls: "226034874", lat: 38.692425, lng: -120.695550,
+    tag: "ShowingTime — 2 HOUR notice required",
+    notes: "SHOWING: Schedule through ShowingTime. Allow response time — 2 hour notice required (book this one first!).\nHOME: $599,000 · 4 bd / 2 ba single story + detached casita · granite kitchen, wrap-around deck, 3-car garage, generator, 500-gal propane.\nDisclosures: app.disclosures.io/link/3525-Thorson-Drive" },
+  { id: "spoint",      name: "4550 S Point Rd", city: "Diamond Springs, CA 95619", mls: "226080666", lat: 38.684065, lng: -120.814237,
+    tag: "OPEN HOUSE Sat 7/11, 10 AM–1 PM",
+    notes: "OPEN HOUSE: Sat Jul 11, 10 AM–1 PM (hosted, in person) — or text LA for showing and go.\nHOME: $499,000 ($286/sqft) · 3 bd + office / 2.5 ba · ~0.46 ac.\nNOTES: Pest inspection done, section 1 repaired. Updates/improvements list attached to listing." },
+  { id: "meadowview",  name: "4350 Meadowview Acres Rd", city: "Cool, CA 95614", mls: "226087038", lat: 38.868664, lng: -121.002533,
+    tag: "OPEN HOUSE Sat 7/11, 1:30–3:30 PM",
+    notes: "OPEN HOUSE: Sat Jul 11, 1:30–3:30 PM — hosted by Kirsten Alger (REMAX Gold) + Sol Nisbest Home Loans.\nHOME: 4 bd / 4 ba (3 full, 1 half) · 3,086 sqft · El Dorado schools.\nNOTES: Washer, dryer, fridge do NOT convey. Seller wants a quick sale. (Seller previously kept 24 goats in fenced front area.)" }
+];
+let order = HOUSES.map(h => h.id);
+const openNotes = new Set();
+let legs = [];            // per-leg {dist(m), dur(s)} after each fetch
+let routeLayer = null, markerLayer = null;
+let fetchSeq = 0;
+
+const map = L.map('map');
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+map.fitBounds(allPoints().map(p => [p.lat, p.lng]), { padding: [40, 40] });
+
+function houseById(id) { return HOUSES.find(h => h.id === id); }
+function allPoints() { return [START, ...HOUSES]; }
+function routePoints() {
+  const pts = [START, ...order.map(houseById)];
+  if (document.getElementById('roundtrip').checked) pts.push(START);
+  return pts;
+}
+function fmtTime(s) {
+  const m = Math.round(s / 60);
+  return m >= 60 ? Math.floor(m / 60) + "h " + (m % 60) + "m" : m + " min";
+}
+function renderList() {
+  const ul = document.getElementById('stops');
+  ul.innerHTML = "";
+  const rt = document.getElementById('roundtrip').checked;
+
+  ul.appendChild(fixedRow("🏠", START.name, START.city, "Start"));
+  order.forEach((id, i) => {
+    const h = houseById(id);
+    const li = document.createElement('li');
+    li.className = 'stop';
+    li.draggable = true;
+    li.dataset.id = id;
+    const legTxt = legs[i] ? `↳ ${(legs[i].dist * 0.000621371).toFixed(1)} mi · ${fmtTime(legs[i].dur)} from previous stop` : "";
+    const myNotes = localStorage.getItem("mynotes-" + id) || "";
+    li.innerHTML = `
+      <div class="badge">${i + 1}</div>
+      <div class="stop-info">
+        <div class="addr">${h.name}</div>
+        <div class="city">${h.city} · MLS #${h.mls}</div>
+        <div class="leg">${legTxt}</div>
+        <div class="tag">${h.tag}</div>
+        <details class="notes" ${openNotes.has(id) ? "open" : ""}>
+          <summary>Showing info &amp; my notes${myNotes ? " ✏️" : ""}<span class="saved">saved ✓</span></summary>
+          <div class="showing">${h.notes}</div>
+          <textarea placeholder="My notes (impressions, questions, follow-ups)…" data-notes="${id}">${myNotes}</textarea>
+        </details>
+      </div>
+      <div class="arrows">
+        <button data-move="-1" ${i === 0 ? "disabled" : ""}>▲</button>
+        <button data-move="1" ${i === order.length - 1 ? "disabled" : ""}>▼</button>
+      </div>`;
+    li.addEventListener('dragstart', () => { li.classList.add('dragging'); });
+    li.addEventListener('dragend', () => { li.classList.remove('dragging'); commitDomOrder(); });
+    const det = li.querySelector('details.notes');
+    det.addEventListener('toggle', () => { det.open ? openNotes.add(id) : openNotes.delete(id); });
+    const ta = li.querySelector('textarea');
+    // don't let typing/selecting in the textarea start a card drag
+    ta.addEventListener('mousedown', () => { li.draggable = false; });
+    ta.addEventListener('blur', () => { li.draggable = true; });
+    ta.addEventListener('input', () => {
+      localStorage.setItem("mynotes-" + id, ta.value);
+      const s = li.querySelector('.saved');
+      s.style.visibility = "visible";
+      clearTimeout(ta._t); ta._t = setTimeout(() => s.style.visibility = "hidden", 1200);
+    });
+    li.querySelectorAll('button[data-move]').forEach(b => b.addEventListener('click', () => {
+      const d = +b.dataset.move, j = order.indexOf(id);
+      [order[j], order[j + d]] = [order[j + d], order[j]];
+      refresh();
+    }));
+    ul.appendChild(li);
+  });
+  if (rt) {
+    const endLeg = legs[order.length] ? `↳ ${(legs[order.length].dist * 0.000621371).toFixed(1)} mi · ${fmtTime(legs[order.length].dur)} from previous stop` : "";
+    ul.appendChild(fixedRow("🏠", START.name, START.city + (endLeg ? "" : ""), "Return", endLeg));
+  }
+
+  ul.addEventListener('dragover', onDragOver);
+}
+function fixedRow(icon, name, city, tag, legTxt) {
+  const li = document.createElement('li');
+  li.className = 'stop fixed';
+  li.innerHTML = `<div class="badge">${icon}</div>
+    <div class="stop-info"><div class="addr">${name} <span style="color:#8a857c;font-weight:400">(${tag})</span></div>
+    <div class="city">${city}</div>${legTxt ? `<div class="leg">${legTxt}</div>` : ""}</div>`;
+  return li;
+}
+function onDragOver(e) {
+  e.preventDefault();
+  const dragging = document.querySelector('.stop.dragging');
+  if (!dragging) return;
+  const others = [...document.querySelectorAll('.stop:not(.dragging):not(.fixed)')];
+  const after = others.find(el => e.clientY < el.getBoundingClientRect().top + el.getBoundingClientRect().height / 2);
+  const ul = document.getElementById('stops');
+  if (after) ul.insertBefore(dragging, after); else {
+    const fixedEnd = ul.querySelector('.stop.fixed:last-child');
+    if (fixedEnd && fixedEnd !== ul.firstChild) ul.insertBefore(dragging, fixedEnd); else ul.appendChild(dragging);
+  }
+}
+function commitDomOrder() {
+  order = [...document.querySelectorAll('.stop[data-id]')].map(el => el.dataset.id);
+  refresh();
+}
+
+function drawMarkers() {
+  if (markerLayer) markerLayer.remove();
+  markerLayer = L.layerGroup().addTo(map);
+  const home = L.divIcon({ className: "", html: '<div class="num-icon home">🏠</div>', iconSize: [28, 28], iconAnchor: [14, 14] });
+  L.marker([START.lat, START.lng], { icon: home }).bindPopup("<b>Start:</b> " + START.name + "<br>" + START.city).addTo(markerLayer);
+  order.forEach((id, i) => {
+    const h = houseById(id);
+    const ic = L.divIcon({ className: "", html: `<div class="num-icon">${i + 1}</div>`, iconSize: [28, 28], iconAnchor: [14, 14] });
+    L.marker([h.lat, h.lng], { icon: ic }).bindPopup(`<b>Stop ${i + 1}:</b> ${h.name}<br>${h.city}<br>MLS #${h.mls}<br><b style="color:#c96442">${h.tag}</b>`).addTo(markerLayer);
+  });
+}
+
+async function fetchRoute() {
+  const seq = ++fetchSeq;
+  const pts = routePoints();
+  const coords = pts.map(p => p.lng + "," + p.lat).join(";");
+  setStatus("Calculating driving route…");
+  try {
+    const r = await fetch(`https://router.project-osrm.org/route/v1/driving/${coords}?overview=full&geometries=geojson&steps=false`);
+    const j = await r.json();
+    if (seq !== fetchSeq) return;                 // stale response
+    if (j.code !== "Ok") throw new Error(j.code);
+    const route = j.routes[0];
+    legs = route.legs.map(l => ({ dist: l.distance, dur: l.duration }));
+    if (routeLayer) routeLayer.remove();
+    routeLayer = L.geoJSON(route.geometry, { style: { color: "#c96442", weight: 4, opacity: 0.85 } }).addTo(map);
+    document.getElementById('totDist').textContent = (route.distance * 0.000621371).toFixed(1);
+    document.getElementById('totTime').textContent = fmtTime(route.duration);
+    setStatus("");
+  } catch (err) {
+    if (seq !== fetchSeq) return;
+    // fallback: straight lines + rough estimate (40 mph avg)
+    legs = [];
+    if (routeLayer) routeLayer.remove();
+    routeLayer = L.polyline(pts.map(p => [p.lat, p.lng]), { color: "#c96442", weight: 3, dashArray: "6 6" }).addTo(map);
+    let tot = 0;
+    for (let i = 1; i < pts.length; i++) tot += haversine(pts[i - 1], pts[i]);
+    document.getElementById('totDist').textContent = "~" + (tot * 0.000621371 * 1.3).toFixed(0);
+    document.getElementById('totTime').textContent = "~" + fmtTime(tot * 1.3 / 17.9);
+    setStatus("Routing service unreachable — showing straight-line estimate. Check internet and try again.");
+  }
+  renderList();
+  updateGmaps();
+}
+
+function haversine(a, b) {
+  const R = 6371000, toR = x => x * Math.PI / 180;
+  const dLat = toR(b.lat - a.lat), dLng = toR(b.lng - a.lng);
+  const s = Math.sin(dLat / 2) ** 2 + Math.cos(toR(a.lat)) * Math.cos(toR(b.lat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(s));
+}
+
+async function optimize() {
+  setStatus("Testing all 120 possible orders against real drive times…");
+  const pts = [START, ...HOUSES];
+  const coords = pts.map(p => p.lng + "," + p.lat).join(";");
+  let matrix;
+  try {
+    const r = await fetch(`https://router.project-osrm.org/table/v1/driving/${coords}`);
+    const j = await r.json();
+    if (j.code !== "Ok") throw new Error(j.code);
+    matrix = j.durations;
+  } catch {
+    matrix = pts.map(a => pts.map(b => haversine(a, b))); // distance proxy fallback
+    setStatus("Routing service unreachable — optimized by straight-line distance instead.");
+  }
+  const rt = document.getElementById('roundtrip').checked;
+  const idx = [1, 2, 3, 4, 5];
+  let best = null, bestCost = Infinity;
+  for (const perm of permutations(idx)) {
+    let c = matrix[0][perm[0]];
+    for (let i = 1; i < perm.length; i++) c += matrix[perm[i - 1]][perm[i]];
+    if (rt) c += matrix[perm[perm.length - 1]][0];
+    if (c < bestCost) { bestCost = c; best = perm; }
+  }
+  order = best.map(i => HOUSES[i - 1].id);
+  refresh();
+}
+function* permutations(arr) {
+  if (arr.length <= 1) { yield arr; return; }
+  for (let i = 0; i < arr.length; i++) {
+    const rest = [...arr.slice(0, i), ...arr.slice(i + 1)];
+    for (const p of permutations(rest)) yield [arr[i], ...p];
+  }
+}
+
+function updateGmaps() {
+  const pts = routePoints();
+  const enc = p => encodeURIComponent(p.name + ", " + p.city);
+  const origin = enc(pts[0]), dest = enc(pts[pts.length - 1]);
+  const way = pts.slice(1, -1).map(enc).join("%7C");
+  document.getElementById('gmaps').href =
+    `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}${way ? "&waypoints=" + way : ""}`;
+}
+function setStatus(t) { document.getElementById('status').textContent = t; }
+function refresh() { drawMarkers(); renderList(); fetchRoute(); }
+
+document.getElementById('optimize').addEventListener('click', optimize);
+document.getElementById('reset').addEventListener('click', () => { order = HOUSES.map(h => h.id); refresh(); });
+document.getElementById('roundtrip').addEventListener('change', refresh);
+refresh();
+</script>
+</body>
+</html>
