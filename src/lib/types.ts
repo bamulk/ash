@@ -15,6 +15,9 @@ export type Contact = {
   source: string | null;
   birthday: string | null;
   notes: string | null;
+  unsubscribe_token: string | null;
+  unsubscribed_at: string | null;
+  unsubscribe_reason: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -68,7 +71,31 @@ export type Campaign = {
   scheduled_date: string | null;
   status: "planned" | "in_progress" | "done";
   notes: string | null;
+  email_subject: string | null;
+  email_body: string | null;
+  email_from: string | null;
+  email_sent_at: string | null;
   created_at: string;
+};
+
+export type CampaignContact = {
+  campaign_id: string;
+  contact_id: string;
+  touched_at: string | null;
+  status: "included" | "sent" | "skipped";
+  email_message_id: string | null;
+  email_sent_at: string | null;
+  email_status:
+    | "queued"
+    | "sent"
+    | "delivered"
+    | "bounced"
+    | "complained"
+    | "opened"
+    | "clicked"
+    | "skipped"
+    | null;
+  email_error: string | null;
 };
 
 export type Reminder = {

@@ -39,8 +39,11 @@ export async function proxy(request: NextRequest) {
     pathname === "/sw.js" ||
     pathname === "/manifest.webmanifest" ||
     pathname === "/offline.html";
+  // Unsubscribe links are clicked from marketing emails by people with
+  // no app session, so the whole /unsubscribe/<token> flow is public.
+  const isPublicRoute = pathname.startsWith("/unsubscribe/");
 
-  if (!user && !isAuthRoute && !isPwaAsset) {
+  if (!user && !isAuthRoute && !isPwaAsset && !isPublicRoute) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
