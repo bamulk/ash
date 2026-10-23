@@ -133,6 +133,11 @@ export function renderTemplate(
  * If the input is already a complete HTML document (e.g. pasted from a
  * Claude artifact or an email designer), skip the shell and inject the
  * unsubscribe footer just before </body> so we don't double-wrap it.
+ *
+ * If the input already contains the {{{RESEND_UNSUBSCRIBE_URL}}} token
+ * (an email designer's convention for "put the real unsub URL here"),
+ * substitute the token with the recipient's real token URL and skip
+ * appending our own footer — the designer's footer is the sole copy.
  */
 export function wrapHtml(bodyHtml: string, unsubscribeUrl: string): string {
   const footer = `
@@ -141,6 +146,10 @@ export function wrapHtml(bodyHtml: string, unsubscribeUrl: string): string {
   You received this because you&rsquo;re a contact of Ashley Stone Homes.
   <a href="${unsubscribeUrl}" style="color:#841618;text-decoration:underline;">Unsubscribe</a>.
 </p>`;
+
+  if (/\{\{\{\s*RESEND_UNSUBSCRIBE_URL\s*\}\}\}/.test(bodyHtml)) {
+    return bodyHtml.replace(/\{\{\{\s*RESEND_UNSUBSCRIBE_URL\s*\}\}\}/g, unsubscribeUrl);
+  }
 
   const isFullDoc = /<!doctype\s|<html[\s>]/i.test(bodyHtml);
   if (isFullDoc) {
