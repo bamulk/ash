@@ -129,16 +129,33 @@ export function renderTemplate(
 /**
  * Wrap plain / minimal HTML with a boilerplate shell that includes the
  * unsubscribe link (required by CAN-SPAM and Gmail's bulk-sender rules).
+ *
+ * If the input is already a complete HTML document (e.g. pasted from a
+ * Claude artifact or an email designer), skip the shell and inject the
+ * unsubscribe footer just before </body> so we don't double-wrap it.
  */
 export function wrapHtml(bodyHtml: string, unsubscribeUrl: string): string {
+  const footer = `
+<hr style="border:0;border-top:1px solid #e2e8f0;margin:28px auto 16px;max-width:600px;" />
+<p style="font-size:12px;color:#94a3b8;margin:0 auto 24px;max-width:600px;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
+  You received this because you&rsquo;re a contact of Ashley Stone Homes.
+  <a href="${unsubscribeUrl}" style="color:#841618;text-decoration:underline;">Unsubscribe</a>.
+</p>`;
+
+  const isFullDoc = /<!doctype\s|<html[\s>]/i.test(bodyHtml);
+  if (isFullDoc) {
+    // Inject the footer just before </body>; append at the end if there
+    // isn't a clean </body> (robustness over strictness).
+    if (/<\/body>/i.test(bodyHtml)) {
+      return bodyHtml.replace(/<\/body>/i, `${footer}\n</body>`);
+    }
+    return bodyHtml + footer;
+  }
+
   return `<!DOCTYPE html>
 <html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;color:#0f172a;max-width:600px;margin:0 auto;padding:24px;">
 ${bodyHtml}
-<hr style="border:0;border-top:1px solid #e2e8f0;margin:28px 0 16px;" />
-<p style="font-size:12px;color:#94a3b8;margin:0;">
-  You received this because you're a contact of Ashley Stone Homes.
-  <a href="${unsubscribeUrl}" style="color:#841618;text-decoration:underline;">Unsubscribe</a>.
-</p>
+${footer}
 </body></html>`;
 }
 
