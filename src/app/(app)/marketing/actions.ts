@@ -10,6 +10,7 @@ import {
   isResendConfigured,
   renderTemplate,
   sendMany,
+  sendOne,
   toHtmlIfPlain,
   wrapHtml,
   type ResendEmail,
@@ -176,6 +177,76 @@ export async function logCampaignTouchesAction(id: string) {
   }
   await supabase.from("campaigns").update({ status: "done" }).eq("id", id);
   revalidatePath(`/marketing/campaigns/${id}`);
+}
+
+/**
+ * Send a single test email of the campaign's current saved subject +
+ * body to an arbitrary address, personalized with "Test" sample vars.
+ * Signature matches React 19 useActionState so the client component can
+ * render inline success/error feedback.
+ *
+ * Nothing is written to campaign_contacts and the campaign is not
+ * marked done — this is iteration, not a real mailing.
+ */
+export async function sendTestEmailAction(
+  id: string,
+  _prev: { ok: boolean; message?: string } | null,
+  formData: FormData
+): Promise<{ ok: boolean; message?: string }> {
+  if (!isResendConfigured()) {
+    return { ok: false, message: "Resend not configured" };
+  }
+  const to = String(formData.get("to") || "").trim();
+  if (!to || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
+    return { ok: false, message: "Enter a valid email address" };
+  }
+  const supabase = await createClient();
+  const { data: campaign } = await supabase
+    .from("campaigns")
+    .select("name, email_subject, email_body, email_from")
+    .eq("id", id)
+    .single();
+  if (!campaign) return { ok: false, message: "Campaign not found" };
+  if (!campaign.email_subject || !campaign.email_body) {
+    return { ok: false, message: "Save a subject and body first (hit Save draft)" };
+  }
+
+  // If the test recipient happens to be a real contact, use their real
+  // unsubscribe token so the link in the test behaves like production.
+  // Otherwise generate a dummy token — clicking it 404s, which is the
+  // safe behavior for a stranger receiving a stray test.
+  const { data: match } = await supabase
+    .from("contacts")
+    .select("unsubscribe_token")
+    .contains("emails", [to])
+    .maybeSingle();
+  const unsubUrl = `${appUrl()}/unsubscribe/${match?.unsubscribe_token || "test-" + id.slice(0, 8)}`;
+
+  const vars = { first_name: "Test", display_name: "Test Recipient", last_name: "" };
+  const subject = `[TEST] ${renderTemplate(campaign.email_subject, vars)}`;
+  const html = wrapHtml(
+    renderTemplate(toHtmlIfPlain(campaign.email_body), vars),
+    unsubUrl
+  );
+
+  try {
+    const messageId = await sendOne({
+      from: campaign.email_from || defaultFrom(),
+      to,
+      subject,
+      html,
+      tags: [
+        { name: "campaign_id", value: id },
+        { name: "test", value: "true" },
+      ],
+    });
+    return { ok: true, message: `Sent to ${to} · ${messageId.slice(0, 10)}…` };
+  } catch (err) {
+    return {
+      ok: false,
+      message: err instanceof Error ? err.message : String(err),
+    };
+  }
 }
 
 /**

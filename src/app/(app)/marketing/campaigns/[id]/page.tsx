@@ -15,6 +15,7 @@ import { PageHeader, Card, LinkButton, Field, Input, Textarea, Badge } from "@/c
 import SubmitButton from "@/components/SubmitButton";
 import DeleteButton from "@/components/DeleteButton";
 import ConfirmForm from "@/components/ConfirmForm";
+import TestEmailForm from "@/components/TestEmailForm";
 import { matchContacts, describeCriteria } from "@/lib/segments";
 import { formatDate } from "@/lib/format";
 import { isResendConfigured, defaultFrom } from "@/lib/resend";
@@ -25,6 +26,7 @@ import {
   logCampaignTouchesAction,
   updateCampaignEmailAction,
   sendCampaignEmailAction,
+  sendTestEmailAction,
 } from "../../actions";
 
 export const dynamic = "force-dynamic";
@@ -95,6 +97,14 @@ export default async function CampaignDetailPage({
   const logAction = logCampaignTouchesAction.bind(null, id);
   const updateEmail = updateCampaignEmailAction.bind(null, id);
   const sendEmail = sendCampaignEmailAction.bind(null, id);
+  const sendTest = sendTestEmailAction.bind(null, id);
+
+  // Prefill the test-send input with the signed-in user's email —
+  // Ashley will almost always want to test to herself first.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const myEmail = user?.email ?? "";
 
   const STATUSES: Campaign["status"][] = ["planned", "in_progress", "done"];
 
@@ -196,26 +206,43 @@ export default async function CampaignDetailPage({
           </div>
         </form>
 
-        {/* Separate form so the send button isn't nested inside the composer form. */}
-        <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2 flex-wrap">
-          <span className="text-xs text-slate-500 dark:text-slate-400">
-            Sending uses the last saved subject + body. Save your draft first.
-          </span>
-          {resendOn && camp.email_subject && camp.email_body ? (
-            <ConfirmForm
-              action={sendEmail}
-              confirmText={`Send this email to ${emailable.length} ${emailable.length === 1 ? "contact" : "contacts"}? This cannot be undone.`}
-            >
-              <SubmitButton size="sm">
-                <Send size={14} />
-                Send to {emailable.length} {emailable.length === 1 ? "contact" : "contacts"}
-              </SubmitButton>
-            </ConfirmForm>
-          ) : (
-            <span className="text-xs text-slate-400">
-              {resendOn ? "Add a subject and body to enable send" : "Configure Resend to enable send"}
+        {/* Test + real send are separate forms so the real-send button
+            isn't nested inside the composer or the test form. Both act
+            on the last SAVED subject + body — hit "Save draft" first. */}
+        <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 space-y-3">
+          <div className="flex items-start sm:items-center justify-between gap-2 flex-col sm:flex-row">
+            <div className="text-xs text-slate-500 dark:text-slate-400">
+              Preview the saved copy before mailing the full list.
+            </div>
+            {resendOn ? (
+              <TestEmailForm action={sendTest} defaultTo={myEmail} />
+            ) : (
+              <span className="text-xs text-slate-400">
+                Configure Resend to enable test sends
+              </span>
+            )}
+          </div>
+
+          <div className="flex items-center justify-between gap-2 flex-wrap pt-2 border-t border-slate-100 dark:border-slate-800">
+            <span className="text-xs text-slate-500 dark:text-slate-400">
+              Real send goes to every reachable contact in the segment.
             </span>
-          )}
+            {resendOn && camp.email_subject && camp.email_body ? (
+              <ConfirmForm
+                action={sendEmail}
+                confirmText={`Send this email to ${emailable.length} ${emailable.length === 1 ? "contact" : "contacts"}? This cannot be undone.`}
+              >
+                <SubmitButton size="sm">
+                  <Send size={14} />
+                  Send to {emailable.length} {emailable.length === 1 ? "contact" : "contacts"}
+                </SubmitButton>
+              </ConfirmForm>
+            ) : (
+              <span className="text-xs text-slate-400">
+                {resendOn ? "Add a subject and body to enable send" : "Configure Resend to enable send"}
+              </span>
+            )}
+          </div>
         </div>
       </Card>
 
