@@ -1,77 +1,111 @@
 @import "tailwindcss";
 
+/* Palette and type system match ashleystonehomes.com:
+   - cream page, near-black ink, hairline borders
+   - Jost display + Hanken Grotesk body, both via next/font
+   - maroon on brand bands, sage on quiet accents
+   - flat (no shadows, no rounded corners) by default */
 :root {
-  --background: #f6f7f9;
-  --foreground: #0f172a;
-  --brand: #841618;          /* Ashley Stone Homes maroon */
-  --brand-hover: #6c1214;    /* darker on hover */
-  --accent: #b08642;         /* warm gold accent */
-  --ring: rgba(132, 22, 24, 0.25);
+  --background: #f4f4f1;   /* cream page bg */
+  --surface: #fbfbf9;      /* cards, inputs */
+  --sand: #dfddd6;         /* subtle contrast band */
+  --foreground: #1d1d1b;   /* ink */
+  --muted: #4a4944;        /* body copy */
+  --soft: #7a7971;         /* captions, hints */
+  --border: #d6d5d1;       /* hairline */
+  --border-strong: #1d1d1b;/* heavy divider */
+  --brand: #8a1c2b;        /* maroon CTA band */
+  --brand-hover: #6f1522;
+  --brand-ink: #fff6f6;    /* text on brand */
+  --accent: #4f5e43;       /* sage band */
+  --accent-ink: #f3f5ee;
+  --ring: rgba(138, 28, 43, 0.28);
 }
 
-/* System dark mode — applied automatically when the OS is in dark. */
+/* System dark mode: still warm-neutral, not slate. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0b1220;
-    --foreground: #e2e8f0;
-    --brand: #b81d20;
-    --brand-hover: #9a181a;
-    --accent: #c79a55;
-    --ring: rgba(184, 29, 32, 0.35);
+    --background: #1a1a18;
+    --surface: #232320;
+    --sand: #2d2d29;
+    --foreground: #f4f4f1;
+    --muted: #c2c0b8;
+    --soft: #8a897f;
+    --border: #38372f;
+    --border-strong: #f4f4f1;
+    --brand: #b5253a;
+    --brand-hover: #c73a4f;
+    --brand-ink: #fff6f6;
+    --accent: #6b7e5a;
+    --accent-ink: #f3f5ee;
+    --ring: rgba(181, 37, 58, 0.35);
   }
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-sand: var(--sand);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-soft: var(--soft);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-brand: var(--brand);
   --color-brand-hover: var(--brand-hover);
+  --color-brand-ink: var(--brand-ink);
   --color-accent: var(--accent);
-  --font-sans: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --color-accent-ink: var(--accent-ink);
+  --font-sans: var(--font-body), "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: var(--font-display), Jost, Futura, "Century Gothic", "Trebuchet MS", sans-serif;
+}
+
+html, body {
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 body {
-  background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(132, 22, 24, 0.06), transparent 60%),
-    radial-gradient(900px 500px at 100% 0%, rgba(176, 134, 66, 0.05), transparent 60%),
-    var(--background);
-  color: var(--foreground);
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  font-family: var(--font-body), "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-feature-settings: "ss01", "cv11";
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background:
-      radial-gradient(1200px 600px at 10% -10%, rgba(184, 29, 32, 0.10), transparent 60%),
-      radial-gradient(900px 500px at 100% 0%, rgba(199, 154, 85, 0.07), transparent 60%),
-      var(--background);
-  }
+/* Jost for display rhythm; headings elect in via Tailwind font-display or
+   the `.display` class, but the app's PageHeader + h1/h2 default to it. */
+h1, h2, h3,
+.display {
+  font-family: var(--font-display), Jost, Futura, "Century Gothic", "Trebuchet MS", sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+h1 { letter-spacing: -0.025em; }
+
+/* Form controls echo the hairline / cream / near-black system. */
+input, select, textarea {
+  background-color: var(--surface);
+  color: var(--foreground);
+  border-color: var(--border);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #94a3b8;
+  color: var(--soft);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ring);
+  border-color: var(--border-strong);
+}
+
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"] {
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
-  input::placeholder,
-  textarea::placeholder {
-    color: #64748b;
-  }
-}
-
-input, select, textarea {
-  background-color: #ffffff;
-  color: #0f172a;
-  border-color: #e2e8f0;
-}
-
-@media (prefers-color-scheme: dark) {
-  input, select, textarea {
-    background-color: #1e293b;
-    color: #f1f5f9;
-    border-color: #334155;
-  }
   input[type="date"],
   input[type="time"],
   input[type="datetime-local"] {
@@ -79,14 +113,18 @@ input, select, textarea {
   }
 }
 
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--ring);
-  border-color: var(--brand);
+* {
+  transition-property: background-color, border-color, color, box-shadow, opacity;
+  transition-duration: 120ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
-* {
-  transition-property: background-color, border-color, color, box-shadow, transform, opacity;
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+/* Small-caps metadata rows (matches the site's "Real Estate Group" sublabel). */
+.eyebrow {
+  font-family: var(--font-body), "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--muted);
 }

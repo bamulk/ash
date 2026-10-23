@@ -4,23 +4,25 @@ import type { ComponentProps, ComponentPropsWithoutRef, ReactNode } from "react"
 type Variant = "primary" | "secondary" | "ghost" | "danger";
 type Size = "sm" | "md";
 
+// Flat, hairline-bordered, no radius — matches ashleystonehomes.com's
+// gallery-signage feel. Primary is near-black with off-white ink.
 const base =
-  "inline-flex items-center justify-center gap-2 font-medium rounded-lg select-none whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-brand disabled:opacity-50 disabled:pointer-events-none";
+  "inline-flex items-center justify-center gap-2 font-medium select-none whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-brand disabled:opacity-50 disabled:pointer-events-none tracking-tight";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-brand text-white hover:bg-brand-hover shadow-sm shadow-slate-900/20",
+    "bg-foreground text-background hover:bg-brand hover:text-brand-ink",
   secondary:
-    "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 shadow-sm",
+    "bg-surface text-foreground border border-border-strong hover:bg-foreground hover:text-background",
   ghost:
-    "text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800",
+    "text-muted hover:text-foreground hover:bg-sand",
   danger:
-    "bg-white dark:bg-slate-900 text-red-600 border border-red-200 dark:border-red-900/50 hover:bg-red-50 dark:hover:bg-red-950/30",
+    "bg-surface text-brand border border-brand hover:bg-brand hover:text-brand-ink",
 };
 
 const sizes: Record<Size, string> = {
-  sm: "text-xs px-2.5 py-1.5",
-  md: "text-sm px-3.5 py-2",
+  sm: "text-xs px-3 py-1.5",
+  md: "text-sm px-4 py-2",
 };
 
 export function Button({
@@ -69,7 +71,7 @@ export function Card({
 }) {
   return (
     <div
-      className={`bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700/70 shadow-sm shadow-slate-900/[0.02] ${className}`}
+      className={`bg-surface border border-border-strong ${className}`}
     >
       {children}
     </div>
@@ -86,13 +88,11 @@ export function PageHeader({
   actions?: ReactNode;
 }) {
   return (
-    <div className="flex items-start sm:items-center justify-between gap-4 flex-col sm:flex-row">
+    <div className="flex items-start sm:items-center justify-between gap-4 flex-col sm:flex-row pb-4 border-b border-border-strong">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+        <h1 className="text-3xl text-foreground">{title}</h1>
         {subtitle && (
-          <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5">
-            {subtitle}
-          </p>
+          <p className="text-sm text-muted mt-1">{subtitle}</p>
         )}
       </div>
       {actions && (
@@ -105,7 +105,7 @@ export function PageHeader({
 }
 
 const inputClass =
-  "w-full border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-slate-100";
+  "w-full border border-border px-3 py-2 text-sm text-foreground bg-surface";
 
 export function Input(props: ComponentProps<"input">) {
   return <input {...props} className={`${inputClass} ${props.className ?? ""}`} />;
@@ -131,28 +131,26 @@ export function Field({
   hint?: string;
 }) {
   return (
-    <label className="block space-y-1">
-      <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
-        {label}
-      </span>
+    <label className="block space-y-1.5">
+      <span className="eyebrow block">{label}</span>
       {children}
       {hint && (
-        <span className="block text-xs text-slate-400 dark:text-slate-500">
-          {hint}
-        </span>
+        <span className="block text-xs text-soft">{hint}</span>
       )}
     </label>
   );
 }
 
+// Keep badge semantics but recolor to a flat, hairline look that reads on
+// the cream page without competing with the Jost headings.
 const badgeColors: Record<string, string> = {
-  buyer: "bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 ring-blue-200 dark:ring-blue-900",
-  seller: "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 ring-emerald-200 dark:ring-emerald-900",
-  both: "bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-300 ring-violet-200 dark:ring-violet-900",
-  planned: "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 ring-slate-200 dark:ring-slate-700",
-  in_progress: "bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 ring-amber-200 dark:ring-amber-900",
-  done: "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 ring-emerald-200 dark:ring-emerald-900",
-  overdue: "bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 ring-rose-200 dark:ring-rose-900",
+  buyer: "bg-sand text-foreground border border-border-strong",
+  seller: "bg-accent text-accent-ink border border-accent",
+  both: "bg-brand text-brand-ink border border-brand",
+  planned: "bg-sand text-muted border border-border",
+  in_progress: "bg-surface text-foreground border border-border-strong",
+  done: "bg-accent text-accent-ink border border-accent",
+  overdue: "bg-brand text-brand-ink border border-brand",
 };
 
 export function Badge({
@@ -166,7 +164,7 @@ export function Badge({
 }) {
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ring-1 ring-inset ${
+      className={`inline-flex items-center px-2 py-0.5 text-[11px] font-semibold tracking-wide uppercase ${
         badgeColors[tone] ?? badgeColors.planned
       } ${className}`}
     >
@@ -185,12 +183,10 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="text-center py-16 px-4">
-      <p className="text-slate-900 dark:text-slate-100 font-medium">{title}</p>
+    <div className="text-center py-16 px-4 border border-border bg-surface">
+      <p className="text-foreground text-lg">{title}</p>
       {description && (
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-md mx-auto">
-          {description}
-        </p>
+        <p className="text-sm text-muted mt-1 max-w-md mx-auto">{description}</p>
       )}
       {action && <div className="mt-4 flex justify-center">{action}</div>}
     </div>

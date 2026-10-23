@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Hanken_Grotesk, Jost } from "next/font/google";
 import Script from "next/script";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+// Match the public site: Hanken Grotesk for body copy, Jost for display.
+const bodyFont = Hanken_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body",
+  display: "swap",
+});
+const displayFont = Jost({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Ashley Stone Homes",
@@ -27,8 +39,8 @@ export const viewport = {
   viewportFit: "cover" as const,
   interactiveWidget: "resizes-content" as const,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#841618" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b1220" },
+    { media: "(prefers-color-scheme: light)", color: "#1d1d1b" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1a18" },
   ],
 };
 
@@ -37,8 +49,8 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const mapsKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY?.trim();
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans">
+    <html lang="en" className={`${bodyFont.variable} ${displayFont.variable} h-full antialiased`}>
+      <body className="min-h-full bg-background text-foreground font-sans">
         {children}
         <ServiceWorkerRegister />
         {mapsKey && (

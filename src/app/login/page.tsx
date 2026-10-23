@@ -33,32 +33,25 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand rounded-full opacity-10 blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent rounded-full opacity-10 blur-3xl" />
-      </div>
-
+    <div className="min-h-screen flex items-center justify-center p-6">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm bg-white dark:bg-slate-900/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl shadow-slate-900/5 border border-slate-200 dark:border-slate-700/70 space-y-5"
+        className="w-full max-w-sm bg-surface border border-border-strong p-10 space-y-6"
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 pb-5 border-b border-border">
           <Image
             src="/logo.png"
             alt="Ashley Stone Homes"
             width={48}
             height={48}
             priority
-            className="w-12 h-12 object-contain"
+            className="w-12 h-12 object-contain bg-[#fbfbf9] p-[3px] border border-border"
           />
-          <div>
-            <h1 className="text-xl font-semibold tracking-tight">
-              Ashley Stone Homes
-            </h1>
-            <p className="text-xs text-slate-600 dark:text-slate-400">
-              Welcome back
-            </p>
+          <div className="leading-tight">
+            <div className="font-display text-xl font-medium text-foreground">
+              Ashley Stone
+            </div>
+            <div className="eyebrow mt-0.5">Real Estate Group</div>
           </div>
         </div>
 
@@ -73,7 +66,7 @@ export default function LoginPage() {
             placeholder="you@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-slate-300 dark:border-slate-600 rounded-lg px-3.5 py-3 text-base text-slate-900 dark:text-slate-100"
+            className="w-full border border-border px-3.5 py-3 text-base text-foreground bg-surface"
           />
           <input
             id="login-password"
@@ -84,12 +77,12 @@ export default function LoginPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-slate-300 dark:border-slate-600 rounded-lg px-3.5 py-3 text-base text-slate-900 dark:text-slate-100"
+            className="w-full border border-border px-3.5 py-3 text-base text-foreground bg-surface"
           />
         </div>
 
         {error && (
-          <p className="text-red-600 text-sm bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/50 rounded-lg px-3 py-2">
+          <p className="text-brand text-sm bg-surface border border-brand px-3 py-2">
             {error}
           </p>
         )}
@@ -98,7 +91,7 @@ export default function LoginPage() {
           {loading ? "…" : "Sign in"}
         </Button>
 
-        <p className="text-center text-xs text-slate-500 dark:text-slate-400">
+        <p className="text-center text-xs text-soft">
           Access is by invitation. Need an account? Ask an admin to add you.
         </p>
       </form>
