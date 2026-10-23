@@ -198,6 +198,9 @@ export default async function CampaignDetailPage({
               <Input name="email_from" defaultValue={camp.email_from ?? ""} placeholder={resendOn ? defaultFrom() : "ashley@ashleystonehomes.com"} />
             </Field>
           </div>
+          <Field label="Reply-to" hint="Replies go here instead of the From address. Leave blank for no override.">
+            <Input name="email_reply_to" type="email" defaultValue={camp.email_reply_to ?? ""} placeholder="ashleystonehomes@gmail.com" />
+          </Field>
           <Field label="Body" hint="Plain text or basic HTML. {first_name} is replaced per contact. Unsubscribe link is added automatically.">
             <Textarea name="email_body" rows={10} defaultValue={camp.email_body ?? ""} placeholder={"Hi {first_name},\n\nI wanted to share a quick update on the Sacramento market…\n\n— Ashley"} />
           </Field>

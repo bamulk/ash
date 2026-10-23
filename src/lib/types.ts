@@ -74,6 +74,7 @@ export type Campaign = {
   email_subject: string | null;
   email_body: string | null;
   email_from: string | null;
+  email_reply_to: string | null;
   email_sent_at: string | null;
   created_at: string;
 };

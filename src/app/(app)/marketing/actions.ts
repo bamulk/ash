@@ -93,6 +93,7 @@ export async function createCampaignAction(formData: FormData) {
       email_subject: str(formData.get("email_subject")) ?? null,
       email_body: str(formData.get("email_body")) ?? null,
       email_from: str(formData.get("email_from")) ?? null,
+      email_reply_to: str(formData.get("email_reply_to")) ?? null,
     })
     .select("id")
     .single();
@@ -109,6 +110,7 @@ export async function updateCampaignEmailAction(id: string, formData: FormData) 
       email_subject: str(formData.get("email_subject")) ?? null,
       email_body: str(formData.get("email_body")) ?? null,
       email_from: str(formData.get("email_from")) ?? null,
+      email_reply_to: str(formData.get("email_reply_to")) ?? null,
     })
     .eq("id", id);
   if (error) throw new Error(error.message);
@@ -203,7 +205,7 @@ export async function sendTestEmailAction(
   const supabase = await createClient();
   const { data: campaign } = await supabase
     .from("campaigns")
-    .select("name, email_subject, email_body, email_from")
+    .select("name, email_subject, email_body, email_from, email_reply_to")
     .eq("id", id)
     .single();
   if (!campaign) return { ok: false, message: "Campaign not found" };
@@ -235,6 +237,7 @@ export async function sendTestEmailAction(
       to,
       subject,
       html,
+      reply_to: campaign.email_reply_to || undefined,
       tags: [
         { name: "campaign_id", value: id },
         { name: "test", value: "true" },
@@ -264,7 +267,7 @@ export async function sendCampaignEmailAction(id: string) {
 
   const { data: campaign } = await supabase
     .from("campaigns")
-    .select("id, name, segment_id, email_subject, email_body, email_from")
+    .select("id, name, segment_id, email_subject, email_body, email_from, email_reply_to")
     .eq("id", id)
     .single();
   if (!campaign) throw new Error("Campaign not found");
@@ -358,6 +361,7 @@ export async function sendCampaignEmailAction(id: string) {
         to: emailAddr,
         subject,
         html: bodyHtml,
+        reply_to: campaign.email_reply_to || undefined,
         headers: {
           "List-Unsubscribe": `<${unsubUrl}>`,
           "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
