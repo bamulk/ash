@@ -24,7 +24,7 @@ export default async function AppLayout({
   return (
     <div className="min-h-screen flex flex-col">
       <NavBar isAdmin={!!isAdmin} displayName={profile?.full_name || user.email || ""} />
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-[calc(env(safe-area-inset-bottom)+5rem)] md:pb-8">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-[calc(env(safe-area-inset-bottom)+5.5rem)] md:pb-8">
         {children}
       </main>
     </div>
