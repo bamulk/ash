@@ -26,9 +26,14 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     title: "Ashley Stone",
-    // black-translucent lets the iOS status bar adapt to whatever the
-    // page paints underneath — matches the rest of our dark/light theme.
-    statusBarStyle: "black-translucent",
+    // "default" gives the iOS status bar its own strip (coloured by
+    // themeColor below) and starts the app under it. With
+    // "black-translucent" the page ran under the status bar and iOS 27
+    // blurred whatever scrolled there — the header included (WebKit
+    // bug 324438). Phones read this when the app is added to the home
+    // screen: an existing icon keeps the old setting, so delete and
+    // re-add the icon on-device to pick up this change.
+    statusBarStyle: "default",
   },
 };
 
