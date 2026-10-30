@@ -15,6 +15,8 @@ import {
   addTagAction,
   removeTagAction,
   checkContactValueAction,
+  toggleAutoTouchesOptOutAction,
+  cancelScheduledTouchAction,
 } from "../actions";
 import { createReminderAction, toggleReminderAction } from "../../reminders/actions";
 
@@ -35,21 +37,38 @@ export default async function ContactDetailPage({
   if (!contact) notFound();
   const c = contact as Contact;
 
-  const [{ data: linkRows }, { data: txns }, { data: reminders }, { data: campRows }, { data: valRows }] =
-    await Promise.all([
-      supabase.from("contact_tags").select("tag_id, tags(id, name, color)").eq("contact_id", id),
-      supabase.from("transactions").select("*").eq("contact_id", id).order("closed_date", { ascending: false }),
-      supabase.from("reminders").select("*").eq("contact_id", id).order("due_date"),
-      supabase
-        .from("campaign_contacts")
-        .select("touched_at, status, campaigns(id, name, scheduled_date, kind)")
-        .eq("contact_id", id),
-      supabase
-        .from("home_valuations")
-        .select("*")
-        .eq("contact_id", id)
-        .order("queried_at", { ascending: false }),
-    ]);
+  const [
+    { data: linkRows },
+    { data: txns },
+    { data: reminders },
+    { data: campRows },
+    { data: valRows },
+    { data: leadRows },
+    { data: scheduledRows },
+  ] = await Promise.all([
+    supabase.from("contact_tags").select("tag_id, tags(id, name, color)").eq("contact_id", id),
+    supabase.from("transactions").select("*").eq("contact_id", id).order("closed_date", { ascending: false }),
+    supabase.from("reminders").select("*").eq("contact_id", id).order("due_date"),
+    supabase
+      .from("campaign_contacts")
+      .select("touched_at, status, campaigns(id, name, scheduled_date, kind)")
+      .eq("contact_id", id),
+    supabase
+      .from("home_valuations")
+      .select("*")
+      .eq("contact_id", id)
+      .order("queried_at", { ascending: false }),
+    supabase
+      .from("home_value_requests")
+      .select("*")
+      .eq("contact_id", id)
+      .order("requested_at", { ascending: false }),
+    supabase
+      .from("scheduled_emails")
+      .select("id, kind, send_at, sent_at, cancelled_at, error, resend_message_id")
+      .eq("contact_id", id)
+      .order("send_at", { ascending: true }),
+  ]);
 
   const tags = (linkRows ?? [])
     .map((r) => (r as unknown as { tags: Tag }).tags)
@@ -58,6 +77,30 @@ export default async function ContactDetailPage({
   const rems = (reminders ?? []) as Reminder[];
   const valuations = (valRows ?? []) as HomeValuation[];
   const latestVal = valuations[0];
+  const leadRequests = (leadRows ?? []) as {
+    id: string;
+    address: string;
+    city: string | null;
+    state: string | null;
+    zip: string | null;
+    source: string;
+    message: string | null;
+    avm_estimate: number | null;
+    avm_low: number | null;
+    avm_high: number | null;
+    avm_error: string | null;
+    avm_fetched_at: string | null;
+    requested_at: string;
+  }[];
+  const scheduled = (scheduledRows ?? []) as {
+    id: string;
+    kind: string;
+    send_at: string;
+    sent_at: string | null;
+    cancelled_at: string | null;
+    error: string | null;
+    resend_message_id: string | null;
+  }[];
   const rentcastOn = isRentCastConfigured();
   const campaigns = (campRows ?? []) as unknown as {
     touched_at: string | null;
@@ -310,6 +353,105 @@ export default async function ContactDetailPage({
           </div>
         </Card>
       )}
+
+      {/* Lead inquiries (home-value form submissions) */}
+      {leadRequests.length > 0 && (
+        <Card className="p-4">
+          <h2 className="text-sm font-medium mb-3">Lead inquiries</h2>
+          <div className="divide-y divide-border">
+            {leadRequests.map((r) => (
+              <div key={r.id} className="py-3 text-sm">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-medium">
+                    {r.address}{r.city ? `, ${r.city}` : ""}{r.state ? `, ${r.state}` : ""}
+                  </span>
+                  <span className="text-muted text-xs">{formatDate(r.requested_at)}</span>
+                </div>
+                <div className="mt-1 text-xs text-muted flex flex-wrap gap-x-4 gap-y-1">
+                  <span>Source: {r.source}</span>
+                  {r.avm_fetched_at && r.avm_estimate != null && (
+                    <span>
+                      RentCast: {formatCurrency(Number(r.avm_estimate))}
+                      {r.avm_low != null && r.avm_high != null
+                        ? ` (${formatCurrency(Number(r.avm_low))}–${formatCurrency(Number(r.avm_high))})`
+                        : ""}
+                    </span>
+                  )}
+                  {r.avm_error && (
+                    <span className="text-brand">AVM: {r.avm_error}</span>
+                  )}
+                </div>
+                {r.message && (
+                  <p className="mt-2 text-sm text-muted whitespace-pre-wrap">{r.message}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* Automation (automated birthday / anniversary / drip queue) */}
+      <Card className="p-4">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-sm font-medium">Automation</h2>
+          <form action={toggleAutoTouchesOptOutAction.bind(null, id)}>
+            <input
+              type="hidden"
+              name="opt_out"
+              value={c.auto_touches_opt_out ? "false" : "true"}
+            />
+            <SubmitButton variant="secondary" size="sm">
+              {c.auto_touches_opt_out ? "Resume auto touches" : "Pause auto touches"}
+            </SubmitButton>
+          </form>
+        </div>
+        {c.auto_touches_opt_out && (
+          <p className="text-xs text-brand mb-3">
+            Birthday + anniversary emails are paused for this contact. Lead
+            drip and campaign sends still go out.
+          </p>
+        )}
+        {scheduled.length === 0 ? (
+          <p className="text-sm text-slate-400">
+            No automated touches scheduled or sent yet.
+          </p>
+        ) : (
+          <div className="divide-y divide-border">
+            {scheduled.map((s) => {
+              const label =
+                s.kind === "drip_welcome" ? "Welcome drip" :
+                s.kind === "drip_market" ? "Market update drip" :
+                s.kind === "drip_cta" ? "Follow-up drip" :
+                s.kind === "anniversary" ? "Home anniversary" :
+                s.kind === "birthday" ? "Birthday" : s.kind;
+              const status = s.sent_at
+                ? `sent ${formatDate(s.sent_at)}`
+                : s.cancelled_at
+                  ? `cancelled ${formatDate(s.cancelled_at)}`
+                  : s.error
+                    ? `error: ${s.error}`
+                    : `queued for ${formatDate(s.send_at)}`;
+              const canCancel = !s.sent_at && !s.cancelled_at;
+              const cancel = cancelScheduledTouchAction.bind(null, id, s.id);
+              return (
+                <div key={s.id} className="py-2 text-sm flex items-center justify-between gap-3">
+                  <div>
+                    <span className="font-medium">{label}</span>
+                    <span className="text-muted"> · {status}</span>
+                  </div>
+                  {canCancel && (
+                    <form action={cancel}>
+                      <button className="text-xs text-muted hover:text-brand" aria-label="Cancel scheduled touch">
+                        Cancel
+                      </button>
+                    </form>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </Card>
 
       {/* Edit */}
       <div>

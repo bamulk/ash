@@ -41,7 +41,13 @@ export async function proxy(request: NextRequest) {
     pathname === "/offline.html";
   // Unsubscribe links are clicked from marketing emails by people with
   // no app session, so the whole /unsubscribe/<token> flow is public.
-  const isPublicRoute = pathname.startsWith("/unsubscribe/");
+  // The public lead-capture API and the Vercel cron are both guarded by
+  // their own shared secrets (WEBSITE_LEAD_SECRET / CRON_SECRET) rather
+  // than a Supabase session, so they stay out of the auth redirect.
+  const isPublicRoute =
+    pathname.startsWith("/unsubscribe/") ||
+    pathname.startsWith("/api/leads/") ||
+    pathname.startsWith("/api/cron/");
 
   if (!user && !isAuthRoute && !isPwaAsset && !isPublicRoute) {
     const url = request.nextUrl.clone();

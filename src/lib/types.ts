@@ -18,8 +18,47 @@ export type Contact = {
   unsubscribe_token: string | null;
   unsubscribed_at: string | null;
   unsubscribe_reason: string | null;
+  auto_touches_opt_out: boolean;
   created_at: string;
   updated_at: string;
+};
+
+export type HomeValueRequest = {
+  id: string;
+  contact_id: string | null;
+  address: string;
+  city: string | null;
+  state: string | null;
+  zip: string | null;
+  message: string | null;
+  source: string;
+  avm_estimate: number | null;
+  avm_low: number | null;
+  avm_high: number | null;
+  avm_raw: unknown;
+  avm_fetched_at: string | null;
+  avm_error: string | null;
+  acknowledged_at: string | null;
+  requested_at: string;
+};
+
+export type ScheduledEmail = {
+  id: string;
+  contact_id: string;
+  kind:
+    | "drip_welcome"
+    | "drip_market"
+    | "drip_cta"
+    | "anniversary"
+    | "birthday";
+  send_at: string;
+  sent_at: string | null;
+  cancelled_at: string | null;
+  resend_message_id: string | null;
+  error: string | null;
+  metadata: Record<string, unknown>;
+  dedupe_key: string | null;
+  created_at: string;
 };
 
 export type Tag = { id: string; name: string; color: string };

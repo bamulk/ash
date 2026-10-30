@@ -209,7 +209,8 @@ declare t text;
 begin
   foreach t in array array[
     'contacts','tags','contact_tags','transactions',
-    'segments','campaigns','campaign_contacts','reminders','home_valuations'
+    'segments','campaigns','campaign_contacts','reminders','home_valuations',
+    'home_value_requests','scheduled_emails'
   ] loop
     execute format('drop policy if exists %I on public.%I', t || '_authed_all', t);
     execute format(
@@ -218,3 +219,53 @@ begin
     );
   end loop;
 end $$;
+
+-- ============ Lead capture + automated touches ============
+-- (Applied as a migration against the live DB; mirrored here so a
+-- future `schema.sql`-fresh setup keeps parity.)
+create table if not exists public.home_value_requests (
+  id uuid primary key default gen_random_uuid(),
+  contact_id uuid references public.contacts(id) on delete set null,
+  address text not null,
+  city text,
+  state text,
+  zip text,
+  message text,
+  source text not null default 'public_form',
+  avm_estimate numeric(14,2),
+  avm_low numeric(14,2),
+  avm_high numeric(14,2),
+  avm_raw jsonb,
+  avm_fetched_at timestamptz,
+  avm_error text,
+  acknowledged_at timestamptz,
+  requested_at timestamptz not null default now()
+);
+create index if not exists home_value_requests_contact_idx on public.home_value_requests (contact_id);
+create index if not exists home_value_requests_requested_at_idx on public.home_value_requests (requested_at desc);
+alter table public.home_value_requests enable row level security;
+
+create table if not exists public.scheduled_emails (
+  id uuid primary key default gen_random_uuid(),
+  contact_id uuid not null references public.contacts(id) on delete cascade,
+  kind text not null,
+  send_at timestamptz not null,
+  sent_at timestamptz,
+  cancelled_at timestamptz,
+  resend_message_id text,
+  error text,
+  metadata jsonb not null default '{}',
+  dedupe_key text,
+  created_at timestamptz not null default now()
+);
+create unique index if not exists scheduled_emails_dedupe_idx
+  on public.scheduled_emails (dedupe_key) where dedupe_key is not null;
+create index if not exists scheduled_emails_due_idx
+  on public.scheduled_emails (send_at) where sent_at is null and cancelled_at is null;
+alter table public.scheduled_emails enable row level security;
+
+alter table public.contacts
+  add column if not exists auto_touches_opt_out boolean not null default false;
+
+insert into public.tags (name, color) values ('lead', 'amber')
+on conflict (name) do nothing;

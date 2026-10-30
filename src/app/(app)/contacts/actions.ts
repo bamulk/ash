@@ -149,3 +149,36 @@ export async function checkContactValueAction(contactId: string) {
   if (error) throw new Error(error.message);
   revalidatePath(`/contacts/${contactId}`);
 }
+
+/**
+ * Toggle a contact out of (or back into) the automatic birthday /
+ * anniversary / lead-drip touches. Explicit unsubscribe still kills
+ * everything regardless of this flag.
+ */
+export async function toggleAutoTouchesOptOutAction(contactId: string, formData: FormData) {
+  const supabase = await createClient();
+  const nextRaw = String(formData.get("opt_out") || "").trim();
+  const next = nextRaw === "true";
+  const { error } = await supabase
+    .from("contacts")
+    .update({ auto_touches_opt_out: next })
+    .eq("id", contactId);
+  if (error) throw new Error(error.message);
+  revalidatePath(`/contacts/${contactId}`);
+}
+
+/**
+ * Cancel a queued (not-yet-sent) automated touch for this contact.
+ * Used from the contact page when Ashley wants to skip the day-7 drip
+ * on a specific lead without opting the contact out of everything.
+ */
+export async function cancelScheduledTouchAction(contactId: string, scheduledId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("scheduled_emails")
+    .update({ cancelled_at: new Date().toISOString() })
+    .eq("id", scheduledId)
+    .is("sent_at", null);
+  if (error) throw new Error(error.message);
+  revalidatePath(`/contacts/${contactId}`);
+}
