@@ -42,6 +42,123 @@ export type HomeValueRequest = {
   requested_at: string;
 };
 
+export type ListingStatus =
+  | "coming_soon"
+  | "active"
+  | "under_contract"
+  | "pending"
+  | "sold"
+  | "withdrawn"
+  | "expired";
+
+export const LISTING_PIPELINE_STATUSES: ListingStatus[] = [
+  "coming_soon",
+  "active",
+  "under_contract",
+  "pending",
+];
+
+export const LISTING_STATUS_LABELS: Record<ListingStatus, string> = {
+  coming_soon: "Coming soon",
+  active: "Active",
+  under_contract: "Under contract",
+  pending: "Pending",
+  sold: "Sold",
+  withdrawn: "Withdrawn",
+  expired: "Expired",
+};
+
+export type Listing = {
+  id: string;
+  contact_id: string | null;
+  address: string;
+  city: string | null;
+  state: string | null;
+  zip: string | null;
+  mls_number: string | null;
+  status: ListingStatus;
+  list_date: string | null;
+  list_price: number | null;
+  current_price: number | null;
+  original_price: number | null;
+  contract_date: string | null;
+  est_close_date: string | null;
+  sold_date: string | null;
+  sold_price: number | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  sqft: number | null;
+  lot_size: string | null;
+  notes: string | null;
+  next_action: string | null;
+  next_action_date: string | null;
+  transaction_id: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type BuyerStatus =
+  | "prospecting"
+  | "touring"
+  | "writing_offers"
+  | "under_contract"
+  | "pending"
+  | "closed"
+  | "paused";
+
+export const BUYER_PIPELINE_STATUSES: BuyerStatus[] = [
+  "prospecting",
+  "touring",
+  "writing_offers",
+  "under_contract",
+  "pending",
+];
+
+export const BUYER_STATUS_LABELS: Record<BuyerStatus, string> = {
+  prospecting: "Prospecting",
+  touring: "Touring",
+  writing_offers: "Writing offers",
+  under_contract: "Under contract",
+  pending: "Pending",
+  closed: "Closed",
+  paused: "Paused",
+};
+
+export type BuyerEngagement = {
+  id: string;
+  contact_id: string;
+  status: BuyerStatus;
+  budget_min: number | null;
+  budget_max: number | null;
+  preapproval_lender: string | null;
+  preapproval_amount: number | null;
+  preapproval_expires: string | null;
+  target_neighborhoods: string | null;
+  must_haves: string | null;
+  property_type: string | null;
+  min_beds: number | null;
+  min_baths: number | null;
+  notes: string | null;
+  next_action: string | null;
+  next_action_date: string | null;
+  under_contract_address: string | null;
+  under_contract_price: number | null;
+  est_close_date: string | null;
+  transaction_id: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type BuyerShowing = {
+  id: string;
+  engagement_id: string;
+  address: string;
+  shown_on: string;
+  rating: number | null;
+  notes: string | null;
+  created_at: string;
+};
+
 export type ScheduledEmail = {
   id: string;
   contact_id: string;

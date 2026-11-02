@@ -269,3 +269,100 @@ alter table public.contacts
 
 insert into public.tags (name, color) values ('lead', 'amber')
 on conflict (name) do nothing;
+
+-- ============ Pipeline: active listings + buyer engagements ============
+create table if not exists public.listings (
+  id uuid primary key default gen_random_uuid(),
+  contact_id uuid references public.contacts(id) on delete set null,
+  address text not null,
+  city text,
+  state text,
+  zip text,
+  mls_number text,
+  status text not null default 'coming_soon'
+    check (status in ('coming_soon','active','under_contract','pending','sold','withdrawn','expired')),
+  list_date date,
+  list_price numeric(14,2),
+  current_price numeric(14,2),
+  original_price numeric(14,2),
+  contract_date date,
+  est_close_date date,
+  sold_date date,
+  sold_price numeric(14,2),
+  bedrooms numeric(4,1),
+  bathrooms numeric(4,1),
+  sqft integer,
+  lot_size text,
+  notes text,
+  next_action text,
+  next_action_date date,
+  transaction_id uuid references public.transactions(id) on delete set null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+create index if not exists listings_status_idx on public.listings (status);
+create index if not exists listings_contact_idx on public.listings (contact_id);
+create index if not exists listings_next_action_idx on public.listings (next_action_date);
+alter table public.listings enable row level security;
+drop trigger if exists listings_touch_updated_at on public.listings;
+create trigger listings_touch_updated_at
+  before update on public.listings
+  for each row execute procedure public.touch_updated_at();
+
+create table if not exists public.buyer_engagements (
+  id uuid primary key default gen_random_uuid(),
+  contact_id uuid not null references public.contacts(id) on delete cascade,
+  status text not null default 'prospecting'
+    check (status in ('prospecting','touring','writing_offers','under_contract','pending','closed','paused')),
+  budget_min numeric(14,2),
+  budget_max numeric(14,2),
+  preapproval_lender text,
+  preapproval_amount numeric(14,2),
+  preapproval_expires date,
+  target_neighborhoods text,
+  must_haves text,
+  property_type text,
+  min_beds numeric(4,1),
+  min_baths numeric(4,1),
+  notes text,
+  next_action text,
+  next_action_date date,
+  under_contract_address text,
+  under_contract_price numeric(14,2),
+  est_close_date date,
+  transaction_id uuid references public.transactions(id) on delete set null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+create index if not exists buyer_engagements_status_idx on public.buyer_engagements (status);
+create index if not exists buyer_engagements_contact_idx on public.buyer_engagements (contact_id);
+create index if not exists buyer_engagements_next_action_idx on public.buyer_engagements (next_action_date);
+alter table public.buyer_engagements enable row level security;
+drop trigger if exists buyer_engagements_touch_updated_at on public.buyer_engagements;
+create trigger buyer_engagements_touch_updated_at
+  before update on public.buyer_engagements
+  for each row execute procedure public.touch_updated_at();
+
+create table if not exists public.buyer_showings (
+  id uuid primary key default gen_random_uuid(),
+  engagement_id uuid not null references public.buyer_engagements(id) on delete cascade,
+  address text not null,
+  shown_on date not null default (now()::date),
+  rating integer check (rating between 1 and 5),
+  notes text,
+  created_at timestamptz not null default now()
+);
+create index if not exists buyer_showings_engagement_idx on public.buyer_showings (engagement_id);
+alter table public.buyer_showings enable row level security;
+
+do $$
+declare t text;
+begin
+  foreach t in array array['listings','buyer_engagements','buyer_showings'] loop
+    execute format('drop policy if exists %I on public.%I', t || '_authed_all', t);
+    execute format(
+      'create policy %I on public.%I for all using (auth.role() = ''authenticated'') with check (auth.role() = ''authenticated'')',
+      t || '_authed_all', t
+    );
+  end loop;
+end $$;

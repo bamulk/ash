@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Users, DollarSign, Bell, Cake, Home as HomeIcon, ArrowRight, TrendingDown, TrendingUp, Percent } from "lucide-react";
+import { Users, DollarSign, Bell, Cake, Home as HomeIcon, ArrowRight, KanbanSquare, TrendingDown, TrendingUp, Percent } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Card, Badge, LinkButton } from "@/components/ui";
 import { formatCurrency, formatDate, todayISO } from "@/lib/format";
@@ -80,7 +80,14 @@ export default async function Dashboard() {
     : { data: null };
   const firstName = (profile?.full_name || "there").split(" ")[0];
 
-  const [{ data: contacts }, { data: txns }, { data: reminders }, rates] = await Promise.all([
+  const [
+    { data: contacts },
+    { data: txns },
+    { data: reminders },
+    { data: listingRows },
+    { data: buyerRows },
+    rates,
+  ] = await Promise.all([
     supabase.from("contacts").select("id, display_name, role, birthday"),
     supabase.from("transactions").select("*"),
     supabase
@@ -88,8 +95,27 @@ export default async function Dashboard() {
       .select("*, contacts(display_name)")
       .eq("is_done", false)
       .order("due_date"),
+    supabase
+      .from("listings")
+      .select("id, status, current_price, list_price")
+      .in("status", ["coming_soon", "active", "under_contract", "pending"]),
+    supabase
+      .from("buyer_engagements")
+      .select("id, status, budget_max, preapproval_amount")
+      .in("status", [
+        "prospecting",
+        "touring",
+        "writing_offers",
+        "under_contract",
+        "pending",
+      ]),
     getPmmsRates(),
   ]);
+  const activeListings = listingRows ?? [];
+  const activeBuyers = buyerRows ?? [];
+  const listingsOnMarket = activeListings
+    .filter((l) => l.status === "coming_soon" || l.status === "active")
+    .reduce((s, l) => s + Number(l.current_price ?? l.list_price ?? 0), 0);
 
   const allContacts = (contacts ?? []) as Pick<Contact, "id" | "display_name" | "role" | "birthday">[];
   const buyers = allContacts.filter((c) => c.role === "buyer" || c.role === "both").length;
@@ -142,7 +168,18 @@ export default async function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+        <StatCard
+          href="/pipeline"
+          label="Pipeline"
+          value={`${activeListings.length} · ${activeBuyers.length}`}
+          sub={
+            listingsOnMarket > 0
+              ? `${formatCurrency(listingsOnMarket)} on market`
+              : `${activeListings.length} listings · ${activeBuyers.length} buyers`
+          }
+          icon={KanbanSquare}
+        />
         <StatCard href="/contacts" label="Contacts" value={String(allContacts.length)} sub={`${buyers} buyers · ${sellers} sellers`} icon={Users} />
         <StatCard href="/transactions" label={`${year} volume`} value={formatCurrency(ytdVolume)} sub={`${ytd.length} deals closed`} icon={DollarSign} />
         <StatCard href="/transactions" label={`${year} GCI`} value={formatCurrency(ytdGci)} icon={HomeIcon} />

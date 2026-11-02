@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   Users,
   DollarSign,
+  KanbanSquare,
   Megaphone,
   Bell,
   Map,
@@ -25,6 +26,7 @@ function buildItems(isAdmin: boolean): Item[] {
   const items: Item[] = [
     { href: "/", label: "Home", icon: LayoutDashboard, match: (p) => p === "/" },
     { href: "/contacts", label: "Contacts", icon: Users, match: (p) => p.startsWith("/contacts") },
+    { href: "/pipeline", label: "Pipeline", icon: KanbanSquare, match: (p) => p.startsWith("/pipeline") },
     { href: "/transactions", label: "Deals", icon: DollarSign, match: (p) => p.startsWith("/transactions") },
     { href: "/marketing", label: "Marketing", icon: Megaphone, match: (p) => p.startsWith("/marketing") },
     { href: "/reminders", label: "Reminders", icon: Bell, match: (p) => p.startsWith("/reminders") },
@@ -119,19 +121,19 @@ export default function NavBar({
             const Icon = n.icon;
             const active = n.match(pathname);
             return (
-              <li key={n.href} className="flex-1">
+              <li key={n.href} className="flex-1 min-w-0">
                 <Link
                   href={n.href}
                   aria-label={n.label}
                   aria-current={active ? "page" : undefined}
-                  className={`flex flex-col items-center justify-center gap-1 py-2 transition-colors duration-150 ${
+                  className={`flex flex-col items-center justify-center gap-0.5 px-0.5 py-2 transition-colors duration-150 ${
                     active
                       ? "bg-brand text-brand-ink"
                       : "text-[#b9b8b0] active:text-[#fbfbf9]"
                   }`}
                 >
-                  <Icon size={20} />
-                  <span className={`text-[10px] font-medium leading-none ${active ? "" : "opacity-80"}`}>
+                  <Icon size={18} />
+                  <span className={`text-[9px] font-medium leading-none truncate w-full text-center ${active ? "" : "opacity-80"}`}>
                     {n.label}
                   </span>
                 </Link>
