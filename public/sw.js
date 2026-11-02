@@ -9,7 +9,7 @@
 // Bump CACHE_VERSION when shipping a change to this file or the offline
 // page; that invalidates the prior cache on activate.
 
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
 const STATIC_CACHE = `ash-static-${CACHE_VERSION}`;
 const OFFLINE_URL = "/offline.html";
 
@@ -41,6 +41,15 @@ self.addEventListener("activate", (event) => {
         )
       )
       .then(() => self.clients.claim())
+      // Nudge every open window. The client-side registration listens
+      // for `controllerchange` and reloads so people get the new app
+      // shell without having to swipe-close the PWA.
+      .then(() => self.clients.matchAll({ type: "window" }))
+      .then((clients) => {
+        for (const client of clients) {
+          client.postMessage({ type: "sw-updated", version: CACHE_VERSION });
+        }
+      })
   );
 });
 
