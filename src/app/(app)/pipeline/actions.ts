@@ -172,6 +172,18 @@ export async function deleteBuyerAction(id: string) {
   redirect("/pipeline");
 }
 
+/**
+ * Standalone notes updater for the dedicated Notes panel on the buyer
+ * detail page — mirrors updateListingNotesAction.
+ */
+export async function updateBuyerNotesAction(id: string, formData: FormData) {
+  const notes = str(formData.get("notes"));
+  const supabase = await createClient();
+  const { error } = await supabase.from("buyer_engagements").update({ notes }).eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidatePath(`/pipeline/buyers/${id}`);
+}
+
 // --------------------------- showings ---------------------------
 
 export async function addShowingAction(engagementId: string, formData: FormData) {

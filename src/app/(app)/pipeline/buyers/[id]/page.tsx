@@ -6,11 +6,13 @@ import { Badge, Card, Field, Input, PageHeader, Textarea } from "@/components/ui
 import SubmitButton from "@/components/SubmitButton";
 import DeleteButton from "@/components/DeleteButton";
 import BuyerForm from "../_BuyerForm";
+import NotesPanel from "@/components/NotesPanel";
 import {
   addShowingAction,
   deleteBuyerAction,
   deleteShowingAction,
   updateBuyerAction,
+  updateBuyerNotesAction,
 } from "../../actions";
 import {
   BUYER_STATUS_LABELS,
@@ -49,6 +51,7 @@ export default async function BuyerDetailPage({
   const update = updateBuyerAction.bind(null, id);
   const del = deleteBuyerAction.bind(null, id);
   const addShowing = addShowingAction.bind(null, id);
+  const saveNotes = updateBuyerNotesAction.bind(null, id);
 
   return (
     <div className="space-y-6">
@@ -153,6 +156,8 @@ export default async function BuyerDetailPage({
           </div>
         </form>
       </Card>
+
+      <NotesPanel initialNotes={b.notes ?? ""} action={saveNotes} />
 
       <BuyerForm action={update} buyer={b} contacts={contacts ?? []} submitLabel="Save changes" />
     </div>

@@ -104,7 +104,7 @@ export default function BuyerForm({
       </Card>
 
       <Card className="p-5 space-y-4">
-        <h2 className="font-display text-lg">Next action + notes</h2>
+        <h2 className="font-display text-lg">Next action</h2>
         <div className="grid grid-cols-1 sm:grid-cols-[2fr_1fr] gap-3">
           <Field label="Next action">
             <Input name="next_action" defaultValue={buyer?.next_action ?? ""} placeholder="Tour 1234 K Street Saturday" />
@@ -113,9 +113,8 @@ export default function BuyerForm({
             <Input type="date" name="next_action_date" defaultValue={buyer?.next_action_date ?? ""} />
           </Field>
         </div>
-        <Field label="Notes">
-          <Textarea name="notes" rows={5} defaultValue={buyer?.notes ?? ""} />
-        </Field>
+        {/* Notes live in their own panel above the form (NotesPanel). */}
+        <input type="hidden" name="notes" value={buyer?.notes ?? ""} />
       </Card>
 
       <div className="flex justify-end">
