@@ -246,3 +246,16 @@ export async function deleteListingTaskAction(listingId: string, taskId: string)
   if (error) throw new Error(error.message);
   revalidatePath(`/pipeline/listings/${listingId}`);
 }
+
+/**
+ * Standalone notes updater so the dedicated Notes panel on the listing
+ * detail page can save without hauling the whole edit form through
+ * useActionState or re-validating every other field.
+ */
+export async function updateListingNotesAction(id: string, formData: FormData) {
+  const notes = str(formData.get("notes"));
+  const supabase = await createClient();
+  const { error } = await supabase.from("listings").update({ notes }).eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidatePath(`/pipeline/listings/${id}`);
+}

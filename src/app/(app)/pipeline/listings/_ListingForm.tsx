@@ -1,4 +1,4 @@
-import { Card, Field, Input, Select, Textarea } from "@/components/ui";
+import { Card, Field, Input, Select } from "@/components/ui";
 import SubmitButton from "@/components/SubmitButton";
 import AddressAutocomplete from "@/components/AddressAutocomplete";
 import {
@@ -111,7 +111,7 @@ export default function ListingForm({
       </Card>
 
       <Card className="p-5 space-y-4">
-        <h2 className="font-display text-lg">Next action + notes</h2>
+        <h2 className="font-display text-lg">Next action</h2>
         <div className="grid grid-cols-1 sm:grid-cols-[2fr_1fr] gap-3">
           <Field label="Next action">
             <Input name="next_action" defaultValue={listing?.next_action ?? ""} placeholder="Price-drop conversation with seller" />
@@ -120,9 +120,8 @@ export default function ListingForm({
             <Input type="date" name="next_action_date" defaultValue={listing?.next_action_date ?? ""} />
           </Field>
         </div>
-        <Field label="Notes">
-          <Textarea name="notes" rows={5} defaultValue={listing?.notes ?? ""} />
-        </Field>
+        {/* Notes live in their own panel above the form (NotesPanel). */}
+        <input type="hidden" name="notes" value={listing?.notes ?? ""} />
       </Card>
 
       <div className="flex justify-end">

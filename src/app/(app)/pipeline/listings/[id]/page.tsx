@@ -5,12 +5,14 @@ import { Badge, PageHeader } from "@/components/ui";
 import DeleteButton from "@/components/DeleteButton";
 import ListingForm from "../_ListingForm";
 import Checklist from "./_Checklist";
+import NotesPanel from "./_NotesPanel";
 import {
   addListingTaskAction,
   deleteListingAction,
   deleteListingTaskAction,
   toggleListingTaskAction,
   updateListingAction,
+  updateListingNotesAction,
 } from "../../actions";
 import {
   LISTING_STATUS_LABELS,
@@ -50,6 +52,7 @@ export default async function ListingDetailPage({
   const toggleTask = toggleListingTaskAction.bind(null, id);
   const addTask = addListingTaskAction.bind(null, id);
   const deleteTask = deleteListingTaskAction.bind(null, id);
+  const saveNotes = updateListingNotesAction.bind(null, id);
   // Days-on-market is computed server-side on request; a wall-clock read
   // in a Server Component is fine and this value just lives on screen.
   const nowMs = new Date().getTime();
@@ -107,6 +110,8 @@ export default async function ListingDetailPage({
         addAction={addTask}
         deleteAction={deleteTask}
       />
+
+      <NotesPanel initialNotes={l.notes ?? ""} action={saveNotes} />
 
       <ListingForm
         action={update}
