@@ -14,7 +14,6 @@ import {
   type Listing,
   type ListingStatus,
 } from "@/lib/types";
-import { moveBuyerStatusAction, moveListingStatusAction } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -225,23 +224,25 @@ function ListingCard({
   listing: Listing;
   contact: Contact | undefined;
 }) {
-  const nextStatuses = nextListingStatuses(listing.status as ListingStatus);
   const price = listing.current_price ?? listing.list_price;
   const priceDropped =
     listing.original_price != null &&
     listing.current_price != null &&
     Number(listing.current_price) < Number(listing.original_price);
 
+  // Whole card is one link so the status change lives safely on the detail
+  // page — no inline move buttons to tap by accident.
   return (
-    <div className="bg-background border border-border p-3 space-y-2">
-      <Link href={`/pipeline/listings/${listing.id}`} className="block">
-        <div className="text-sm font-medium leading-tight hover:underline">
-          {listing.address}
-        </div>
+    <Link
+      href={`/pipeline/listings/${listing.id}`}
+      className="block bg-background border border-border p-3 space-y-2 hover:border-foreground"
+    >
+      <div>
+        <div className="text-sm font-medium leading-tight">{listing.address}</div>
         <div className="text-xs text-muted mt-0.5">
           {[listing.city, listing.state].filter(Boolean).join(", ")}
         </div>
-      </Link>
+      </div>
       <div className="flex items-center justify-between text-xs">
         <span className="font-display text-sm">
           {price != null ? formatCurrency(Number(price)) : "—"}
@@ -249,11 +250,7 @@ function ListingCard({
         {priceDropped && <Badge tone="overdue">Price drop</Badge>}
       </div>
       {contact && (
-        <div className="text-xs text-muted">
-          <Link href={`/contacts/${contact.id}`} className="hover:underline">
-            {contact.display_name}
-          </Link>
-        </div>
+        <div className="text-xs text-muted">{contact.display_name}</div>
       )}
       {listing.next_action && (
         <div className="text-xs text-muted border-t border-border pt-2">
@@ -264,26 +261,7 @@ function ListingCard({
           )}
         </div>
       )}
-      {nextStatuses.length > 0 && (
-        <form
-          action={moveListingStatusAction.bind(null, listing.id)}
-          className="flex items-center gap-1 flex-wrap"
-        >
-          {nextStatuses.map((s) => (
-            <button
-              key={s}
-              type="submit"
-              name="status"
-              value={s}
-              className="text-[11px] uppercase tracking-wider text-muted hover:text-foreground border border-border px-2 py-0.5"
-              title={`Move to ${LISTING_STATUS_LABELS[s]}`}
-            >
-              → {LISTING_STATUS_LABELS[s]}
-            </button>
-          ))}
-        </form>
-      )}
-    </div>
+    </Link>
   );
 }
 
@@ -294,7 +272,6 @@ function BuyerCard({
   buyer: BuyerEngagement;
   contact: Contact | undefined;
 }) {
-  const nextStatuses = nextBuyerStatuses(buyer.status as BuyerStatus);
   const budget =
     buyer.budget_max != null
       ? `up to ${formatCurrency(Number(buyer.budget_max))}`
@@ -303,13 +280,16 @@ function BuyerCard({
         : null;
 
   return (
-    <div className="bg-background border border-border p-3 space-y-2">
-      <Link href={`/pipeline/buyers/${buyer.id}`} className="block">
-        <div className="text-sm font-medium hover:underline">
+    <Link
+      href={`/pipeline/buyers/${buyer.id}`}
+      className="block bg-background border border-border p-3 space-y-2 hover:border-foreground"
+    >
+      <div>
+        <div className="text-sm font-medium">
           {contact?.display_name ?? "Buyer"}
         </div>
         {budget && <div className="text-xs text-muted mt-0.5">{budget}</div>}
-      </Link>
+      </div>
       {buyer.target_neighborhoods && (
         <div className="text-xs text-muted">
           {buyer.target_neighborhoods}
@@ -333,46 +313,6 @@ function BuyerCard({
           )}
         </div>
       )}
-      {nextStatuses.length > 0 && (
-        <form
-          action={moveBuyerStatusAction.bind(null, buyer.id)}
-          className="flex items-center gap-1 flex-wrap"
-        >
-          {nextStatuses.map((s) => (
-            <button
-              key={s}
-              type="submit"
-              name="status"
-              value={s}
-              className="text-[11px] uppercase tracking-wider text-muted hover:text-foreground border border-border px-2 py-0.5"
-              title={`Move to ${BUYER_STATUS_LABELS[s]}`}
-            >
-              → {BUYER_STATUS_LABELS[s]}
-            </button>
-          ))}
-        </form>
-      )}
-    </div>
+    </Link>
   );
-}
-
-function nextListingStatuses(current: ListingStatus): ListingStatus[] {
-  switch (current) {
-    case "coming_soon": return ["active"];
-    case "active": return ["under_contract", "withdrawn"];
-    case "under_contract": return ["pending", "active"];
-    case "pending": return ["sold", "active"];
-    default: return [];
-  }
-}
-
-function nextBuyerStatuses(current: BuyerStatus): BuyerStatus[] {
-  switch (current) {
-    case "prospecting": return ["touring", "paused"];
-    case "touring": return ["writing_offers", "paused"];
-    case "writing_offers": return ["under_contract", "touring"];
-    case "under_contract": return ["pending", "touring"];
-    case "pending": return ["closed", "touring"];
-    default: return [];
-  }
 }
