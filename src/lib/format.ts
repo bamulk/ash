@@ -7,6 +7,25 @@ export function formatCurrency(n: number | null | undefined): string {
   }).format(n);
 }
 
+/**
+ * Short-form currency for dashboard tiles and other narrow spaces where
+ * seven-figure dollar amounts would overflow. Keeps full precision up
+ * to $999,999, then switches to compact ($4.7M, $12M, $1.2B). Realtors
+ * read these at a glance — the hundreds place in "$4,728,000" is noise.
+ */
+export function formatCurrencyShort(n: number | null | undefined): string {
+  if (n == null || Number.isNaN(n)) return "—";
+  if (Math.abs(n) < 1_000_000) {
+    return formatCurrency(n);
+  }
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(n);
+}
+
 export function formatCurrencyCents(n: number | null | undefined): string {
   if (n == null || Number.isNaN(n)) return "—";
   return new Intl.NumberFormat("en-US", {

@@ -1,9 +1,17 @@
 import Link from "next/link";
-import { Users, DollarSign, Bell, Cake, Home as HomeIcon, ArrowRight, KanbanSquare, TrendingDown, TrendingUp, Percent } from "lucide-react";
+import {
+  Users,
+  DollarSign,
+  Home as HomeIcon,
+  KanbanSquare,
+  TrendingDown,
+  TrendingUp,
+  Percent,
+} from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { Card, Badge, LinkButton } from "@/components/ui";
-import { formatCurrency, formatDate, todayISO } from "@/lib/format";
-import type { Contact, Transaction, Reminder } from "@/lib/types";
+import { Card, LinkButton } from "@/components/ui";
+import { formatCurrency, formatCurrencyShort, formatDate } from "@/lib/format";
+import type { Contact, Transaction } from "@/lib/types";
 import { getPmmsRates } from "@/lib/freddie-pmms";
 
 export const dynamic = "force-dynamic";
@@ -20,13 +28,13 @@ function RateBlock({
   const delta = curr && prev ? curr.rate - prev.rate : null;
   return (
     <div>
-      <div className="text-xs text-slate-500 dark:text-slate-400">{label}</div>
-      <div className="text-xl font-semibold mt-0.5 flex items-baseline gap-2">
+      <div className="eyebrow">{label}</div>
+      <div className="font-display text-2xl mt-1 flex items-baseline gap-2">
         {curr ? `${curr.rate.toFixed(2)}%` : "—"}
         {delta != null && Math.abs(delta) > 0.0001 && (
           <span
             className={`inline-flex items-center text-xs font-medium ${
-              delta > 0 ? "text-rose-600 dark:text-rose-400" : "text-emerald-600 dark:text-emerald-400"
+              delta > 0 ? "text-brand" : "text-accent"
             }`}
           >
             {delta > 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
@@ -52,15 +60,48 @@ function StatCard({
   icon: React.ComponentType<{ size?: number; className?: string }>;
 }) {
   return (
-    <Link href={href}>
-      <Card className="p-4 hover:border-brand/40 transition-colors h-full">
+    <Link href={href} className="block">
+      <Card className="p-5 hover:bg-sand transition-colors h-full">
         <div className="flex items-center justify-between">
-          <span className="text-xs text-slate-500 dark:text-slate-400">{label}</span>
-          <Icon size={16} className="text-brand" />
+          <span className="eyebrow">{label}</span>
+          <Icon size={14} className="text-brand" />
         </div>
-        <div className="text-2xl font-semibold mt-2">{value}</div>
-        {sub && <div className="text-xs text-slate-400 mt-0.5">{sub}</div>}
+        <div className="font-display text-2xl sm:text-3xl mt-3 tabular-nums leading-tight">
+          {value}
+        </div>
+        {sub && <div className="text-xs text-muted mt-1">{sub}</div>}
       </Card>
+    </Link>
+  );
+}
+
+type PipelineRow = {
+  key: string;
+  href: string;
+  title: string;
+  nextAction: string;
+  nextActionDate: string;
+  tag: "listing" | "buyer";
+};
+
+function NextActionRow({ row }: { row: PipelineRow }) {
+  return (
+    <Link
+      href={row.href}
+      className="group flex items-start justify-between gap-4 py-3 border-b border-border last:border-b-0 hover:bg-sand -mx-5 px-5"
+    >
+      <div className="min-w-0">
+        <div className="flex items-center gap-2">
+          <span className="eyebrow">
+            {row.tag === "listing" ? "Listing" : "Buyer"}
+          </span>
+          <span className="text-sm font-medium truncate">{row.title}</span>
+        </div>
+        <div className="text-sm text-muted mt-0.5">{row.nextAction}</div>
+      </div>
+      <div className="text-xs text-muted whitespace-nowrap pt-0.5">
+        {formatDate(row.nextActionDate)}
+      </div>
     </Link>
   );
 }
@@ -69,39 +110,32 @@ export default async function Dashboard() {
   const supabase = await createClient();
   const now = new Date();
   const year = now.getFullYear();
-  const month = now.getMonth() + 1; // 1-12
-  const today = todayISO();
+  const today = now.toISOString().slice(0, 10);
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const { data: profile } = user
+  const { data: profile } = user?.id
     ? await supabase.from("profiles").select("full_name").eq("id", user.id).single()
     : { data: null };
-  const firstName = (profile?.full_name || "there").split(" ")[0];
+  const firstName = (profile?.full_name || "").split(" ")[0] || "there";
 
   const [
     { data: contacts },
     { data: txns },
-    { data: reminders },
     { data: listingRows },
     { data: buyerRows },
     rates,
   ] = await Promise.all([
-    supabase.from("contacts").select("id, display_name, role, birthday"),
+    supabase.from("contacts").select("id, display_name, role"),
     supabase.from("transactions").select("*"),
     supabase
-      .from("reminders")
-      .select("*, contacts(display_name)")
-      .eq("is_done", false)
-      .order("due_date"),
-    supabase
       .from("listings")
-      .select("id, status, current_price, list_price")
+      .select("id, address, status, next_action, next_action_date, current_price, list_price")
       .in("status", ["coming_soon", "active", "under_contract", "pending"]),
     supabase
       .from("buyer_engagements")
-      .select("id, status, budget_max, preapproval_amount")
+      .select("id, contact_id, status, next_action, next_action_date, budget_max, preapproval_amount")
       .in("status", [
         "prospecting",
         "touring",
@@ -111,13 +145,15 @@ export default async function Dashboard() {
       ]),
     getPmmsRates(),
   ]);
-  const activeListings = listingRows ?? [];
-  const activeBuyers = buyerRows ?? [];
-  const listingsOnMarket = activeListings
-    .filter((l) => l.status === "coming_soon" || l.status === "active")
-    .reduce((s, l) => s + Number(l.current_price ?? l.list_price ?? 0), 0);
 
-  const allContacts = (contacts ?? []) as Pick<Contact, "id" | "display_name" | "role" | "birthday">[];
+  const allContacts = (contacts ?? []) as Pick<Contact, "id" | "display_name" | "role">[];
+  const buyerContactIds = new Set((buyerRows ?? []).map((b) => b.contact_id));
+  const buyerContactNames = new Map(
+    allContacts
+      .filter((c) => buyerContactIds.has(c.id))
+      .map((c) => [c.id, c.display_name])
+  );
+
   const buyers = allContacts.filter((c) => c.role === "buyer" || c.role === "both").length;
   const sellers = allContacts.filter((c) => c.role === "seller" || c.role === "both").length;
 
@@ -126,163 +162,173 @@ export default async function Dashboard() {
   const ytdVolume = ytd.reduce((a, t) => a + (t.sold_price || 0), 0);
   const ytdGci = ytd.reduce((a, t) => a + (t.gci || 0), 0);
 
-  const openRems = (reminders ?? []) as (Reminder & { contacts: { display_name: string } | null })[];
-  const overdue = openRems.filter((r) => r.due_date < today);
-  const dueSoon = openRems.filter((r) => r.due_date >= today).slice(0, 6);
+  const activeListings = listingRows ?? [];
+  const activeBuyers = buyerRows ?? [];
+  const listingsOnMarket = activeListings
+    .filter((l) => l.status === "coming_soon" || l.status === "active")
+    .reduce((s, l) => s + Number(l.current_price ?? l.list_price ?? 0), 0);
 
-  // Home-purchase anniversaries this month (from closed deals).
-  const anniversaries = allTxns
-    .filter((t) => t.closed_date && Number(t.closed_date.slice(5, 7)) === month)
-    .map((t) => ({
-      name: t.client_name,
-      contactId: t.contact_id,
-      date: t.closed_date!,
-      years: year - Number(t.closed_date!.slice(0, 4)),
-    }))
-    .filter((a) => a.years >= 1)
-    .sort((a, b) => a.date.slice(8, 10).localeCompare(b.date.slice(8, 10)));
+  // Everything with a scheduled next action — sorted earliest first,
+  // keep the first dozen so overdue items don't push today's work off.
+  const nextActions: PipelineRow[] = [
+    ...activeListings
+      .filter((l) => l.next_action && l.next_action_date)
+      .map(
+        (l): PipelineRow => ({
+          key: `l:${l.id}`,
+          href: `/pipeline/listings/${l.id}`,
+          title: l.address,
+          nextAction: l.next_action as string,
+          nextActionDate: l.next_action_date as string,
+          tag: "listing",
+        })
+      ),
+    ...activeBuyers
+      .filter((b) => b.next_action && b.next_action_date)
+      .map(
+        (b): PipelineRow => ({
+          key: `b:${b.id}`,
+          href: `/pipeline/buyers/${b.id}`,
+          title: buyerContactNames.get(b.contact_id) ?? "Buyer",
+          nextAction: b.next_action as string,
+          nextActionDate: b.next_action_date as string,
+          tag: "buyer",
+        })
+      ),
+  ]
+    .sort((a, b) => a.nextActionDate.localeCompare(b.nextActionDate))
+    .slice(0, 12);
 
-  // Birthdays this month.
-  const birthdays = allContacts
-    .filter((c) => c.birthday && Number(c.birthday.slice(5, 7)) === month)
-    .sort((a, b) => (a.birthday || "").slice(8, 10).localeCompare((b.birthday || "").slice(8, 10)));
-
-  const monthName = now.toLocaleString("en-US", { month: "long" });
+  const overdueActions = nextActions.filter((n) => n.nextActionDate < today);
+  const todayActions = nextActions.filter((n) => n.nextActionDate === today);
+  const upcomingActions = nextActions.filter((n) => n.nextActionDate > today).slice(0, 6);
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-start sm:items-center justify-between gap-4 flex-col sm:flex-row">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Welcome back, {firstName}</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-            Here&apos;s what&apos;s happening at Ashley Stone Homes.
-          </p>
-        </div>
+    <div className="space-y-10">
+      {/* Welcome */}
+      <div className="flex items-start sm:items-end justify-between gap-6 flex-col sm:flex-row">
+        <h1 className="font-display text-4xl sm:text-5xl text-foreground leading-none">
+          Hi, {firstName}
+        </h1>
         <div className="grid grid-cols-2 sm:flex sm:flex-row gap-2 w-full sm:w-auto">
-          <LinkButton href="/contacts/new" variant="secondary">
-            <Users size={14} /> Add contact
+          <LinkButton href="/pipeline/listings/new" variant="secondary">
+            <HomeIcon size={14} /> Add listing
           </LinkButton>
-          <LinkButton href="/transactions/new" variant="secondary">
-            <DollarSign size={14} /> Add deal
+          <LinkButton href="/contacts/new" variant="secondary">
+            <Users size={14} /> Add client
           </LinkButton>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+      {/* The four numbers that tell her where things stand. */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
           href="/pipeline"
-          label="Pipeline"
+          label="Active work"
           value={`${activeListings.length} · ${activeBuyers.length}`}
           sub={
             listingsOnMarket > 0
-              ? `${formatCurrency(listingsOnMarket)} on market`
+              ? `${activeListings.length} listings · ${activeBuyers.length} buyers · ${formatCurrencyShort(listingsOnMarket)} on market`
               : `${activeListings.length} listings · ${activeBuyers.length} buyers`
           }
           icon={KanbanSquare}
         />
-        <StatCard href="/contacts" label="Contacts" value={String(allContacts.length)} sub={`${buyers} buyers · ${sellers} sellers`} icon={Users} />
-        <StatCard href="/transactions" label={`${year} volume`} value={formatCurrency(ytdVolume)} sub={`${ytd.length} deals closed`} icon={DollarSign} />
-        <StatCard href="/transactions" label={`${year} GCI`} value={formatCurrency(ytdGci)} icon={HomeIcon} />
-        <StatCard href="/reminders" label="Open reminders" value={String(openRems.length)} sub={`${overdue.length} overdue`} icon={Bell} />
+        <StatCard
+          href="/contacts"
+          label="Clients"
+          value={String(allContacts.length)}
+          sub={`${buyers} buyers · ${sellers} sellers`}
+          icon={Users}
+        />
+        <StatCard
+          href="/transactions"
+          label={`${year} volume`}
+          value={formatCurrencyShort(ytdVolume)}
+          sub={`${ytd.length} ${ytd.length === 1 ? "deal" : "deals"} closed`}
+          icon={DollarSign}
+        />
+        <StatCard
+          href="/transactions"
+          label={`${year} GCI`}
+          value={formatCurrencyShort(ytdGci)}
+          icon={HomeIcon}
+        />
       </div>
 
+      {/* Working on — the one list that keeps her moving. */}
+      <section className="space-y-3">
+        <div className="flex items-end justify-between">
+          <div>
+            <h2 className="font-display text-2xl text-foreground">Working on</h2>
+            <p className="text-sm text-muted mt-1">
+              Pipeline items with a next action scheduled.
+            </p>
+          </div>
+          <Link href="/pipeline" className="text-sm text-muted hover:text-foreground whitespace-nowrap">
+            All in pipeline →
+          </Link>
+        </div>
+
+        {nextActions.length === 0 ? (
+          <Card className="p-10 text-center">
+            <p className="text-sm text-muted">
+              Nothing scheduled.{" "}
+              <Link href="/pipeline" className="text-brand underline">
+                Open the pipeline
+              </Link>{" "}
+              to set a next action on a listing or buyer.
+            </p>
+          </Card>
+        ) : (
+          <Card className="p-5 space-y-6">
+            {overdueActions.length > 0 && (
+              <div>
+                <div className="eyebrow text-brand mb-1">Overdue</div>
+                {overdueActions.map((r) => (
+                  <NextActionRow key={r.key} row={r} />
+                ))}
+              </div>
+            )}
+            {todayActions.length > 0 && (
+              <div>
+                <div className="eyebrow mb-1">Today</div>
+                {todayActions.map((r) => (
+                  <NextActionRow key={r.key} row={r} />
+                ))}
+              </div>
+            )}
+            {upcomingActions.length > 0 && (
+              <div>
+                <div className="eyebrow mb-1">Coming up</div>
+                {upcomingActions.map((r) => (
+                  <NextActionRow key={r.key} row={r} />
+                ))}
+              </div>
+            )}
+          </Card>
+        )}
+      </section>
+
+      {/* Rates — handy for client calls. */}
       {(rates.thirty || rates.fifteen) && (
-        <Card className="p-4">
-          <div className="flex items-start justify-between gap-4 flex-wrap">
+        <section className="space-y-3">
+          <div className="flex items-end justify-between">
             <div>
-              <h2 className="text-sm font-medium flex items-center gap-2">
-                <Percent size={14} className="text-brand" /> Mortgage rates this week
-              </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Freddie Mac PMMS via FRED
+              <h2 className="font-display text-2xl text-foreground">Rates this week</h2>
+              <p className="text-sm text-muted mt-1 inline-flex items-center gap-1.5">
+                <Percent size={12} /> Freddie Mac PMMS
                 {rates.thirty?.date ? ` · week of ${formatDate(rates.thirty.date)}` : ""}
               </p>
             </div>
+          </div>
+          <Card className="p-5">
             <div className="grid grid-cols-2 gap-6">
               <RateBlock label="30-yr fixed" curr={rates.thirty} prev={rates.thirtyPrev} />
               <RateBlock label="15-yr fixed" curr={rates.fifteen} prev={rates.fifteenPrev} />
             </div>
-          </div>
-        </Card>
+          </Card>
+        </section>
       )}
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Reminders */}
-        <Card className="p-5">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-medium flex items-center gap-2">
-              <Bell size={16} className="text-brand" /> Reminders
-            </h2>
-            <Link href="/reminders" className="text-xs text-brand hover:underline inline-flex items-center gap-1">
-              All <ArrowRight size={12} />
-            </Link>
-          </div>
-          {overdue.length === 0 && dueSoon.length === 0 ? (
-            <p className="text-sm text-slate-400">Nothing due. You&apos;re all caught up.</p>
-          ) : (
-            <div className="space-y-2">
-              {overdue.map((r) => (
-                <div key={r.id} className="flex items-center justify-between text-sm">
-                  <span>{r.title}</span>
-                  <Badge tone="overdue">{formatDate(r.due_date)}</Badge>
-                </div>
-              ))}
-              {dueSoon.map((r) => (
-                <div key={r.id} className="flex items-center justify-between text-sm">
-                  <span>{r.title}</span>
-                  <span className="text-xs text-slate-400">{formatDate(r.due_date)}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </Card>
-
-        {/* This month */}
-        <Card className="p-5">
-          <h2 className="font-medium flex items-center gap-2 mb-3">
-            <Cake size={16} className="text-brand" /> {monthName} milestones
-          </h2>
-          {anniversaries.length === 0 && birthdays.length === 0 ? (
-            <p className="text-sm text-slate-400">No home anniversaries or birthdays this month.</p>
-          ) : (
-            <div className="space-y-3">
-              {anniversaries.length > 0 && (
-                <div>
-                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Home anniversaries</div>
-                  <div className="space-y-1">
-                    {anniversaries.map((a, i) => (
-                      <div key={i} className="flex items-center justify-between text-sm">
-                        {a.contactId ? (
-                          <Link href={`/contacts/${a.contactId}`} className="hover:underline">{a.name}</Link>
-                        ) : (
-                          <span>{a.name}</span>
-                        )}
-                        <span className="text-xs text-slate-400">
-                          {a.years} yr{a.years === 1 ? "" : "s"} · {formatDate(a.date)}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {birthdays.length > 0 && (
-                <div>
-                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Birthdays</div>
-                  <div className="space-y-1">
-                    {birthdays.map((c) => (
-                      <div key={c.id} className="flex items-center justify-between text-sm">
-                        <Link href={`/contacts/${c.id}`} className="hover:underline">{c.display_name}</Link>
-                        <span className="text-xs text-slate-400">{formatDate(c.birthday)}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </Card>
-      </div>
-
     </div>
   );
 }

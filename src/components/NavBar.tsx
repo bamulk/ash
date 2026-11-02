@@ -9,7 +9,6 @@ import {
   DollarSign,
   KanbanSquare,
   Megaphone,
-  Bell,
   UserCog,
 } from "lucide-react";
 import SignOutButton from "./SignOutButton";
@@ -28,7 +27,6 @@ function buildItems(isAdmin: boolean): Item[] {
     { href: "/pipeline", label: "Pipeline", icon: KanbanSquare, match: (p) => p.startsWith("/pipeline") },
     { href: "/transactions", label: "Deals", icon: DollarSign, match: (p) => p.startsWith("/transactions") },
     { href: "/marketing", label: "Marketing", icon: Megaphone, match: (p) => p.startsWith("/marketing") },
-    { href: "/reminders", label: "Reminders", icon: Bell, match: (p) => p.startsWith("/reminders") },
   ];
   if (isAdmin) {
     items.push({ href: "/team", label: "Team", icon: UserCog, match: (p) => p.startsWith("/team") });

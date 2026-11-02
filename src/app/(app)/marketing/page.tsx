@@ -5,7 +5,7 @@ import { PageHeader, Card, Badge, Field, Input, Select } from "@/components/ui";
 import SubmitButton from "@/components/SubmitButton";
 import { matchContacts, describeCriteria } from "@/lib/segments";
 import { formatDate } from "@/lib/format";
-import type { Contact, Segment, Campaign, SegmentCriteria } from "@/lib/types";
+import type { Contact, Segment, Campaign, SegmentCriteria, Transaction } from "@/lib/types";
 import { createSegmentAction, createCampaignAction } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -19,13 +19,14 @@ const KIND_LABEL: Record<string, string> = {
 
 export default async function MarketingPage() {
   const supabase = await createClient();
-  const [{ data: segments }, { data: campaigns }, { data: contacts }, { data: tags }, { data: links }] =
+  const [{ data: segments }, { data: campaigns }, { data: contacts }, { data: tags }, { data: links }, { data: txns }] =
     await Promise.all([
       supabase.from("segments").select("*").order("created_at", { ascending: false }),
       supabase.from("campaigns").select("*").order("created_at", { ascending: false }),
       supabase.from("contacts").select("*"),
       supabase.from("tags").select("id, name, color").order("name"),
       supabase.from("contact_tags").select("contact_id, tag_id"),
+      supabase.from("transactions").select("id, contact_id, client_name, closed_date"),
     ]);
 
   const tagsByContact = new Map<string, Set<string>>();
@@ -40,9 +41,109 @@ export default async function MarketingPage() {
   const segCount = (c: SegmentCriteria) => matchContacts(allContacts, c, tagsByContact).length;
   const segById = new Map((segments ?? []).map((s) => [s.id, s as Segment]));
 
+  // Upcoming milestones — the next 60 days of home anniversaries + birthdays.
+  // Lives on the marketing page because that's the only place Ashley cares
+  // about them (dashboard was removed; these drive mailer touches, not daily
+  // workflow).
+  const now = new Date();
+  const nowStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const windowDays = 60;
+  type Milestone = {
+    key: string;
+    kind: "anniversary" | "birthday";
+    name: string;
+    contactId: string | null;
+    monthDay: string;
+    nextDate: Date;
+    years: number | null;
+  };
+  function nextOccurrence(monthDay: string): Date {
+    const m = Number(monthDay.slice(0, 2));
+    const d = Number(monthDay.slice(3, 5));
+    const thisYear = new Date(now.getFullYear(), m - 1, d);
+    return thisYear >= nowStart
+      ? thisYear
+      : new Date(now.getFullYear() + 1, m - 1, d);
+  }
+  const anniversaries: Milestone[] = ((txns ?? []) as Transaction[])
+    .filter((t) => t.closed_date)
+    .map((t) => {
+      const monthDay = (t.closed_date as string).slice(5);
+      const next = nextOccurrence(monthDay);
+      return {
+        key: `annv:${t.id}`,
+        kind: "anniversary" as const,
+        name: t.client_name,
+        contactId: t.contact_id,
+        monthDay,
+        nextDate: next,
+        years: next.getFullYear() - Number((t.closed_date as string).slice(0, 4)),
+      };
+    })
+    .filter((m) => m.years !== null && m.years >= 1);
+  const birthdays: Milestone[] = allContacts
+    .filter((c) => c.birthday)
+    .map((c) => {
+      const monthDay = (c.birthday as string).slice(5);
+      return {
+        key: `bday:${c.id}`,
+        kind: "birthday" as const,
+        name: c.display_name,
+        contactId: c.id,
+        monthDay,
+        nextDate: nextOccurrence(monthDay),
+        years: null,
+      };
+    });
+  const upcomingMilestones: Milestone[] = [...anniversaries, ...birthdays]
+    .filter((m) => {
+      const diff =
+        (m.nextDate.getTime() - nowStart.getTime()) / (1000 * 60 * 60 * 24);
+      return diff >= 0 && diff <= windowDays;
+    })
+    .sort((a, b) => a.nextDate.getTime() - b.nextDate.getTime())
+    .slice(0, 20);
+  const fmtNextDate = (d: Date) =>
+    d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+
   return (
     <div className="space-y-8">
       <PageHeader title="Marketing" subtitle="Build mailing segments and track campaigns" />
+
+      {/* Upcoming anniversaries + birthdays — the one thing this page needs
+          to surface besides segments and campaigns. */}
+      {upcomingMilestones.length > 0 && (
+        <section className="space-y-3">
+          <div className="flex items-end justify-between">
+            <div>
+              <h2 className="font-display text-2xl text-foreground">Upcoming touches</h2>
+              <p className="text-sm text-muted mt-1">
+                Home anniversaries and birthdays in the next 60 days.
+              </p>
+            </div>
+          </div>
+          <Card className="divide-y divide-border">
+            {upcomingMilestones.map((m) => (
+              <Link
+                key={m.key}
+                href={m.contactId ? `/contacts/${m.contactId}` : "/contacts"}
+                className="flex items-center justify-between gap-4 p-4 hover:bg-sand"
+              >
+                <div className="min-w-0 flex items-center gap-3">
+                  <span className="eyebrow w-24 flex-shrink-0">
+                    {m.kind === "anniversary" ? "Anniversary" : "Birthday"}
+                  </span>
+                  <span className="text-sm font-medium truncate">{m.name}</span>
+                </div>
+                <span className="text-xs text-muted whitespace-nowrap">
+                  {fmtNextDate(m.nextDate)}
+                  {m.years != null ? ` · ${m.years} yr${m.years === 1 ? "" : "s"}` : ""}
+                </span>
+              </Link>
+            ))}
+          </Card>
+        </section>
+      )}
 
       {/* Segments */}
       <section className="space-y-4">
