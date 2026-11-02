@@ -172,6 +172,52 @@ export async function deleteBuyerAction(id: string) {
   redirect("/pipeline");
 }
 
+// --------------------------- buyer checklist ---------------------------
+
+export async function toggleBuyerTaskAction(
+  engagementId: string,
+  taskId: string,
+  formData: FormData
+) {
+  const supabase = await createClient();
+  const nextDone = String(formData.get("is_done") || "").trim() === "true";
+  const { error } = await supabase
+    .from("buyer_tasks")
+    .update({
+      is_done: nextDone,
+      done_at: nextDone ? new Date().toISOString() : null,
+    })
+    .eq("id", taskId);
+  if (error) throw new Error(error.message);
+  revalidatePath(`/pipeline/buyers/${engagementId}`);
+}
+
+export async function addBuyerTaskAction(engagementId: string, formData: FormData) {
+  const label = String(formData.get("label") || "").trim();
+  if (!label) return;
+  const supabase = await createClient();
+  const { data: last } = await supabase
+    .from("buyer_tasks")
+    .select("position")
+    .eq("engagement_id", engagementId)
+    .order("position", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const nextPos = (last?.position ?? 0) + 10;
+  const { error } = await supabase
+    .from("buyer_tasks")
+    .insert({ engagement_id: engagementId, label, position: nextPos });
+  if (error) throw new Error(error.message);
+  revalidatePath(`/pipeline/buyers/${engagementId}`);
+}
+
+export async function deleteBuyerTaskAction(engagementId: string, taskId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("buyer_tasks").delete().eq("id", taskId);
+  if (error) throw new Error(error.message);
+  revalidatePath(`/pipeline/buyers/${engagementId}`);
+}
+
 /**
  * Standalone notes updater for the dedicated Notes panel on the buyer
  * detail page — mirrors updateListingNotesAction.

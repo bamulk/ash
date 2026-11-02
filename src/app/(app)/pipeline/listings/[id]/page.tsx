@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Badge, PageHeader } from "@/components/ui";
 import DeleteButton from "@/components/DeleteButton";
 import ListingForm from "../_ListingForm";
-import Checklist from "./_Checklist";
+import Checklist from "@/components/Checklist";
 import NotesPanel from "@/components/NotesPanel";
 import {
   addListingTaskAction,

@@ -3,7 +3,11 @@
 import { useState } from "react";
 import { Check, Plus, X } from "lucide-react";
 import { Card } from "@/components/ui";
-import type { ListingTask } from "@/lib/types";
+
+// Minimal shape — the component only needs id/label/is_done, so both
+// ListingTask and BuyerTask fit and we don't need the component to know
+// about either table.
+type ChecklistTask = { id: string; label: string; is_done: boolean };
 
 export default function Checklist({
   tasks,
@@ -11,7 +15,7 @@ export default function Checklist({
   addAction,
   deleteAction,
 }: {
-  tasks: ListingTask[];
+  tasks: ChecklistTask[];
   toggleAction: (taskId: string, formData: FormData) => void | Promise<void>;
   addAction: (formData: FormData) => void | Promise<void>;
   deleteAction: (taskId: string) => void | Promise<void>;

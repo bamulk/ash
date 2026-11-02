@@ -107,6 +107,16 @@ export type ListingTask = {
   created_at: string;
 };
 
+export type BuyerTask = {
+  id: string;
+  engagement_id: string;
+  label: string;
+  is_done: boolean;
+  done_at: string | null;
+  position: number;
+  created_at: string;
+};
+
 export type BuyerStatus =
   | "prospecting"
   | "touring"

@@ -7,10 +7,14 @@ import SubmitButton from "@/components/SubmitButton";
 import DeleteButton from "@/components/DeleteButton";
 import BuyerForm from "../_BuyerForm";
 import NotesPanel from "@/components/NotesPanel";
+import Checklist from "@/components/Checklist";
 import {
+  addBuyerTaskAction,
   addShowingAction,
   deleteBuyerAction,
+  deleteBuyerTaskAction,
   deleteShowingAction,
+  toggleBuyerTaskAction,
   updateBuyerAction,
   updateBuyerNotesAction,
 } from "../../actions";
@@ -19,6 +23,7 @@ import {
   type BuyerEngagement,
   type BuyerShowing,
   type BuyerStatus,
+  type BuyerTask,
   type Contact,
 } from "@/lib/types";
 import { formatCurrency, formatDate, todayISO } from "@/lib/format";
@@ -32,15 +37,21 @@ export default async function BuyerDetailPage({
 }) {
   const { id } = await params;
   const supabase = await createClient();
-  const [{ data: buyer }, { data: contacts }, { data: showingRows }] = await Promise.all([
-    supabase.from("buyer_engagements").select("*").eq("id", id).single(),
-    supabase.from("contacts").select("id, display_name, role, emails, phones").order("display_name"),
-    supabase
-      .from("buyer_showings")
-      .select("*")
-      .eq("engagement_id", id)
-      .order("shown_on", { ascending: false }),
-  ]);
+  const [{ data: buyer }, { data: contacts }, { data: showingRows }, { data: taskRows }] =
+    await Promise.all([
+      supabase.from("buyer_engagements").select("*").eq("id", id).single(),
+      supabase.from("contacts").select("id, display_name, role, emails, phones").order("display_name"),
+      supabase
+        .from("buyer_showings")
+        .select("*")
+        .eq("engagement_id", id)
+        .order("shown_on", { ascending: false }),
+      supabase
+        .from("buyer_tasks")
+        .select("*")
+        .eq("engagement_id", id)
+        .order("position", { ascending: true }),
+    ]);
   if (!buyer) notFound();
   const b = buyer as BuyerEngagement;
   const buyerContact = (contacts ?? []).find((c) => c.id === b.contact_id) as
@@ -52,6 +63,9 @@ export default async function BuyerDetailPage({
   const del = deleteBuyerAction.bind(null, id);
   const addShowing = addShowingAction.bind(null, id);
   const saveNotes = updateBuyerNotesAction.bind(null, id);
+  const toggleTask = toggleBuyerTaskAction.bind(null, id);
+  const addTask = addBuyerTaskAction.bind(null, id);
+  const deleteTask = deleteBuyerTaskAction.bind(null, id);
 
   return (
     <div className="space-y-6">
@@ -156,6 +170,13 @@ export default async function BuyerDetailPage({
           </div>
         </form>
       </Card>
+
+      <Checklist
+        tasks={(taskRows ?? []) as BuyerTask[]}
+        toggleAction={toggleTask}
+        addAction={addTask}
+        deleteAction={deleteTask}
+      />
 
       <NotesPanel initialNotes={b.notes ?? ""} action={saveNotes} />
 
