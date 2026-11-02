@@ -18,11 +18,18 @@ export default function AddressAutocomplete({
   defaultCity = "",
   defaultState = "",
   defaultZip = "",
+  streetName = "street",
+  streetLabel = "Street",
+  streetHint = "Start typing — addresses autofill city/state/ZIP.",
 }: {
   defaultStreet?: string;
   defaultCity?: string;
   defaultState?: string;
   defaultZip?: string;
+  /** Form field name for the street line. Listings use "address". */
+  streetName?: string;
+  streetLabel?: string;
+  streetHint?: string;
 }) {
   const [street, setStreet] = useState(defaultStreet);
   const [city, setCity] = useState(defaultCity);
@@ -81,10 +88,10 @@ export default function AddressAutocomplete({
   return (
     <>
       <div className="sm:col-span-2">
-        <Field label="Street" hint="Start typing — addresses autofill city/state/ZIP.">
+        <Field label={streetLabel} hint={streetHint}>
           <Input
             ref={streetRef}
-            name="street"
+            name={streetName}
             autoComplete="off"
             value={street}
             onChange={(e) => setStreet(e.target.value)}

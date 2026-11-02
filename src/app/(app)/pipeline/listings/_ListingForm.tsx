@@ -1,5 +1,6 @@
 import { Card, Field, Input, Select, Textarea } from "@/components/ui";
 import SubmitButton from "@/components/SubmitButton";
+import AddressAutocomplete from "@/components/AddressAutocomplete";
 import {
   LISTING_STATUS_LABELS,
   type Contact,
@@ -29,19 +30,15 @@ export default function ListingForm({
     <form action={action} className="space-y-6">
       <Card className="p-5 space-y-4">
         <h2 className="font-display text-lg">Property</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-[1fr_120px_80px_120px] gap-3">
-          <Field label="Address">
-            <Input name="address" required defaultValue={listing?.address ?? ""} placeholder="123 J Street" />
-          </Field>
-          <Field label="City">
-            <Input name="city" defaultValue={listing?.city ?? ""} />
-          </Field>
-          <Field label="State">
-            <Input name="state" maxLength={2} defaultValue={listing?.state ?? ""} />
-          </Field>
-          <Field label="ZIP">
-            <Input name="zip" defaultValue={listing?.zip ?? ""} />
-          </Field>
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          <AddressAutocomplete
+            streetName="address"
+            streetLabel="Address"
+            defaultStreet={listing?.address ?? ""}
+            defaultCity={listing?.city ?? ""}
+            defaultState={listing?.state ?? ""}
+            defaultZip={listing?.zip ?? ""}
+          />
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <Field label="MLS #">
