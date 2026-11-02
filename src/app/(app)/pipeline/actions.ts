@@ -199,3 +199,50 @@ export async function deleteShowingAction(engagementId: string, showingId: strin
   if (error) throw new Error(error.message);
   revalidatePath(`/pipeline/buyers/${engagementId}`);
 }
+
+// --------------------------- listing checklist ---------------------------
+
+export async function toggleListingTaskAction(
+  listingId: string,
+  taskId: string,
+  formData: FormData
+) {
+  const supabase = await createClient();
+  const nextDone = String(formData.get("is_done") || "").trim() === "true";
+  const { error } = await supabase
+    .from("listing_tasks")
+    .update({
+      is_done: nextDone,
+      done_at: nextDone ? new Date().toISOString() : null,
+    })
+    .eq("id", taskId);
+  if (error) throw new Error(error.message);
+  revalidatePath(`/pipeline/listings/${listingId}`);
+}
+
+export async function addListingTaskAction(listingId: string, formData: FormData) {
+  const label = String(formData.get("label") || "").trim();
+  if (!label) return;
+  const supabase = await createClient();
+  // Append to the end — read the current max position so new items sort last.
+  const { data: last } = await supabase
+    .from("listing_tasks")
+    .select("position")
+    .eq("listing_id", listingId)
+    .order("position", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const nextPos = (last?.position ?? 0) + 10;
+  const { error } = await supabase
+    .from("listing_tasks")
+    .insert({ listing_id: listingId, label, position: nextPos });
+  if (error) throw new Error(error.message);
+  revalidatePath(`/pipeline/listings/${listingId}`);
+}
+
+export async function deleteListingTaskAction(listingId: string, taskId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("listing_tasks").delete().eq("id", taskId);
+  if (error) throw new Error(error.message);
+  revalidatePath(`/pipeline/listings/${listingId}`);
+}

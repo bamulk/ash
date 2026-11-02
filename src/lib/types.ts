@@ -97,6 +97,16 @@ export type Listing = {
   updated_at: string;
 };
 
+export type ListingTask = {
+  id: string;
+  listing_id: string;
+  label: string;
+  is_done: boolean;
+  done_at: string | null;
+  position: number;
+  created_at: string;
+};
+
 export type BuyerStatus =
   | "prospecting"
   | "touring"

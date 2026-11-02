@@ -4,12 +4,20 @@ import { createClient } from "@/lib/supabase/server";
 import { Badge, PageHeader } from "@/components/ui";
 import DeleteButton from "@/components/DeleteButton";
 import ListingForm from "../_ListingForm";
-import { deleteListingAction, updateListingAction } from "../../actions";
+import Checklist from "./_Checklist";
+import {
+  addListingTaskAction,
+  deleteListingAction,
+  deleteListingTaskAction,
+  toggleListingTaskAction,
+  updateListingAction,
+} from "../../actions";
 import {
   LISTING_STATUS_LABELS,
   type Contact,
   type Listing,
   type ListingStatus,
+  type ListingTask,
 } from "@/lib/types";
 import { formatCurrency, formatDate } from "@/lib/format";
 
@@ -22,9 +30,14 @@ export default async function ListingDetailPage({
 }) {
   const { id } = await params;
   const supabase = await createClient();
-  const [{ data: listing }, { data: contacts }] = await Promise.all([
+  const [{ data: listing }, { data: contacts }, { data: tasks }] = await Promise.all([
     supabase.from("listings").select("*").eq("id", id).single(),
     supabase.from("contacts").select("id, display_name, role, emails, phones").order("display_name"),
+    supabase
+      .from("listing_tasks")
+      .select("*")
+      .eq("listing_id", id)
+      .order("position", { ascending: true }),
   ]);
   if (!listing) notFound();
   const l = listing as Listing;
@@ -34,6 +47,9 @@ export default async function ListingDetailPage({
 
   const update = updateListingAction.bind(null, id);
   const del = deleteListingAction.bind(null, id);
+  const toggleTask = toggleListingTaskAction.bind(null, id);
+  const addTask = addListingTaskAction.bind(null, id);
+  const deleteTask = deleteListingTaskAction.bind(null, id);
   // Days-on-market is computed server-side on request; a wall-clock read
   // in a Server Component is fine and this value just lives on screen.
   const nowMs = new Date().getTime();
@@ -84,6 +100,13 @@ export default async function ListingDetailPage({
           <span className="text-muted">Est. close {formatDate(l.est_close_date)}</span>
         )}
       </div>
+
+      <Checklist
+        tasks={(tasks ?? []) as ListingTask[]}
+        toggleAction={toggleTask}
+        addAction={addTask}
+        deleteAction={deleteTask}
+      />
 
       <ListingForm
         action={update}
