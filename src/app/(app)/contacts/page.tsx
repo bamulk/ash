@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { UserPlus, Search, Mail, Phone, MapPin } from "lucide-react";
+import { Mic, UserPlus, Search, Mail, Phone, MapPin } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { PageHeader, LinkButton, Card, Badge, EmptyState } from "@/components/ui";
 import { formatRole } from "@/lib/format";
@@ -64,9 +64,14 @@ export default async function ContactsPage({
         title="Contacts"
         subtitle={`${rows.length} of ${contacts?.length ?? 0} shown`}
         actions={
-          <LinkButton href="/contacts/new">
-            <UserPlus size={14} /> New contact
-          </LinkButton>
+          <>
+            <LinkButton href="/contacts/dictate" variant="secondary">
+              <Mic size={14} /> Dictate
+            </LinkButton>
+            <LinkButton href="/contacts/new">
+              <UserPlus size={14} /> New contact
+            </LinkButton>
+          </>
         }
       />
 

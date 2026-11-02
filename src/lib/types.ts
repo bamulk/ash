@@ -159,6 +159,10 @@ export type BuyerShowing = {
   created_at: string;
 };
 
+export type DictationResult =
+  | { ok: true; contactId: string; display_name: string }
+  | { ok: false; message: string; transcript?: string };
+
 export type ScheduledEmail = {
   id: string;
   contact_id: string;

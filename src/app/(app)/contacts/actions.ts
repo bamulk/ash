@@ -4,6 +4,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { fetchAvm, contactAddress, isRentCastConfigured } from "@/lib/rentcast";
+import {
+  isAnthropicConfigured,
+  parseContactFromDictation,
+} from "@/lib/anthropic";
 
 function list(v: FormDataEntryValue | null): string[] {
   return String(v || "")
@@ -181,4 +185,119 @@ export async function cancelScheduledTouchAction(contactId: string, scheduledId:
     .is("sent_at", null);
   if (error) throw new Error(error.message);
   revalidatePath(`/contacts/${contactId}`);
+}
+
+/**
+ * Parse a free-form dictation into a Contact row and save it. Shape
+ * matches React 19 useActionState: the client's DictationComposer
+ * posts the transcript, we hand back a result object, and on success
+ * the component navigates to the new contact's page. We do NOT redirect
+ * from here because useActionState swallows thrown redirects. The
+ * DictationResult type lives in src/lib/types.ts because exporting
+ * types from a "use server" file breaks Next's server-action bundling.
+ */
+export async function parseAndCreateContactAction(
+  _prev: import("@/lib/types").DictationResult | null,
+  formData: FormData
+): Promise<import("@/lib/types").DictationResult> {
+  const transcript = String(formData.get("transcript") || "").trim();
+  if (!transcript) {
+    return { ok: false, message: "Say something and try again." };
+  }
+  if (!isAnthropicConfigured()) {
+    return {
+      ok: false,
+      message: "Set ANTHROPIC_API_KEY in .env.local (and Vercel) to enable dictation.",
+      transcript,
+    };
+  }
+
+  let parsed;
+  try {
+    parsed = await parseContactFromDictation(transcript);
+  } catch (err) {
+    return {
+      ok: false,
+      message: err instanceof Error ? err.message : String(err),
+      transcript,
+    };
+  }
+
+  const displayName =
+    parsed.display_name ||
+    `${parsed.first_name} ${parsed.last_name}`.trim();
+  if (!displayName) {
+    return {
+      ok: false,
+      message: "Couldn't catch a name — try again starting with the person's name.",
+      transcript,
+    };
+  }
+
+  // Append the raw dictation to the notes so Ashley can double-check
+  // the AI didn't drop or rename anything she said. The pattern is
+  // "parsed notes" + a divider + the verbatim transcript, so later
+  // edits don't lose provenance.
+  const notes = [
+    parsed.notes?.trim() || null,
+    `— Dictated ${new Date().toLocaleString("en-US", { month: "short", day: "numeric" })} —\n${transcript}`,
+  ]
+    .filter(Boolean)
+    .join("\n\n");
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("contacts")
+    .insert({
+      first_name: parsed.first_name,
+      last_name: parsed.last_name,
+      display_name: displayName,
+      emails: parsed.emails,
+      phones: parsed.phones,
+      street: parsed.street,
+      city: parsed.city,
+      state: parsed.state,
+      zip: parsed.zip,
+      role: parsed.role,
+      birthday: parsed.birthday,
+      source: "dictation",
+      notes,
+    })
+    .select("id, display_name")
+    .single();
+  if (error || !data) {
+    return {
+      ok: false,
+      message: error?.message || "Save failed.",
+      transcript,
+    };
+  }
+
+  // If Ashley said buyer-side details, scaffold a buyer engagement
+  // too so the dictation lands in the pipeline, not just in Contacts.
+  const wantsBuyerEngagement =
+    parsed.role === "buyer" ||
+    parsed.role === "both" ||
+    parsed.budget_max != null ||
+    parsed.budget_min != null ||
+    parsed.target_neighborhoods != null;
+
+  if (wantsBuyerEngagement) {
+    await supabase.from("buyer_engagements").insert({
+      contact_id: data.id,
+      status: "prospecting",
+      budget_min: parsed.budget_min,
+      budget_max: parsed.budget_max,
+      target_neighborhoods: parsed.target_neighborhoods,
+      notes: parsed.notes || null,
+    });
+  }
+
+  revalidatePath("/contacts");
+  revalidatePath("/pipeline");
+  return {
+    ok: true,
+    contactId: data.id,
+    display_name: data.display_name,
+  };
 }
