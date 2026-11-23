@@ -117,8 +117,18 @@ export function Textarea(props: ComponentProps<"textarea">) {
   );
 }
 
+// React applies a select's defaultValue only on mount, so the form reset that
+// follows a save would snap it back to the option it had when the page opened,
+// and the next save would write that stale option back. Keying on the default
+// remounts the select whenever the saved value changes.
 export function Select(props: ComponentProps<"select">) {
-  return <select {...props} className={`${inputClass} ${props.className ?? ""}`} />;
+  return (
+    <select
+      key={String(props.defaultValue ?? "")}
+      {...props}
+      className={`${inputClass} ${props.className ?? ""}`}
+    />
+  );
 }
 
 export function Field({
